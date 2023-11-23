@@ -7,7 +7,7 @@ import "../login/login.css"
 const Register = () => {
   return (
     <>
-        <section className="register-bg" style={{ backgroundImage: `url(${login})` }}>
+        <section className="login-bg" style={{ backgroundImage: `url(${login})` }}>
             <div className="login-box">
                 <form action="">
 
