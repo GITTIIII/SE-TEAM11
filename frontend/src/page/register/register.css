@@ -1,0 +1,13 @@
+.register-bg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: max-content;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
