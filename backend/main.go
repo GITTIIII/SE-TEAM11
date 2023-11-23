@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/SE-TEAM11/entity"
+	"github.com/GITTIIII/SE-TEAM11/entity"
 )
 
 
