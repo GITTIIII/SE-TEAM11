@@ -7,7 +7,7 @@ import "../login/login.css"
 const Register = () => {
   return (
     <>
-        <section className="login-bg" style={{ backgroundImage: `url(${login})` }}>
+        <section className="register-bg" style={{ backgroundImage: `url(${login})` }}>
             <div className="login-box">
                 <form action="">
 
@@ -32,21 +32,23 @@ const Register = () => {
                         </div>
 
                         <div className="input-box">
-                            <input type="number" min="0" max="100" required/>
-                            <label>Age</label>
+                            <input type="text" required/>
+                            <label>Phone</label>
                         </div>
 
+                        <div className="input-box">
+                            
+                                <input type="number" min="0" max="100" required/>
+                                <label>Age</label>
+                        </div>
                         <div className="input-box">
                             <select >
                                 <option value="" selected disabled hidden>Sex</option>
                                 <option value="1">Male</option>
                                 <option value="2">Female</option>
                             </select>
-                            
-                        </div>
-
-                        
-                        
+                        </div>                           
+                     
                         <div className="buttom-area">
 
                             <button type="submit">Sign up</button> 
