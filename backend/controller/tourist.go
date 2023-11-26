@@ -61,7 +61,7 @@ func GetAllTourist(c *gin.Context) {
 func DeleteTourist(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM tourists WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Tourist not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -78,7 +78,7 @@ func UpdateTourist(c *gin.Context) {
 	}
 	// ค้นหา tourist ด้วย id
 	if tx := entity.DB().Where("id = ?", tourist.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "tourist not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Tourist not found"})
 		return
 	}
 

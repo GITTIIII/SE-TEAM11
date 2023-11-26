@@ -57,7 +57,7 @@ func GetAllEmployeeRole(c *gin.Context) {
 func DeleteEmployeeRole(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM employee_roles WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "EmployeeRole not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -74,7 +74,7 @@ func UpdateEmployeeRole(c *gin.Context) {
 	}
 	// ค้นหา employeeRole ด้วย id
 	if tx := entity.DB().Where("id = ?", employeeRole.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "employeeRole not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "EmployeeRole not found"})
 		return
 	}
 

@@ -40,7 +40,7 @@ func CreateCheckIn(c *gin.Context) {
 func GetCheckInById(c *gin.Context) {
 	var checkIn entity.CheckIn
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM check_ins WHERE id = ?", id).Find(&checkIn).Error; err != nil {
+	if err := entity.DB().Preload("BookPlan").Raw("SELECT * FROM check_ins WHERE id = ?", id).Find(&checkIn).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -50,7 +50,7 @@ func GetCheckInById(c *gin.Context) {
 // GET /checkIn
 func GetAllCheckIn(c *gin.Context) {
 	var checkIn []entity.CheckIn
-	if err := entity.DB().Raw("SELECT * FROM check_ins").Find(&checkIn).Error; err != nil {
+	if err := entity.DB().Preload("BookPlan").Raw("SELECT * FROM check_ins").Find(&checkIn).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -61,7 +61,7 @@ func GetAllCheckIn(c *gin.Context) {
 func DeleteCheckIn(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM check_ins WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "CheckIn not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -78,7 +78,7 @@ func UpdateCheckIn(c *gin.Context) {
 	}
 	// ค้นหา checkIn ด้วย id
 	if tx := entity.DB().Where("id = ?", checkIn.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "checkIn not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "CheckIn not found"})
 		return
 	}
 

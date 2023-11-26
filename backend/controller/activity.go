@@ -35,7 +35,7 @@ func CreateActivity(c *gin.Context) {
 func GetActivityById(c *gin.Context) {
 	var activity entity.Activity
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM activitys WHERE id = ?", id).Find(&activity).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM activities WHERE id = ?", id).Find(&activity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -45,7 +45,7 @@ func GetActivityById(c *gin.Context) {
 // GET /activity
 func GetAllActivity(c *gin.Context) {
 	var activity []entity.Activity
-	if err := entity.DB().Raw("SELECT * FROM activitys").Find(&activity).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM activities").Find(&activity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -55,8 +55,8 @@ func GetAllActivity(c *gin.Context) {
 // DELETE /activity/:id
 func DeleteActivity(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM activitys WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+	if tx := entity.DB().Exec("DELETE FROM activities WHERE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Activity not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -73,7 +73,7 @@ func UpdateActivity(c *gin.Context) {
 	}
 	// ค้นหา activity ด้วย id
 	if tx := entity.DB().Where("id = ?", activity.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "activity not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Activity not found"})
 		return
 	}
 

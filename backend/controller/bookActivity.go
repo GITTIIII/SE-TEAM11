@@ -25,8 +25,10 @@ func CreateBookActivity(c *gin.Context) {
 		Time: bookActivity.Time,
 		PlannerID: bookActivity.PlannerID,
 		Planner: planner,
+
 		TouristID: bookActivity.TouristID,
 		Tourist: tourist,
+
 		ActivityID: bookActivity.ActivityID,
 		Activity: activity,
 	}
@@ -44,7 +46,7 @@ func CreateBookActivity(c *gin.Context) {
 func GetBookActivityById(c *gin.Context) {
 	var bookActivity entity.BookActivity
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM book_activities WHERE id = ?", id).Find(&bookActivity).Error; err != nil {
+	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities WHERE id = ?", id).Find(&bookActivity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -54,7 +56,7 @@ func GetBookActivityById(c *gin.Context) {
 // GET /bookActivity
 func GetAllBookActivity(c *gin.Context) {
 	var bookActivity []entity.BookActivity
-	if err := entity.DB().Raw("SELECT * FROM book_activities").Find(&bookActivity).Error; err != nil {
+	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities").Find(&bookActivity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -65,7 +67,7 @@ func GetAllBookActivity(c *gin.Context) {
 func DeleteBookActivity(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM book_activities WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bookActivitiy not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "BookActivity not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -82,7 +84,7 @@ func UpdateBookActivity(c *gin.Context) {
 	}
 	// ค้นหา bookActivity ด้วย id
 	if tx := entity.DB().Where("id = ?", bookActivity.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bookActivity not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "BookActivity not found"})
 		return
 	}
 

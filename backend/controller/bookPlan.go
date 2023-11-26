@@ -49,7 +49,7 @@ func CreateBookPlan(c *gin.Context) {
 func GetBookPlanById(c *gin.Context) {
 	var bookPlan entity.BookPlan
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM book_plans WHERE id = ?", id).Find(&bookPlan).Error; err != nil {
+	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Room").Preload("FoodSet").Raw("SELECT * FROM book_plans WHERE id = ?", id).Find(&bookPlan).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -59,7 +59,7 @@ func GetBookPlanById(c *gin.Context) {
 // GET /bookPlan
 func GetAllBookPlan(c *gin.Context) {
 	var bookPlan []entity.BookPlan
-	if err := entity.DB().Raw("SELECT * FROM book_plans").Find(&bookPlan).Error; err != nil {
+	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Room").Preload("FoodSet").Raw("SELECT * FROM book_plans").Find(&bookPlan).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -70,7 +70,7 @@ func GetAllBookPlan(c *gin.Context) {
 func DeleteBookPlan(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM book_plans WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "BookPlan not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -87,7 +87,7 @@ func UpdateBookPlan(c *gin.Context) {
 	}
 	// ค้นหา bookPlan ด้วย id
 	if tx := entity.DB().Where("id = ?", bookPlan.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bookPlan not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "BookPlan not found"})
 		return
 	}
 

@@ -7,7 +7,7 @@ import (
 type FoodSet struct {
 	gorm.Model
 
-	Food_set_name string
+	FoodSet_name string
 	Count int
 
 	SavoryID *uint

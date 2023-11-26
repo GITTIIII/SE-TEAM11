@@ -57,7 +57,7 @@ func GetAllDrink(c *gin.Context) {
 func DeleteDrink(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM drinks WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Drink not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -74,7 +74,7 @@ func UpdateDrink(c *gin.Context) {
 	}
 	// ค้นหา drink ด้วย id
 	if tx := entity.DB().Where("id = ?", drink.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "drink not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Drink not found"})
 		return
 	}
 

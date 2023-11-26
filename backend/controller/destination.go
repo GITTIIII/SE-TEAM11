@@ -45,7 +45,7 @@ func CreateDestination(c *gin.Context) {
 func GetDestinationById(c *gin.Context) {
 	var destination entity.Destination
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM destinations WHERE id = ?", id).Find(&destination).Error; err != nil {
+	if err := entity.DB().Preload("PortOrigin").Preload("PortDestination").Preload("Baggage").Raw("SELECT * FROM destinations WHERE id = ?", id).Find(&destination).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -55,7 +55,7 @@ func GetDestinationById(c *gin.Context) {
 // GET /destination
 func GetAllDestination(c *gin.Context) {
 	var destination []entity.Destination
-	if err := entity.DB().Raw("SELECT * FROM destinations").Find(&destination).Error; err != nil {
+	if err := entity.DB().Preload("PortOrigin").Preload("PortDestination").Preload("Baggage").Raw("SELECT * FROM destinations").Find(&destination).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -66,7 +66,7 @@ func GetAllDestination(c *gin.Context) {
 func DeleteDestination(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM destinations WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Destination not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
@@ -83,7 +83,7 @@ func UpdateDestination(c *gin.Context) {
 	}
 	// ค้นหา destination ด้วย id
 	if tx := entity.DB().Where("id = ?", destination.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "destination not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Destination not found"})
 		return
 	}
 
