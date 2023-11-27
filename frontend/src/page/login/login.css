@@ -48,8 +48,9 @@
 
 .input-box input:focus~label,
 .input-box input:valid~label{
-    top: 1em;
-    font-size: 0.8em;
+    top: 25%;
+    font-size: 85%;
+    padding: 1.5%;
 }
 
 .input-box label {
@@ -57,7 +58,7 @@
     top: 50%;
     left : 5px;
     transform: translateY(-50%);
-    font-size: 2vmin;
+    font-size: 100%;
     font-weight: bold;
     color: rgb(0, 0, 0);
     pointer-events: none;
@@ -71,15 +72,15 @@
     border: none;
     outline: none;
     color: black;
-    font-size: 2vh;
+    font-size: 120%;
     background-color: rgba(255, 255, 255, 0.331);
-    padding: 3.5% 0% 2% 2.5%;
+    padding: 5% 0% 2% 2.5%;
 }
 
 .input-box .icon{
     position: absolute;
-    right: 1rem;
-    bottom: 2.5vh;
+    right: 2%;
+    bottom: 35%;
     color: rgb(86, 86, 86);
 }
 
