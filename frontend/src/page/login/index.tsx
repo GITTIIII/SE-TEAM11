@@ -37,8 +37,9 @@ const Login = () => {
                             <Link to="/">Forgot Password?</Link>
                         </div>
                         <div className="buttom-area">
-
-                            <button type="submit">Sign in</button> 
+                            <div className="login-button">
+                                <button type="submit">Sign in</button> 
+                            </div>
                             <Link to="register">Create an account</Link>
                     
                         </div>

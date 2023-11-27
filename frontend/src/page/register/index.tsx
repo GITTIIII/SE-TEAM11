@@ -50,8 +50,10 @@ const Register = () => {
                         </div>                           
                      
                         <div className="buttom-area">
+                            <div className="login-button">
 
                             <button type="submit">Sign up</button> 
+                            </div>
                             <Link to="/">Have Account?</Link>
                     
                         </div>
