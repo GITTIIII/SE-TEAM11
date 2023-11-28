@@ -1,16 +1,26 @@
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons"; //for icon
-import { Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import logo1 from "../../asset/logo1.png"
 import ship from "../../asset/ship.jpg"
+import { useState } from "react";
+import { message } from "antd";
 
 const Login = () => {
-  return (
-    <>
+    let navigate = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage();
+    const [input, setInput] = useState({
+        Username: "",
+        Password: "",
+    });
+
+    return (
+        <>
         <section className="login-bg" style={{ backgroundImage: `url(${ship})` }}>
+            {contextHolder}
             <div className="login-box">
-                <form action="">
+                <Form>
 
                     <div className="icon">
                         <img src={logo1} alt="logo"/>
@@ -43,11 +53,11 @@ const Login = () => {
                             <Link to="register">Create an account</Link>
                     
                         </div>
-                </form>
-            </div>
-        </section>
-    </>
-  );
+                    </Form>
+                </div>
+            </section>
+        </>
+    );
 };
 
 export default Login;
