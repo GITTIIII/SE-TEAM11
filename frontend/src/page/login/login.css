@@ -134,9 +134,12 @@
     margin: 20px 0px;
 }
 
-@media (max-width: 360px){
+@media (max-width: 500px){
     .login-box{
         width: 100%;
         height: 100vh;
+    }
+    .input-box input{
+        width: 100%;
     }
 }
