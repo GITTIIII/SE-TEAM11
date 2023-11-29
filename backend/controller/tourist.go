@@ -19,12 +19,12 @@ func CreateTourist(c *gin.Context) {
 
 	// สร้าง tourist
 	a := entity.Tourist{
-		Tourist_name: tourist.Tourist_name,
-		Gender: tourist.Gender,
-		Age: tourist.Age,
-		Phone: tourist.Phone,
-		Password: tourist.Password,
 		Email: tourist.Email,
+		Password: tourist.Password,
+		Tourist_name: tourist.Tourist_name,
+		Phone: tourist.Phone,
+		Age: tourist.Age,
+		Gender: tourist.Gender,
 	}
 
 	// บันทึก
