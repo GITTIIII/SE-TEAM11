@@ -5,7 +5,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import Login from "./page/login";
+import Login from "./page/login/loginTourist";
 import Register from "./page/register";
 
 import CheckIn from "./page/employee/checkIn";
@@ -17,11 +17,13 @@ import Room from "./page/employee/room";
 import Payment from "./page/employee/payment";
 import EmployeeLayout from "./layout/employeeLayout";
 import Employee from "./page/employee";
+import LoginEmployee from "./page/login/loginEmployee";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-        <Route index element={<Login />} />
+        <Route index path="/" element={<Login />} />
+        <Route path="login/employee" element={<LoginEmployee/>} />
         <Route path="register" element={<Register/>} />
 
         <Route path="employee" element={<EmployeeLayout/>}>

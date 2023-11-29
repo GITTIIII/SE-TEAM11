@@ -11,6 +11,7 @@ type Employee struct {
 	Employee_tel string 
 	Employee_email string 	
 	Employee_sex string 
+	Employee_password string 
 
 	EmployeeRoleID *uint
 	EmployeeRole EmployeeRole `gorm:"foreignKey:EmployeeRoleID"`

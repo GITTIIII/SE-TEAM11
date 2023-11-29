@@ -2,8 +2,8 @@ import React from 'react'
 import logo1 from "../asset/logo1.png"
 import "./sidebar.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBed, faCreditCard, faMapLocationDot, faPaperPlane, faScrewdriverWrench, faUserCheck, faUserGear,  faUtensils } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import { faBed, faChevronRight, faCreditCard, faMapLocationDot, faPaperPlane, faScrewdriverWrench, faUserCheck, faUserGear,  faUtensils } from '@fortawesome/free-solid-svg-icons'
+import { NavLink } from 'react-router-dom'
 
 export default function Sidebar() {
   return (
@@ -12,61 +12,61 @@ export default function Sidebar() {
         <div className="menu">
             <ul>
 
-                <Link to="admin">
+                <NavLink to="admin">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faUserGear} size='lg'/>
                     <label>Employee</label>
                   </li>
-                </Link>
+                </NavLink>
 
-                <Link to="payment">
+                <NavLink to="payment">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faCreditCard} size='lg'/>
                     <label>Payment</label>
                   </li>
-                </Link>
+                </NavLink>
 
-                <Link to="check-in">
+                <NavLink to="check-in">
                 <li>
                   <FontAwesomeIcon className='icon' icon={faUserCheck} size='lg'/>
                   <label>Check in</label>
                 </li>              
-                </Link>
+                </NavLink>
 
-                <Link to="destination">
+                <NavLink to="destination">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faMapLocationDot} size='lg'/>
                     <label>Destination</label>
-                  </li>               
-                </Link>
+                  </li>              
+                </NavLink>
 
-                <Link to="food">
+                <NavLink to="food">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faUtensils} size='lg'/>
                     <label>Food</label>
-                  </li>               
-                </Link>
+                  </li>              
+                </NavLink>
 
-                <Link to="planner">
+                <NavLink to="planner">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faPaperPlane} size='lg'/>
                     <label>Planner</label>
-                  </li>               
-                </Link>
+                  </li>              
+                </NavLink>
 
-                <Link to="repair">
+                <NavLink to="repair">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faScrewdriverWrench} size='lg'/>
                     <label>Repair</label>
                   </li>
-                </Link>
+                </NavLink>
 
-                <Link to="room">
+                <NavLink to="room">
                   <li>
                     <FontAwesomeIcon className='icon' icon={faBed} size='lg'/>
                     <label>Room</label>
                   </li>
-                </Link>
+                </NavLink>
             </ul>
         </div>
         <div className="user">

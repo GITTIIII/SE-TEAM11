@@ -39,7 +39,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 20px 0px;
+    padding: 10% 0px;
 }
 
 .menu ul a{
@@ -48,12 +48,12 @@
     width: 100%;
 }
 
-.menu li:hover{
+.menu li:hover, .menu .active{
     color: wheat;
     background-color: #435585;
 }
 
-.menu li:hover .icon{
+.menu li:hover .icon, .menu .active .icon{
     color: wheat;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .menu .icon{
-    margin: 0px 15px;
+    margin: 0px 7%;
 }
 
 .menu {
@@ -89,12 +89,6 @@
 
 .sidebar:hover .menu li{
     justify-content: start;
-    padding: 20px;
+    padding: 10%;
     width: 100%;
-}
-
-@media (max-width: 900px){
-    .menu .icon{
-        display: none;
-    }
 }

@@ -15,6 +15,9 @@ func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
+	r.POST("/login", controller.Login)
+	r.POST("/login/employee", controller.LoginEmployee)
+
 	//Activity Route
 	r.GET("/Activity", controller.GetAllActivity)
 	r.GET("/Activity/byId/:id", controller.GetActivityById)
