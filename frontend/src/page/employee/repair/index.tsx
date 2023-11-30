@@ -102,7 +102,7 @@ const handleSubmit = async (values: RepairInterface) => {
           <div className='repair-form-control'>
             <label className='repair-text'>Repair Detail</label>
             <br></br>
-            <textarea className='repair-textarea' placeholder='Enter your detail' required value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
+            <textarea className='repair-textarea' placeholder='Enter your detail' required value={comment} onChange={(e) => setComment(e.target.value)}/>
           </div>
 
           <div className='repair-form-control'>
