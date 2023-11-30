@@ -15,9 +15,10 @@ import Planner from "./page/employee/planner";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import Payment from "./page/employee/payment";
-import EmployeeLayout from "./layout/employeeLayout";
+import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
 import Employee from "./page/employee";
 import LoginEmployee from "./page/login/loginEmployee";
+import TouristLayout from "./layout/touristLayout/touristLayout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,10 @@ const router = createBrowserRouter(
           <Route path="planner" element={<Planner/>}/>
           <Route path="repair" element={<Repair/>}/>
           <Route path="room" element={<Room/>}/>
+        </Route>
+
+        <Route path="tourist" element={<TouristLayout/>}>
+          
         </Route>
 
     </>

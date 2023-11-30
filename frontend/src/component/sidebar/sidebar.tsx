@@ -1,8 +1,8 @@
 import React from 'react'
-import logo1 from "../asset/logo1.png"
+import logo1 from "../../asset/logo1.png"
 import "./sidebar.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBed, faChevronRight, faCreditCard, faMapLocationDot, faPaperPlane, faScrewdriverWrench, faUserCheck, faUserGear,  faUtensils } from '@fortawesome/free-solid-svg-icons'
+import { faBed, faCreditCard, faMapLocationDot, faPaperPlane, faScrewdriverWrench, faUserCheck, faUserGear,  faUtensils } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom'
 
 export default function Sidebar() {
