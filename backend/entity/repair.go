@@ -6,8 +6,8 @@ import (
 
 type Repair struct {
 	gorm.Model
-	Comment    string 
-	Repair_img	string
+	Comment    string  `gorm:"type:longtext"`
+	Repair_img	string  `gorm:"type:longtext"`
 
 	RepairTypeID *uint
 	RepairType RepairType `gorm:"foreignKey:RepairTypeID"`

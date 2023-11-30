@@ -20,7 +20,7 @@ func CreateRepairType(c *gin.Context) {
 	// สร้าง repairType
 	a := entity.RepairType{
 		Repair_name: repairType.Repair_name,
-		Count: repairType.Count,
+		
 	}
 
 	// บันทึก

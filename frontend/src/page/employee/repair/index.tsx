@@ -1,15 +1,47 @@
 import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 import  "./repair.css"
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { Button, message, Upload } from 'antd';
+import { Button, message, Upload, DatePicker ,Form} from 'antd';
 import ship from "../../../asset/ship.jpg"
+
+import { CreateRepair } from '../../../services/https/repair';
+import { RepairInterface } from '../../../interface/IRepair';
 
 
 
 export default function Repair() {
 
-  const [photo, setPhoto] = useState("");
+  let navigate = useNavigate();
+
+  const [messageApi, contextHolder] = message.useMessage();
+  const [comment, setComment] = useState("");
+
+const handleSubmit = async (values: RepairInterface) => {
+  values.Comment = comment
+  values.Repair_img = repair_img
+
+  console.log(values)
+
+  let res = await CreateRepair(values);
+  if (res.status) {
+    messageApi.open({
+      type: "success",
+      content: "บันทึกข้อมูลสำเร็จ",
+    });
+    setTimeout(function () {
+      // navigate("/");
+    }, 2000);
+  } else {
+    messageApi.open({
+      type: "error",
+      content: "บันทึกข้อมูลไม่สำเร็จ",
+    });
+  }
+};
+
+  const [repair_img, setRepair_Img] = useState("");
 
   const props: UploadProps = {
     beforeUpload: (file) => {
@@ -19,7 +51,7 @@ export default function Repair() {
         if (e.target) {
           const base64Image = e.target.result as string; // Ensure it's a string
           // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
-          setPhoto(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
+          setRepair_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
         }
       };
   
@@ -41,17 +73,17 @@ export default function Repair() {
       
       
       <div className='repair-form'>
-        <form>
+        <Form onFinish={handleSubmit}>
           <div className='repair-form-control'>
             <label className='repair-text'>Number of room</label>
             <br></br>
-            <input className='repair-input' type="text"placeholder='Enter your room number' />
+            <input className='repair-input' type="text"placeholder='Enter your room number' required />
           </div>
 
           <div className='repair-form-control'>
             <label className='repair-text'>Employee Name</label>
             <br></br>
-            <input className='repair-input' type="text"placeholder='Enter your name' />
+            <input className='repair-input' type="text"placeholder='Enter your name' required />
           </div>
 
           <div className='repair-form-control'>
@@ -70,17 +102,32 @@ export default function Repair() {
           <div className='repair-form-control'>
             <label className='repair-text'>Repair Detail</label>
             <br></br>
-            <textarea className='repair-textarea' placeholder='Enter your detail'></textarea>
+            <textarea className='repair-textarea' placeholder='Enter your detail' required value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
           </div>
 
           <div className='repair-form-control'>
             <label className='repair-text'>Upload your image</label>
             <br></br>
-            <Upload {...props} accept='image/png, image/jpeg'>
+            <Upload {...props} accept='image/png, image/jpeg' action="/Repair">
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
             {/* <input className='repair-input-file' type='file' accept='image/*'></input> */}
           </div>
+
+          {/* <div className='repair-form-control'>
+            <label className='repair-text'>Date</label>
+            <br></br>
+            <input type='datetime-local'/>
+          </div>
+
+          <div className='repair-form-control'>
+            <label className='repair-text'>Date</label>
+            <br></br>
+            <DatePicker
+              format="YYYY-MM-DD HH:mm:ss"
+              showTime
+            />
+          </div> */}
 
 
 
@@ -88,7 +135,7 @@ export default function Repair() {
             <button type='submit'>ยืนยัน</button>
           </div>
 
-        </form>
+        </Form>
       </div>
       
     </div>
