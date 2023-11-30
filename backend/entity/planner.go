@@ -17,6 +17,4 @@ type Planner struct {
 	BookPlans []BookPlan `gorm:"foreignKey:PlannerID"`
 
 	Reviews []Review `gorm:"foreignKey:PlannerID"`
-	
-	BookActivitys []BookActivity `gorm:"foreignKey:PlannerID"`
 }

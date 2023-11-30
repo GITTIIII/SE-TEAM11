@@ -10,7 +10,7 @@ import (
 // POST /bookActivity
 func CreateBookActivity(c *gin.Context) {
 	var bookActivity entity.BookActivity
-	var planner entity.Planner
+	var bookPlan entity.BookPlan
 	var tourist entity.Tourist
 	var activity entity.Activity
 
@@ -23,8 +23,8 @@ func CreateBookActivity(c *gin.Context) {
 	// สร้าง bookActivity
 	a := entity.BookActivity{
 		Time: bookActivity.Time,
-		PlannerID: bookActivity.PlannerID,
-		Planner: planner,
+		BookPlanID: bookActivity.BookPlanID,
+		BookPlan: bookPlan,
 
 		TouristID: bookActivity.TouristID,
 		Tourist: tourist,
@@ -46,7 +46,7 @@ func CreateBookActivity(c *gin.Context) {
 func GetBookActivityById(c *gin.Context) {
 	var bookActivity entity.BookActivity
 	id := c.Param("id")
-	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities WHERE id = ?", id).Find(&bookActivity).Error; err != nil {
+	if err := entity.DB().Preload("BookPlan").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities WHERE id = ?", id).Find(&bookActivity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -56,7 +56,7 @@ func GetBookActivityById(c *gin.Context) {
 // GET /bookActivity
 func GetAllBookActivity(c *gin.Context) {
 	var bookActivity []entity.BookActivity
-	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities").Find(&bookActivity).Error; err != nil {
+	if err := entity.DB().Preload("BookPlan").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities").Find(&bookActivity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
