@@ -3,6 +3,7 @@ import  "./repair.css"
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, message, Upload } from 'antd';
+import ship from "../../../asset/ship.jpg"
 
 
 
@@ -34,9 +35,9 @@ export default function Repair() {
   return (
     <>
 
+    <div className='login-bg' style={{ backgroundImage: `url(${ship})` }}>
 
-
-      <h1 className='repair-header'>Repair</h1>
+    <h1 className='repair-header'>Repair</h1>
       
       
       <div className='repair-form'>
@@ -89,6 +90,10 @@ export default function Repair() {
 
         </form>
       </div>
+      
+    </div>
+
+     
 
     </>
   )
