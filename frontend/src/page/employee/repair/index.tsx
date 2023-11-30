@@ -43,19 +43,19 @@ export default function Repair() {
       <div className='repair-form'>
         <form>
           <div className='repair-form-control'>
-            <label>Number of room</label>
+            <label className='repair-text'>Number of room</label>
             <br></br>
             <input className='repair-input' type="text"placeholder='Enter your room number' />
           </div>
 
           <div className='repair-form-control'>
-            <label>Employee Name</label>
+            <label className='repair-text'>Employee Name</label>
             <br></br>
             <input className='repair-input' type="text"placeholder='Enter your name' />
           </div>
 
           <div className='repair-form-control'>
-            <label>Repair Type</label>
+            <label className='repair-text'>Repair Type</label>
             <br></br>
             <div className='repair-select'>
               <select className='repair-select-custom'>
@@ -68,13 +68,13 @@ export default function Repair() {
           </div>
 
           <div className='repair-form-control'>
-            <label>Repair Detail</label>
+            <label className='repair-text'>Repair Detail</label>
             <br></br>
             <textarea className='repair-textarea' placeholder='Enter your detail'></textarea>
           </div>
 
           <div className='repair-form-control'>
-            <label>Upload your image</label>
+            <label className='repair-text'>Upload your image</label>
             <br></br>
             <Upload {...props} accept='image/png, image/jpeg'>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
