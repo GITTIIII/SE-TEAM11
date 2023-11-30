@@ -33,7 +33,7 @@ export default function Repair() {
 
   return (
     <>
-<<<<<<< HEAD
+
 
 
       <h1 className='repair-header'>Repair</h1>
@@ -89,15 +89,7 @@ export default function Repair() {
 
         </form>
       </div>
-=======
-    <div className="repair">
 
-      <div>Repair</div>
-      <button>dwadwad</button>
-    
-    </div>
-  
->>>>>>> c5f394d26c43f26e31a59bdeb9d1e8a5c8df0a4d
     </>
   )
 }
