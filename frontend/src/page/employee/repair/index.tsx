@@ -84,7 +84,7 @@ export default function Repair() {
 
 
 
-          <div className='repair-form-control'>
+          <div className='buttom-area'>
             <button type='submit'>ยืนยัน</button>
           </div>
 
