@@ -6,7 +6,7 @@ import (
 
 type RepairType struct {
 	gorm.Model
-	Repair_name string 
+	Repair_name string `gorm:"uniqueIndex"`
 
 	Repairs []Repair `gorm:"foreignKey:RepairTypeID"`
 }
