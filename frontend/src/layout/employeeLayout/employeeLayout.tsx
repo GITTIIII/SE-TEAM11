@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom'
-// import Footer from '../component/footer/footer'
-import Sidebar from '../component/sidebar'
+import Sidebar from '../../component/sidebar/sidebar'
 import "./layout.css"
 export default function EmployeeLayout() {
 
