@@ -1,15 +1,19 @@
 package entity
 
 import (
+	"time"
 	"gorm.io/gorm"
 )
 
 type BookActivity struct {
 	gorm.Model
-	Time string 
 
-	PlannerID *uint
-	Planner Planner `gorm:"foreignKey:PlannerID"`
+	Time time.Time
+	NumberOfPeople int
+	Comment string
+
+	BookPlanID *uint
+	BookPlan BookPlan `gorm:"foreignKey:BookPlanID"`
 
 	TouristID *uint
 	Tourist Tourist `gorm:"foreignKey:TouristID"`

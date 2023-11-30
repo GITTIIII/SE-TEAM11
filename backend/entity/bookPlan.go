@@ -21,4 +21,5 @@ type BookPlan struct {
 
 	Payments []Payment `gorm:"foreignKey:BookPlanID"`
 	CheckIns []CheckIn `gorm:"foreignKey:BookPlanID"`
+	BookActivitys []BookActivity `gorm:"foreignKey:BookPlanID"`
 }
