@@ -7,8 +7,10 @@ import (
 
 type BookActivity struct {
 	gorm.Model
+
 	Time time.Time
-	Date string
+	NumberOfPeople int
+	Comment string
 
 	BookPlanID *uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID"`
