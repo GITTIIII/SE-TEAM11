@@ -19,6 +19,8 @@ import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
 import Employee from "./page/employee";
 import LoginEmployee from "./page/login/loginEmployee";
 import TouristLayout from "./layout/touristLayout/touristLayout";
+import Profile from "./page/tourist/profile";
+import BookPlan from "./page/tourist/bookPlan";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,9 +39,10 @@ const router = createBrowserRouter(
           <Route path="repair" element={<Repair/>}/>
           <Route path="room" element={<Room/>}/>
         </Route>
-
+  
+        <Route path="profile" element={<Profile/>}/>
         <Route path="tourist" element={<TouristLayout/>}>
-          
+        <Route path="bookPlan" element={<BookPlan/>}/>
         </Route>
 
     </>
