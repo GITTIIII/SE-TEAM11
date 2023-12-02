@@ -104,14 +104,12 @@ const Register = () => {
                         </div>
 
                         <div className="input-box">
-                                <input 
-                                type="number" 
-                                min="0" 
-                                max="100" 
-                                name="Age"
-                                onChange={handleInput}
-                                required/>
-                                <label>Age</label>
+                            <input 
+                            type="number" 
+                            name="Age"
+                            onChange={handleInput}
+                            required/>
+                            <label>Age</label>
                         </div>
 
                         <div className="input-box">

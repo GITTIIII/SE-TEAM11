@@ -21,6 +21,7 @@ import LoginEmployee from "./page/login/loginEmployee";
 import TouristLayout from "./layout/touristLayout/touristLayout";
 import Profile from "./page/tourist/profile";
 import BookPlan from "./page/tourist/bookPlan";
+import BookActivity from "./page/tourist/bookActivity";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route index path="/" element={<Login />} />
         <Route path="login/employee" element={<LoginEmployee/>} />
         <Route path="register" element={<Register/>} />
+        <Route path="profile" element={<Profile/>}/>
 
         <Route path="employee" element={<EmployeeLayout/>}>
           <Route path="admin" element={<Employee/>}/>
@@ -40,9 +42,13 @@ const router = createBrowserRouter(
           <Route path="room" element={<Room/>}/>
         </Route>
   
-        <Route path="profile" element={<Profile/>}/>
         <Route path="tourist" element={<TouristLayout/>}>
-        <Route path="bookPlan" element={<BookPlan/>}/>
+          <Route path="bookPlan" element={<BookPlan/>}/>
+          <Route path="food" element={<Food/>}/>
+          <Route path="destination" element={<Destination/>}/>
+          <Route path="room" element={<Room/>}/>
+          <Route path="bookActivity" element={<BookActivity/>}/>
+          <Route path="payment" element={<Payment/>}/>
         </Route>
 
     </>
