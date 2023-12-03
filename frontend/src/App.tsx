@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./page/login/loginTourist";
-import Register from "./page/register";
+import Register from "./page/register/register";
 
 import CheckIn from "./page/employee/checkIn";
 import Destination from "./page/employee/destination";
@@ -22,6 +22,8 @@ import TouristLayout from "./layout/touristLayout/touristLayout";
 import Profile from "./page/tourist/profile";
 import BookPlan from "./page/tourist/bookPlan";
 import BookActivity from "./page/tourist/bookActivity";
+import Activity from "./page/employee/activity";
+import ActivityCreate from "./page/employee/activity/activityCreate";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +42,8 @@ const router = createBrowserRouter(
           <Route path="planner" element={<Planner/>}/>
           <Route path="repair" element={<Repair/>}/>
           <Route path="room" element={<Room/>}/>
+          <Route path="activity" element={<Activity/>}/>
+          <Route path="activity/create" element={<ActivityCreate/>}/>
         </Route>
   
         <Route path="tourist" element={<TouristLayout/>}>
