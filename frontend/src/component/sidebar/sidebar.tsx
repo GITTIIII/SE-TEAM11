@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logo1 from "../../asset/logo1.png"
 import "./sidebar.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faCreditCard, faMapLocationDot, faPaperPlane, faPersonWalking, faScrewdriverWrench, faUserCheck, faUserGear,  faUtensils } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom'
+import { GetEmployeeById } from '../../services/https/employee'
 
 export default function Sidebar() {
+  const [employee, setEmployee] = useState(null);
+  const EmployeeID = localStorage.getItem("EmployeeID")
+  console.log(EmployeeID)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setEmployee(await GetEmployeeById(Number(EmployeeID)));
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="sidebar">
         <div className="logo"><img src={logo1} alt="logo" /></div>
@@ -77,7 +89,7 @@ export default function Sidebar() {
             </ul>
         </div>
         <div className="user">
-            Employee: name
+            {Object(employee).Name}
         </div>
     </div>
   )

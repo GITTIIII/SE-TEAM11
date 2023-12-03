@@ -5,9 +5,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import Login from "./page/login/loginTourist";
 import Register from "./page/register/register";
-
 import CheckIn from "./page/employee/checkIn";
 import Destination from "./page/employee/destination";
 import Food from "./page/employee/food";
@@ -17,22 +15,22 @@ import Room from "./page/employee/room";
 import Payment from "./page/employee/payment";
 import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
 import Employee from "./page/employee";
-import LoginEmployee from "./page/login/loginEmployee";
+import LoginEmployee from "./page/login/loginEmployee/loginEmployee";
 import TouristLayout from "./layout/touristLayout/touristLayout";
 import Profile from "./page/tourist/profile";
 import BookPlan from "./page/tourist/bookPlan";
 import BookActivity from "./page/tourist/bookActivity";
 import Activity from "./page/employee/activity";
 import ActivityCreate from "./page/employee/activity/activityCreate";
+import LoginTourist from "./page/login/loginTourist/loginTourist";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-        <Route index path="/" element={<Login />} />
+        <Route index path="/" element={<LoginTourist />} />
         <Route path="login/employee" element={<LoginEmployee/>} />
         <Route path="register" element={<Register/>} />
-        <Route path="profile" element={<Profile/>}/>
-
+  
         <Route path="employee" element={<EmployeeLayout/>}>
           <Route path="admin" element={<Employee/>}/>
           <Route path="payment" element={<Payment/>}/>
@@ -53,6 +51,7 @@ const router = createBrowserRouter(
           <Route path="room" element={<Room/>}/>
           <Route path="bookActivity" element={<BookActivity/>}/>
           <Route path="payment" element={<Payment/>}/>
+          <Route path="profile" element={<Profile/>}/>
         </Route>
 
     </>

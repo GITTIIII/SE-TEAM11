@@ -6,12 +6,11 @@ import (
 
 type Employee struct {
 	gorm.Model
-	Employee_name string 
-	Employee_gender string 
-	Employee_tel string 
-	Employee_email string 	
-	Employee_sex string 
-	Employee_password string 
+	Name string 
+	Gender string 
+	Tel string 
+	Email string 	
+	Password string 
 
 	EmployeeRoleID *uint
 	EmployeeRole EmployeeRole `gorm:"foreignKey:EmployeeRoleID"`

@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // POST /employee
@@ -18,12 +19,20 @@ func CreateEmployee(c *gin.Context) {
 		return
 	}
 
+	//hashpassword
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(employee.Password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hash password"})
+		return
+	}
+	
 	// สร้าง employee
 	a := entity.Employee{
-		Employee_name: employee.Employee_name,
-		Employee_tel: employee.Employee_tel,
-		Employee_email: employee.Employee_email,
-		Employee_sex: employee.Employee_sex,
+		Name: employee.Name,
+		Tel: employee.Tel,
+		Email: employee.Email,
+		Password: string(hashPassword),
+		Gender: employee.Gender,
 
 		EmployeeRoleID: employee.EmployeeRoleID,
 		EmployeeRole: employeeRole,

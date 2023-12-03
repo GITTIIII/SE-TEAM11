@@ -24,9 +24,7 @@ const Register = () => {
 
     const handleInput = (e: any) => {
         setInput({
-          ...input,
-          [e.target.name]: e.target.value,
-        });
+            ...input, [e.target.name]: e.target.value});
     };
 
     const handleSubmit = async (values: TouristInterface) => {
@@ -41,18 +39,18 @@ const Register = () => {
 
         let res = await CreateTourist(values);
         if (res.status) {
-          messageApi.open({
-            type: "success",
-            content: "บันทึกข้อมูลสำเร็จ",
-          });
-          setTimeout(function () {
-            navigate("/");
-          }, 2000);
+            messageApi.open({
+                type: "success",
+                content: "บันทึกข้อมูลสำเร็จ",
+            });
+            setTimeout(function () {
+                navigate("/");
+            }, 2000);
         } else {
-          messageApi.open({
-            type: "error",
-            content: "บันทึกข้อมูลไม่สำเร็จ",
-          });
+            messageApi.open({
+                type: "error",
+                content: "บันทึกข้อมูลไม่สำเร็จ",
+            });
         }
     };
 

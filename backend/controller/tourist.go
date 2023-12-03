@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // POST /tourist
@@ -17,10 +18,17 @@ func CreateTourist(c *gin.Context) {
 		return
 	}
 
+	//hashpassword
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(tourist.Password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hash password"})
+		return
+	}
+
 	// สร้าง tourist
 	a := entity.Tourist{
 		Email: tourist.Email,
-		Password: tourist.Password,
+		Password: string(hashPassword),
 		Tourist_name: tourist.Tourist_name,
 		Phone: tourist.Phone,
 		Age: tourist.Age,
