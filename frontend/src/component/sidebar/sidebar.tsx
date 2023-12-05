@@ -16,7 +16,7 @@ export default function Sidebar() {
       setEmployee(await GetEmployeeById(Number(EmployeeID)));
     };
     fetchData();
-  }, [EmployeeID, employee]);
+  }, []);
 
   return (
     <div className="sidebar">

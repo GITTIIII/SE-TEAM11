@@ -12,7 +12,7 @@ export default function Profile() {
       console.log(tourist)
     };
     fetchData();
-  }, [TouristID, tourist]);
+  }, []);
 
   return (
     <div>{Object(tourist).Tourist_name}</div>
