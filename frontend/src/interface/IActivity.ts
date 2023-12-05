@@ -1,4 +1,4 @@
 export interface ActivityInterface {
     ID?: number;
-    Acticity_name?: string;
+    Activity_name?: string;
 }

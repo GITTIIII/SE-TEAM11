@@ -19,7 +19,7 @@ export default function ActivityCreate() {
     };
 
     const handleSubmit = async (values: ActivityInterface) => {
-        values.Acticity_name = input.Activity_name
+        values.Activity_name = input.Activity_name
         console.log(values)
 
         let res = await CreateActivity(values);
@@ -42,18 +42,18 @@ export default function ActivityCreate() {
     return (
         <div className="activity-box">
             {contextHolder}
-        <label>Activity</label>
-        <div className="activity-form">
-            <Form onFinish={handleSubmit}>
-            <input 
-            type="text"
-            name="Acticity_name" 
-            required
-            onChange={handleInput}
-            />
-            </Form>
-        </div>
-        <button type='submit'>ยืนยัน</button>
+            <label>Activity</label>
+            <div className="activity-form">
+                <Form onFinish={handleSubmit}>
+                    <input 
+                    type="text"
+                    name="Activity_name" 
+                    required
+                    onChange={handleInput}
+                    />
+                    <button type='submit'>ยืนยัน</button>
+                </Form>
+            </div>
         </div>
     )
 }
