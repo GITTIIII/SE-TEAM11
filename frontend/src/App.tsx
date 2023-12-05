@@ -23,6 +23,7 @@ import BookActivity from "./page/tourist/bookActivity";
 import Activity from "./page/employee/activity";
 import ActivityCreate from "./page/employee/activity/activityCreate";
 import LoginTourist from "./page/login/loginTourist/loginTourist";
+import RepairCreate from "./page/employee/repair/repairCreate";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
           <Route path="food" element={<Food/>}/>
           <Route path="planner" element={<Planner/>}/>
           <Route path="repair" element={<Repair/>}/>
+          <Route path="repair/create" element={<RepairCreate/>}/>
           <Route path="room" element={<Room/>}/>
           <Route path="activity" element={<Activity/>}/>
           <Route path="activity/create" element={<ActivityCreate/>}/>
