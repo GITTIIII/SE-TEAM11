@@ -13,6 +13,6 @@ type Destination struct {
 	PortDestinationID *uint
 	PortDestination PortDestination `gorm:"foreignKey:PortDestinationID"`
 
-	BaggageID *uint
-	Baggage Baggage `gorm:"foreignKey:BaggageID"`
+	DistanceID *uint
+	Distance Distance `gorm:"foreignKey:DistanceID"`
 }

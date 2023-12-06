@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /destination
@@ -12,7 +12,7 @@ func CreateDestination(c *gin.Context) {
 	var destination entity.Destination
 	var portOrigin entity.PortOrigin
 	var portDestination entity.PortDestination
-	var baggage entity.Baggage
+	var Distance entity.Distance
 
 	// bind เข้าตัวแปร destination
 	if err := c.ShouldBindJSON(&destination); err != nil {
@@ -28,8 +28,8 @@ func CreateDestination(c *gin.Context) {
 		PortDestinationID: destination.PortDestinationID,
 		PortDestination: portDestination,
 
-		BaggageID: destination.BaggageID,
-		Baggage: baggage,
+		DistanceID: destination.DistanceID,
+		Distance: Distance,
 	}
 
 	// บันทึก

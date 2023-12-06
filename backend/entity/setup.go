@@ -26,7 +26,7 @@ func SetupDatabase() {
 		&Room{},
 		&PortOrigin{},
 		&PortDestination{},
-		&Baggage{},
+		&Distance{},
 		&Destination{},
 		&Planner{},
 		&Tourist{},
