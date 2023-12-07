@@ -24,7 +24,7 @@ const [comment, setComment] = useState("");
 
 const [type, setType] = useState<RepairTypeInterface[]>([]);
 const [input, setInput] = useState({
-  Repair_name :"",
+  RepairTypeID :0,
 });
 
 
@@ -41,9 +41,10 @@ useEffect(() => {
 }, [])
 
 const handleInput = (e: any) => {
+  const { name, value } = e.target;
   setInput({
     ...input,
-    [e.target.name]: e.target.value,
+    [name]: parseInt(value,10),
   });
 };
 
@@ -54,6 +55,10 @@ const handleInput = (e: any) => {
 const handleSubmit = async (values: RepairInterface) => {
   values.Comment = comment
   values.Repair_img = repair_img
+  values.RepairTypeID = input.RepairTypeID
+  
+
+
   
 
   console.log(values)
@@ -65,7 +70,7 @@ const handleSubmit = async (values: RepairInterface) => {
       content: "บันทึกข้อมูลสำเร็จ",
     });
     setTimeout(function () {
-      // navigate("/");
+      navigate("../repair");
     }, 2000);
   } else {
     messageApi.open({
@@ -102,6 +107,7 @@ const handleSubmit = async (values: RepairInterface) => {
     <>
 
     <div className='login-bg' style={{ backgroundImage: `url(${ship})` }}>
+    {contextHolder}
 
     <h1 className='repair-text'>Repair</h1>
       
@@ -124,11 +130,11 @@ const handleSubmit = async (values: RepairInterface) => {
             <label className='repair-text'>Repair Type</label>
             <br></br>
             <div className='repair-select'>
-            <select className="repair-select-custom" onChange={handleInput} required>
-                    <option value="none" hidden>เลือกประเภท</option>
-                    {type.map((item, index) => (
-                      <option key={index} value={item.ID}>{item.Repair_name}</option>
-                    ))}
+            <select className="repair-select-custom" name="RepairTypeID" onChange={handleInput} required>
+                  <option value="none" hidden>เลือกประเภท</option>
+                  {type.map((item) => (
+                  <option value={item.ID} key={item.Repair_name}>{item.Repair_name}</option>
+                  ))}
             </select>
             </div>
 
