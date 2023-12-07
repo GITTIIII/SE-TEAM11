@@ -59,4 +59,40 @@ func SetupDatabase() {
 	}
 	db.Model(&RepairType{}).Create(&electricity)
 
+	standard := RoomType{
+		RoomType_name: "Standard Room",
+	}
+	db.Model(&RoomType{}).Create(&standard)
+
+	deluxe := RoomType{
+		RoomType_name: "Deluxe Room",
+	}
+	db.Model(&RoomType{}).Create(&deluxe)
+
+	excutive := RoomType{
+		RoomType_name: "Excutive Room",
+	}
+	db.Model(&RoomType{}).Create(&excutive)
+
+	suite := RoomType{
+		RoomType_name: "Suite Room",
+	}
+	db.Model(&RoomType{}).Create(&suite)
+	
+
+	sea := RoomZone{
+		RoomZone_name: "Sea view",
+	}
+	db.Model(&RoomZone{}).Create(&sea)
+
+	garden := RoomZone{
+		RoomZone_name: "Garden view",
+	}
+	db.Model(&RoomZone{}).Create(&garden)
+
+	pool := RoomZone{
+		RoomZone_name: "Pool view",
+	}
+	db.Model(&RoomZone{}).Create(&pool)
+
 }
