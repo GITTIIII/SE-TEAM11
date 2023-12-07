@@ -29,35 +29,34 @@ import RepairCreate from "./page/employee/repair/repairCreate";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-        <Route index path="/" element={<LoginTourist />} />
-        <Route path="login/employee" element={<LoginEmployee/>} />
-        <Route path="register" element={<Register/>} />
-  
-        <Route path="employee" element={<EmployeeLayout/>}>
-          <Route path="admin" element={<Employee/>}/>
-          <Route path="payment" element={<Payment/>}/>
-          <Route path="check-in" element={<CheckIn/>}/>
-          <Route path="destination" element={<Destination/>}/>
-          <Route path="food" element={<Food/>}/>
-          <Route path="planner" element={<Planner/>}/>
-          <Route path="repair" element={<Repair/>}/>
-          <Route path="repair/create" element={<RepairCreate/>}/>
-          <Route path="room" element={<Room/>}/>
-          <Route path="room/create" element={<CreateRoom/>}/>
-          <Route path="activity" element={<Activity/>}/>
-          <Route path="activity/create" element={<ActivityCreate/>}/>
-        </Route>
-  
-        <Route path="tourist" element={<TouristLayout/>}>
-          <Route path="bookPlan" element={<BookPlan/>}/>
-          <Route path="food" element={<Food/>}/>
-          <Route path="destination" element={<Destination/>}/>
-          <Route path="room" element={<Room/>}/>
-          <Route path="bookActivity" element={<BookActivity/>}/>
-          <Route path="payment" element={<Payment/>}/>
-          <Route path="profile" element={<Profile/>}/>
-        </Route>
+      <Route index path="/" element={<LoginTourist />} />
+      <Route path="login/employee" element={<LoginEmployee />} />
+      <Route path="register" element={<Register />} />
 
+      <Route path="employee" element={<EmployeeLayout />}>
+        <Route path="admin" element={<Employee />} />
+        <Route path="payment" element={<Payment />} />
+        <Route path="check-in" element={<CheckIn />} />
+        <Route path="destination" element={<Destination />} />
+        <Route path="food" element={<Food />} />
+        <Route path="planner" element={<Planner />} />
+        <Route path="repair" element={<Repair />} />
+        <Route path="repair/create" element={<RepairCreate />} />
+        <Route path="room" element={<Room />} />
+        <Route path="room/create" element={<CreateRoom />} />
+        <Route path="activity" element={<Activity />} />
+        <Route path="activity/create" element={<ActivityCreate />} />
+      </Route>
+
+      <Route path="tourist" element={<TouristLayout />}>
+        <Route path="bookPlan" element={<BookPlan />} />
+        <Route path="food" element={<Food />} />
+        <Route path="planner" element={<Planner />} />
+        <Route path="room" element={<Room />} />
+        <Route path="bookActivity" element={<BookActivity />} />
+        <Route path="payment" element={<Payment />} />
+        <Route path="profile" element={<Profile />} />
+      </Route>
     </>
   )
 );
