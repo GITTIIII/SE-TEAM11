@@ -18,31 +18,11 @@ import "./createRoom.css"
 import cruise from "../../../../asset/cruise.png"
 
 
-
-// const getBase64 = (img: RcFile, callback: (url: string) => void) => {
-//   const reader = new FileReader();
-//   reader.addEventListener('load', () => callback(reader.result as string));
-//   reader.readAsDataURL(img);
-// };
-
-// const beforeUpload = (file: RcFile) => {
-//   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-//   if (!isJpgOrPng) {
-//     message.error('You can only upload JPG/PNG file!');
-//   }
-//   const isLt2M = file.size / 1024 / 1024 < 2;
-//   if (!isLt2M) {
-//     message.error('Image must smaller than 2MB!');
-//   }
-//   return isJpgOrPng && isLt2M;
-// };
-
-
-
-
 export default function CreateRooms() {
 
   const [roomType, setRoomType] = useState<RoomTypeInterface[]>([]);
+  const [selectedRoomType, setSelectedRoomType] = useState<string | undefined>(undefined);
+  
   const getRoomType = async () => {
     let res = await GetAllRoomType();
     if (res) {
@@ -55,6 +35,7 @@ export default function CreateRooms() {
 
 
   const [roomZone, setRoomZone] = useState<RoomZoneInterface[]>([]);
+  const [selectedRoomZone, setSelectedRoomZone] = useState<string | undefined>(undefined);
   const getRoomZone = async () => {
     let res = await GetAllRoomZone();
     if (res) {
@@ -65,42 +46,6 @@ export default function CreateRooms() {
     getRoomZone();
   }, []);
 
-  const [employee, setEmployee] = useState<EmployeeInterface[]>([]);
-  const getEmployee = async () => {
-    let res = await GetAllEmployee();
-    if (res) {
-      setEmployee(res);
-    }
-  };
-  useEffect(() => {
-    getEmployee();
-  }, []);
-
-
-  // const [loading, setLoading] = useState(false);
-  // const [imageUrl, setImageUrl] = useState<string>();
-
-  // const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
-  //   if (info.file.status === 'uploading') {
-  //     setLoading(true);
-  //     return;
-  //   }
-  //   if (info.file.status === 'done') {
-  //     // Get this url from response in real world.
-  //     getBase64(info.file.originFileObj as RcFile, (url) => {
-  //       setLoading(false);
-  //       setImageUrl(url);
-  //     });
-  //   }
-  // };
-
-  // const uploadButton = (
-  //   <div>
-  //     {loading ? <LoadingOutlined /> : <PlusOutlined />}
-  //     <div style={{ marginTop: 8 }}>Upload</div>
-  //   </div>
-  // );
-
 
   let navigate = useNavigate();
 
@@ -109,9 +54,11 @@ export default function CreateRooms() {
 
   const handleSubmit = async (values: RoomInterface) => {
     values.Room_number = roomNumber
+    values.RoomTypeID = selectedRoomType ? parseInt(selectedRoomType, 10) : undefined;
+    values.RoomZoneID = selectedRoomZone ? parseInt(selectedRoomZone, 10) : undefined;
     values.Room_img = room_img
 
-    console.log(values.Room_number)
+    console.log(values)
 
     let res = await CreateRoom(values);
     if (res.status) {
@@ -173,7 +120,11 @@ export default function CreateRooms() {
           <label className='create-room-text'>Room Type</label>
           <br></br>
           <div className='create-room-select'>
-            <select className='create-room-select-custom'>
+            <select 
+              className='create-room-select-custom'
+              value={selectedRoomType}
+              onChange={(e) => setSelectedRoomType(e.target.value)}
+            >
               <option value="" disabled selected>
                 select room type
               </option>
@@ -190,7 +141,11 @@ export default function CreateRooms() {
           <label className='create-room-text'>Room Zone</label>
           <br></br>
           <div className='create-room-select'>
-            <select className='create-room-select-custom' placeholder="Select a sevice">
+            <select 
+              className='create-room-select-custom'
+              value={selectedRoomZone}
+              onChange={(e) => setSelectedRoomZone(e.target.value)}
+            >
               <option value="" disabled selected>
                 select room zone
               </option>
@@ -212,38 +167,11 @@ export default function CreateRooms() {
         <div className='create-room-form-control'>
           <label className='create-room-text'>Image of Room</label>
           <br></br>
-            <Upload {...props} accept='image/png, image/jpeg' action="/Repair">
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          {/* <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-            beforeUpload={beforeUpload}
-            onChange={handleChange}
-          >
-            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-          </Upload> */}
+          <Upload {...props} accept='image/png, image/jpeg' action="/Repair">
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
         </div>
 
-        <div className='create-room-form-control'>
-          <label className='create-room-text'>Employee</label>
-          <br></br>
-          <div className='create-room-select'>
-            <select className='create-room-select-custom' placeholder="Select a employee">
-              <option value="" disabled selected>
-                select employee
-              </option>
-              {employee.map((item) => (
-                <option value={item.ID} key={item.Employee_name}>
-                  {item.Employee_name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
 
         <div className='buttom-area'>
           <button type='submit'>ยืนยัน</button>
