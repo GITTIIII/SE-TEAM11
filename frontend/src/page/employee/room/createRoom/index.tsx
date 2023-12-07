@@ -46,6 +46,19 @@ export default function CreateRooms() {
     getRoomZone();
   }, []);
 
+  const [input, setInput] = useState({
+    RoomTypeID :0,
+    RoomZoneID :0,
+  });
+  
+  const handleInput = (e: any) => {
+    const { name, value } = e.target;
+    setInput({
+      ...input,
+      [name]: parseInt(value,10),
+    });
+  };
+
 
   let navigate = useNavigate();
 
@@ -54,8 +67,8 @@ export default function CreateRooms() {
 
   const handleSubmit = async (values: RoomInterface) => {
     values.Room_number = roomNumber
-    values.RoomTypeID = selectedRoomType ? parseInt(selectedRoomType, 10) : undefined;
-    values.RoomZoneID = selectedRoomZone ? parseInt(selectedRoomZone, 10) : undefined;
+    values.RoomTypeID = input.RoomTypeID
+    values.RoomZoneID = input.RoomZoneID
     values.Room_img = room_img
 
     console.log(values)
@@ -120,11 +133,7 @@ export default function CreateRooms() {
           <label className='create-room-text'>Room Type</label>
           <br></br>
           <div className='create-room-select'>
-            <select 
-              className='create-room-select-custom'
-              value={selectedRoomType}
-              onChange={(e) => setSelectedRoomType(e.target.value)}
-            >
+            <select className='create-room-select-custom' name="RoomTypeID" onChange={handleInput} required>
               <option value="" disabled selected>
                 select room type
               </option>
@@ -142,10 +151,7 @@ export default function CreateRooms() {
           <br></br>
           <div className='create-room-select'>
             <select 
-              className='create-room-select-custom'
-              value={selectedRoomZone}
-              onChange={(e) => setSelectedRoomZone(e.target.value)}
-            >
+              className='create-room-select-custom' name="RoomZoneID" onChange={handleInput} required>
               <option value="" disabled selected>
                 select room zone
               </option>
