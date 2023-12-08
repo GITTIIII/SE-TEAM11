@@ -62,6 +62,7 @@ export default function CreateRooms() {
   const [messageApi, contextHolder] = message.useMessage();
   const [roomNumber, setRoom_number] = useState("");
   const [roomPrice, setRoom_price] = useState("");
+  const [room_img, setRoom_Img] = useState("");
 
   const handleSubmit = async (values: RoomInterface) => {
     values.Room_number = roomNumber
@@ -89,7 +90,7 @@ export default function CreateRooms() {
     }
   };
 
-  const [room_img, setRoom_Img] = useState("");
+
 
   const props: UploadProps = {
     beforeUpload: (file) => {
@@ -173,7 +174,7 @@ export default function CreateRooms() {
           <br></br>
           <input 
             className='create-room-input' 
-            type="number" 
+            type="number" step="0.001" 
             placeholder = 'Enter price of room' 
             required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
           />
