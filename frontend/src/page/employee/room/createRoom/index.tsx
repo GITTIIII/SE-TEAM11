@@ -1,16 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
-// import './index.css';
 import { LoadingOutlined, PlusOutlined,UploadOutlined } from '@ant-design/icons';
 import { message, Upload, Form, Button } from 'antd';
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { RoomInterface } from '../../../../interface/IRoom';
-import {RoomTypeInterface} from "./../../../../interface/IRoomType" ;
+import { RoomTypeInterface } from "./../../../../interface/IRoomType" ;
 import { RoomZoneInterface } from '../../../../interface/IRoomZone';
 import { EmployeeInterface } from '../../../../interface/IEmployee';
 import { CreateRoom } from '../../../../services/https/room';
-import {GetAllRoomType} from './../../../../services/https/roomType' ;
+import { GetAllRoomType } from './../../../../services/https/roomType' ;
 import { GetAllRoomZone } from '../../../../services/https/roomZone';
 import { GetAllEmployee } from '../../../../services/https/employee';
 import "./../room.css"
