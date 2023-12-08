@@ -24,8 +24,8 @@ func CreateRoom(c *gin.Context) {
 	a := entity.Room{
 		Room_number: room.Room_number,
 		Room_img: room.Room_img,
-		Status: room.Status,
-		Price: room.Price,
+		Status: "ว่าง",
+		Room_price: room.Room_price,
 
 		RoomTypeID: room.RoomTypeID,
 		RoomType: roomType,

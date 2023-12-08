@@ -21,8 +21,6 @@ import cruise from "../../../../asset/cruise.png"
 export default function CreateRooms() {
 
   const [roomType, setRoomType] = useState<RoomTypeInterface[]>([]);
-  const [selectedRoomType, setSelectedRoomType] = useState<string | undefined>(undefined);
-  
   const getRoomType = async () => {
     let res = await GetAllRoomType();
     if (res) {
@@ -35,7 +33,6 @@ export default function CreateRooms() {
 
 
   const [roomZone, setRoomZone] = useState<RoomZoneInterface[]>([]);
-  const [selectedRoomZone, setSelectedRoomZone] = useState<string | undefined>(undefined);
   const getRoomZone = async () => {
     let res = await GetAllRoomZone();
     if (res) {
@@ -64,11 +61,13 @@ export default function CreateRooms() {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [roomNumber, setRoom_number] = useState("");
+  const [roomPrice, setRoom_price] = useState("");
 
   const handleSubmit = async (values: RoomInterface) => {
     values.Room_number = roomNumber
     values.RoomTypeID = input.RoomTypeID
     values.RoomZoneID = input.RoomZoneID
+    values.Room_price = Number(roomPrice)
     values.Room_img = room_img
 
     console.log(values)
@@ -127,7 +126,11 @@ export default function CreateRooms() {
         <div className='create-room-form-control'>
           <label className='create-room-text'>Number of room</label>
           <br></br>
-          <input className='create-room-input' type="text" placeholder = 'Enter number of room' required value={roomNumber} onChange={(e) => setRoom_number(e.target.value)} />
+          <input 
+            className='create-room-input' 
+            type="text" placeholder = 'Enter number of room' 
+            required value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
+          />
         </div>
 
         <div className='create-room-form-control'>
@@ -168,7 +171,12 @@ export default function CreateRooms() {
         <div className='create-room-form-control'>
           <label className='create-room-text'>Price of Room</label>
           <br></br>
-          <input className='create-room-input' type="number" step="0.01" placeholder = 'Enter price of room' required />
+          <input 
+            className='create-room-input' 
+            type="number" 
+            placeholder = 'Enter price of room' 
+            required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
+          />
         </div>
 
         <div className='create-room-form-control'>

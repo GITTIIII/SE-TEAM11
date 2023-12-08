@@ -7,7 +7,7 @@ export interface RoomInterface {
     Room_number?: string;
     Room_img?: string;
     Status?: string;
-    Price?: number;
+    Room_price?: number;
 
     RoomTypeID?: number;
     RoomType?: RoomTypeInterface;
