@@ -115,6 +115,7 @@ export default function CreateRooms() {
 
   return (
     <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      {contextHolder}
 
       <h1 className='room-header'>Add a Room</h1>
 
