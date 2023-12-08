@@ -15,14 +15,13 @@ import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
 import Payment from "./page/employee/payment";
 import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
-import Employee from "./page/employee";
+import Employee from "./page/employee/employeeCreate";
 import LoginEmployee from "./page/login/loginEmployee/loginEmployee";
 import TouristLayout from "./layout/touristLayout/touristLayout";
 import Profile from "./page/tourist/profile";
 import BookPlan from "./page/tourist/bookPlan";
 import BookActivity from "./page/tourist/bookActivity";
 import Activity from "./page/employee/activity";
-import ActivityCreate from "./page/employee/activity/activityCreate";
 import LoginTourist from "./page/login/loginTourist/loginTourist";
 import RepairCreate from "./page/employee/repair/repairCreate";
 
@@ -45,7 +44,6 @@ const router = createBrowserRouter(
         <Route path="room" element={<Room />} />
         <Route path="room/create" element={<CreateRoom />} />
         <Route path="activity" element={<Activity />} />
-        <Route path="activity/create" element={<ActivityCreate />} />
       </Route>
 
       <Route path="tourist" element={<TouristLayout />}>

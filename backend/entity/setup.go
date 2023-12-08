@@ -79,7 +79,6 @@ func SetupDatabase() {
 	}
 	db.Model(&RoomType{}).Create(&suite)
 	
-
 	sea := RoomZone{
 		RoomZone_name: "Sea view",
 	}
@@ -94,5 +93,11 @@ func SetupDatabase() {
 		RoomZone_name: "Pool view",
 	}
 	db.Model(&RoomZone{}).Create(&pool)
+
+	EmployeeRole := []EmployeeRole{
+		{Name: "employee"},
+		{Name: "admin"},
+	}
+	db.Create(&EmployeeRole)
 
 }

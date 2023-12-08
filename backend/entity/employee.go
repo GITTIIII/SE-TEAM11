@@ -9,7 +9,7 @@ type Employee struct {
 	Name string 
 	Gender string 
 	Tel string 
-	Email string 	
+	Email string `gorm:"uniqueIndex"`
 	Password string 
 
 	EmployeeRoleID *uint

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom';
 import { RoomInterface } from '../../../interface/IRoom';
 import  "./room.css"
 import { Button, ConfigProvider, Table, message, Modal } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import type { ColumnsType } from "antd/es/table";
 import cruise from "../../../asset/cruise.png"
 import { GetAllRoom } from '../../../services/https/room';
@@ -22,7 +22,7 @@ export default function Room() {
       dataIndex: "Room_img",
       key: "room_img",
       render: (text, record, index) => (
-        <img src={record.Room_img} className="" width="50%" />
+        <img src={record.Room_img} className="" width="50%" alt=""/>
       )
     },
     {
@@ -68,7 +68,6 @@ export default function Room() {
   ];
 
 
-  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [listRoom, setAllRoom] = useState<RoomInterface[]>([]);
 
@@ -124,7 +123,7 @@ export default function Room() {
   return (
     
       <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
-
+        {contextHolder}
         <h1 className='room-header'>Room</h1>
 
         <div className='room-headline'/>
