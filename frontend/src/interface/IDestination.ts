@@ -1,16 +1,16 @@
-import {PortOriginInterface} from "./IPortOrigin";
+import { PortOriginInterface } from "./IPortOrigin";
 import { PortDestinationInterface } from "./IPortDestination";
-import {BaggageInterface} from "./IBaggage";
+import { DistanceInterface } from "./IDistance";
 
 export interface DestinationInterface {
-    ID?: number;
-    
-    PortOriginID?: number;
-    PortOrigin?: PortOriginInterface;
+  ID?: number;
 
-    PortDestinationID?: number;
-    PortDestinaton?: PortDestinationInterface;
+  PortOriginID?: number;
+  PortOrigin?: PortOriginInterface;
 
-    BaggageID?: number;
-    Baggage?: BaggageInterface;
+  PortDestinationID?: number;
+  PortDestinaton?: PortDestinationInterface;
+
+  BaggageID?: number;
+  Baggage?: DistanceInterface;
 }

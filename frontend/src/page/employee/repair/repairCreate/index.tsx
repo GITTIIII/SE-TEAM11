@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import  "./repairCreate.css"
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { Button, message, Upload, DatePicker ,Form} from 'antd';
+import { Button, message, Upload, Form} from 'antd';
 import ship from "../../../../asset/ship.jpg"
 
 

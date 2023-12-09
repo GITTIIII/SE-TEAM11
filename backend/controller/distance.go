@@ -36,7 +36,7 @@ func CreateDistance(c *gin.Context) {
 func GetDistanceById(c *gin.Context) {
 	var Distance entity.Distance
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM port_origins WHERE id = ?", id).Find(&Distance).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM distances WHERE id = ?", id).Find(&Distance).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -46,7 +46,7 @@ func GetDistanceById(c *gin.Context) {
 // GET /Distance
 func GetAllDistance(c *gin.Context) {
 	var Distance []entity.Distance
-	if err := entity.DB().Raw("SELECT * FROM port_origins").Find(&Distance).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM distances").Find(&Distance).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -56,8 +56,8 @@ func GetAllDistance(c *gin.Context) {
 // DELETE /Distance/:id
 func DeleteDistance(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM port_origins WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Distancev not found"})
+	if tx := entity.DB().Exec("DELETE FROM distances WHERE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Distance not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})

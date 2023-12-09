@@ -167,6 +167,13 @@ func main() {
 			r.POST("/Savory", controller.CreateSavory)
 			r.PATCH("/Savory", controller.UpdateSavory)
 			r.DELETE("/Savory/:id", controller.DeleteSavory)
+
+			//Distance Route
+			r.GET("/Distance", controller.GetAllDistance)
+			r.GET("/Distance/byId/:id", controller.GetDistanceById)
+			r.POST("/Distance", controller.CreateDistance)
+			r.PATCH("/Distance", controller.UpdateDistance)
+			r.DELETE("/Distance/:id", controller.DeleteDistance)
 		}
 	}
 

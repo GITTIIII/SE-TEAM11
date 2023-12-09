@@ -6,8 +6,7 @@ import (
 
 type EmployeeRole struct {
 	gorm.Model
-	Name string 
-	Role string
+	Name string `gorm:"uniqueIndex"`
 
 	Employees []Employee `gorm:"foreignKey:EmployeeRoleID"`
 }
