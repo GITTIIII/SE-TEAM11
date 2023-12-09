@@ -22,11 +22,13 @@ let navigate = useNavigate();
 const [messageApi, contextHolder] = message.useMessage();
 const [comment, setComment] = useState("");
 
+
 const [type, setType] = useState<RepairTypeInterface[]>([]);
 const [input, setInput] = useState({
   RepairTypeID :0,
 });
 
+const EmployeeID = localStorage.getItem("EmployeeID")
 
 const getRepairType = async () => {
   let res = await GetAllRepairType();
@@ -56,12 +58,13 @@ const handleSubmit = async (values: RepairInterface) => {
   values.Comment = comment
   values.Repair_img = repair_img
   values.RepairTypeID = input.RepairTypeID
+  values.EmployeeID = Number(EmployeeID)
   
 
 
   
 
-  console.log(values)
+  console.log(EmployeeID)
 
   let res = await CreateRepair(values);
   if (res.status) {
@@ -69,9 +72,9 @@ const handleSubmit = async (values: RepairInterface) => {
       type: "success",
       content: "บันทึกข้อมูลสำเร็จ",
     });
-    setTimeout(function () {
-      navigate("../repair");
-    }, 2000);
+    // setTimeout(function () {
+    //   navigate("../repair");
+    // }, 2000);
   } else {
     messageApi.open({
       type: "error",
@@ -120,11 +123,11 @@ const handleSubmit = async (values: RepairInterface) => {
             <input className='repair-input' type="text"placeholder='Enter your room number' required />
           </div>
 
-          <div className='repair-form-control'>
+          {/* <div className='repair-form-control'>
             <label className='repair-text'>Employee Name</label>
             <br></br>
             <input className='repair-input' type="text"placeholder='Enter your name' required />
-          </div>
+          </div> */}
 
           <div className='repair-form-control'>
             <label className='repair-text'>Repair Type</label>
