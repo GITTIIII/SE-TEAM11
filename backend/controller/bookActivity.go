@@ -25,6 +25,7 @@ func CreateBookActivity(c *gin.Context) {
 		Time: bookActivity.Time,
 		NumberOfPeople: bookActivity.NumberOfPeople,
 		Comment: bookActivity.Comment,
+		Phone_number: bookActivity.Phone_number,
 
 		BookPlanID: bookActivity.BookPlanID,
 		BookPlan: bookPlan,
