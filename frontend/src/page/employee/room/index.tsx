@@ -22,7 +22,7 @@ export default function Room() {
       dataIndex: "Room_img",
       key: "room_img",
       render: (text, record, index) => (
-        <img src={record.Room_img} className="" width="50%" alt=""/>
+        <img src={record.Room_img} className="" width="100px" height="100px" style={{ objectFit: "cover" }} alt=""/>
       )
     },
     {
