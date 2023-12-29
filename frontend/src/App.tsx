@@ -54,6 +54,7 @@ const router = createBrowserRouter(
         <Route path="bookActivity" element={<BookActivity />} />
         <Route path="payment" element={<Payment />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="destination" element={<Destination />} />
       </Route>
     </>
   )

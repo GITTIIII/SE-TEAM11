@@ -3,16 +3,34 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: max-content;
+    height: 10vh;
     background-color: aquamarine;
     padding: 0.5% 2%;
 }
 
-.navbar .logo{
+.navbar .topleft-navbar{
     width: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar .logo{
+    width: 75px;
+}
+
+.navbar .navbar-tourist{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar .topright-navbar{
+    width: 5%;
+    display: flex;
+    justify-content: center;
 }
 
 .navbar .profile{
     border-radius: 50%;
-    width: 5%;
+    width: 50px;
 }
