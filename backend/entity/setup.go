@@ -99,5 +99,4 @@ func SetupDatabase() {
 		{Name: "admin"},
 	}
 	db.Create(&EmployeeRole)
-
 }

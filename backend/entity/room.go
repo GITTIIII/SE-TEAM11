@@ -9,7 +9,7 @@ type Room struct {
 	Room_number    	string	`gorm:"uniqueIndex"`
 	Room_img		string
 	Status 			string 
-	Room_price 		float32
+	Room_price 		float64
 
 	RoomTypeID *uint
 	RoomType RoomType `gorm:"foreignKey:RoomTypeID"`

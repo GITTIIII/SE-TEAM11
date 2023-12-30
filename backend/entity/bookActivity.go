@@ -11,6 +11,7 @@ type BookActivity struct {
 	Time time.Time
 	NumberOfPeople int
 	Comment string
+	Phone_number string
 
 	BookPlanID *uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID"`

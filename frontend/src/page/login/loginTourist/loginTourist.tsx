@@ -17,7 +17,7 @@ const LoginTourist = () => {
         Email: "",
         Password: "",
     });
-
+    
     const handleInput = (e: any) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
