@@ -125,6 +125,7 @@ func main() {
 			r.POST("/Repair", controller.CreateRepair)
 			r.PATCH("/Repair", controller.UpdateRepair)
 			r.DELETE("/Repair/:id", controller.DeleteRepair)
+			
 	
 			//RepairType Route
 			r.GET("/RepairType", controller.GetAllRepairType)
