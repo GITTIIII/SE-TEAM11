@@ -9,6 +9,7 @@ type Employee struct {
 	Name string 
 	Gender string 
 	Tel string 
+	Picture string 
 	Email string `gorm:"uniqueIndex"`
 	Password string 
 

@@ -1,21 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import logo1 from "../../asset/logo1.png"
 import "./sidebar.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faCreditCard, faMapLocationDot, faPaperPlane, faPersonWalking, faScrewdriverWrench, faUserCheck, faUserGear,  faUtensils } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom'
 import { GetEmployeeById } from '../../services/https/employee'
+import BottomMenu from '../bottom-menu/bottom-menu'
 
 export default function Sidebar() {
   const [employee, setEmployee] = useState(null);
   const EmployeeID = localStorage.getItem("EmployeeID")
-  console.log(EmployeeID)
+  const [click, setClick] = React.useState(false);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const closeMenu = (e: any) => {
+      console.log(e);
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setClick(false);
+      }
+    };
+    document.addEventListener("mousedown", closeMenu);
     const fetchData = async () => {
       setEmployee(await GetEmployeeById(Number(EmployeeID)));
     };
     fetchData();
+    return () => document.removeEventListener("mousedown", closeMenu);
   }, []);
 
   return (
@@ -88,8 +98,12 @@ export default function Sidebar() {
                 </NavLink>
             </ul>
         </div>
-        <div className="user">
+        <div 
+          className="user"
+          onClick={() => setClick(!click)}
+          ref={sidebarRef}>
             {Object(employee).Name}
+            {click && <BottomMenu />}
         </div>
     </div>
   )

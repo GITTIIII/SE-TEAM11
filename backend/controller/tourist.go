@@ -32,6 +32,7 @@ func CreateTourist(c *gin.Context) {
 		Tourist_name: tourist.Tourist_name,
 		Phone: tourist.Phone,
 		Age: tourist.Age,
+		Picture: tourist.Picture,
 		Gender: tourist.Gender,
 	}
 

@@ -5,7 +5,7 @@ function RightMenu() {
     <>
       <div className="right-menu">
         <ul>
-          <NavLink to="profile">
+          <NavLink to="touristProfile">
             <li>โปรไฟล์</li>
           </NavLink>
           <NavLink to="/">
