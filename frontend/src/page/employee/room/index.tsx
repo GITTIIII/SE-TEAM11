@@ -144,7 +144,8 @@ export default function Room() {
         </NavLink>
 
         <div style={{ marginTop: 20 }}>
-        <Table rowKey="ID" columns={columns} dataSource={listRoom} />
+          <Table rowKey="ID" columns={columns} dataSource={listRoom} style={{padding: '20px', boxShadow: ''}}
+        />
       </div>
       <Modal
         title="ลบข้อมูล ?"
