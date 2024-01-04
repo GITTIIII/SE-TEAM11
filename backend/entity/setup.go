@@ -59,40 +59,14 @@ func SetupDatabase() {
 	}
 	db.Model(&RepairType{}).Create(&electricity)
 
-	standard := RoomType{
-		RoomType_name: "Standard Room",
-	}
-	db.Model(&RoomType{}).Create(&standard)
+	database.Where(RoomType{RoomType_name: "Standard Room"}).FirstOrCreate(&RoomType{RoomType_name: "Standard Room"})
+	database.Where(RoomType{RoomType_name: "Deluxe Room"}).FirstOrCreate(&RoomType{RoomType_name: "Deluxe Room"})
+	database.Where(RoomType{RoomType_name: "Excutive Room"}).FirstOrCreate(&RoomType{RoomType_name: "Excutive Room"})
+	database.Where(RoomType{RoomType_name: "Suite Room"}).FirstOrCreate(&RoomType{RoomType_name: "Suite Room"})
 
-	deluxe := RoomType{
-		RoomType_name: "Deluxe Room",
-	}
-	db.Model(&RoomType{}).Create(&deluxe)
-
-	excutive := RoomType{
-		RoomType_name: "Excutive Room",
-	}
-	db.Model(&RoomType{}).Create(&excutive)
-
-	suite := RoomType{
-		RoomType_name: "Suite Room",
-	}
-	db.Model(&RoomType{}).Create(&suite)
-	
-	sea := RoomZone{
-		RoomZone_name: "Sea view",
-	}
-	db.Model(&RoomZone{}).Create(&sea)
-
-	garden := RoomZone{
-		RoomZone_name: "Garden view",
-	}
-	db.Model(&RoomZone{}).Create(&garden)
-
-	pool := RoomZone{
-		RoomZone_name: "Pool view",
-	}
-	db.Model(&RoomZone{}).Create(&pool)
+	database.Where(RoomZone{RoomZone_name: "Sea view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Sea view"})
+	database.Where(RoomZone{RoomZone_name: "Garden view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Garden view"})
+	database.Where(RoomZone{RoomZone_name: "Pool view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Pool view"})
 
 	EmployeeRole := []EmployeeRole{
 		{Name: "employee"},
