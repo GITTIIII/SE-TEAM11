@@ -26,6 +26,7 @@ import LoginTourist from "./page/login/loginTourist/loginTourist";
 import RepairCreate from "./page/employee/repair/repairCreate";
 import TouristProfile from "./page/tourist/touristProfile";
 import EmployeeProfile from "./page/employee/employeeProfile";
+import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -56,6 +57,7 @@ const router = createBrowserRouter(
         <Route path="planner" element={<Planner />} />
         <Route path="room" element={<Room />} />
         <Route path="bookActivity" element={<BookActivity />} />
+        <Route path="bookActivity/bookActivityCreate" element={<BookActivityCreate />} />
         <Route path="payment" element={<Payment />} />
         <Route path="touristProfile" element={<TouristProfile />} />
         <Route path="destination" element={<Destination />} />

@@ -37,7 +37,7 @@ const LoginEmployee = () => {
 
             setTimeout(function () {
                 navigate("/employee")  
-            }, 2000);
+            }, 500);
 
         } else {
             messageApi.open({

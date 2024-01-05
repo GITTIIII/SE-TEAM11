@@ -38,7 +38,7 @@ const LoginTourist = () => {
 
             setTimeout(function () {
                 navigate("/tourist")  
-            }, 2000);
+            }, 500);
 
         } else {
             messageApi.open({
