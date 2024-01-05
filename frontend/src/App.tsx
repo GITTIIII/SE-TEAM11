@@ -13,6 +13,7 @@ import Planner from "./page/employee/planner";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
+import EditRoom from "./page/employee/room/editRoom";
 import Payment from "./page/employee/payment";
 import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
 import Employee from "./page/employee/employeeCreate";
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
         <Route path="repair/create" element={<RepairCreate />} />
         <Route path="room" element={<Room />} />
         <Route path="room/create" element={<CreateRoom />} />
+        <Route path="room/edit/:id" element={<EditRoom />} />
         <Route path="activity" element={<Activity />} />
       </Route>
 

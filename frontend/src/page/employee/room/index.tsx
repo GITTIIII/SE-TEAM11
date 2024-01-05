@@ -3,14 +3,16 @@ import { NavLink } from 'react-router-dom';
 import { RoomInterface } from '../../../interface/IRoom';
 import  "./room.css"
 import { Button, ConfigProvider, Table, message, Modal } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { ColumnsType } from "antd/es/table";
 import cruise from "../../../asset/cruise.png"
 import { GetAllRoom } from '../../../services/https/room';
 import { DeleteRoomByID } from '../../../services/https/room';
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Room() {
 
+  const navigate = useNavigate();
   const columns: ColumnsType<RoomInterface> = [
     {
       title: "ลำดับ",
@@ -53,7 +55,7 @@ export default function Room() {
       key: "manage",
       render: (text, record, index) => (
         <>
-          {/* <Button  onClick={() =>  navigate(`/customer/edit/${record.ID}`)} shape="circle" icon={<EditOutlined />} size={"large"} /> */}
+          <Button  onClick={() =>  navigate(`/employee/room/edit/${record.ID}`)} shape="circle" icon={<EditOutlined />} size={"large"} />
           <Button
             onClick={() => showModal(record)}
             style={{ marginLeft: 10 }}
