@@ -12,7 +12,7 @@ import {
   Upload,
   Select,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { RoomInterface } from "../../../../interface/IRoom";
 import { RoomTypeInterface } from "../../../../interface/IRoomType";
 import { RoomZoneInterface } from "../../../../interface/IRoomZone";
@@ -32,6 +32,7 @@ function EditRoom() {
 //   const [genders, setGenders] = useState<GendersInterface[]>([]);
   const [roomTypes, setRoomTypes] = useState<RoomTypeInterface[]>([]);
   const [roomZones, setRoomZones] = useState<RoomZoneInterface[]>([]);
+  const [roomImage, setRoomImage] = useState<string | null>(null);
 
   // รับข้อมูลจาก params
   let { id } = useParams();
@@ -100,7 +101,7 @@ function EditRoom() {
       // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
       form.setFieldsValue({
         Room_number:    res.Room_number,
-        // Room_img?:     string;
+        Room_img:       res.Room_img,
         // Status?:       string;
         Room_price:     res.Room_price,
         RoomTypeID:     res.RoomTypeID,    
@@ -258,20 +259,30 @@ function EditRoom() {
               </Form.Item>
             </Col> */}
           </Row>
-          {/* <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             <Form.Item
-              label="LinkedIn"
-              name="LinkedIn"
-              rules={[
-                {
-                  // required: true,
-                  message: "กรุณากรอก LinkedIn Profile URL !",
-                },
-              ]}
-            >
-              <Input />
+                label="รูปห้อง"
+                name="Room_img"
+                getValueFromEvent={(e) => e.file.originFileObj}
+                >
+                <Upload
+                    name="Room_img"
+                    listType="picture"
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        setRoomImage(reader.result as string);
+                    };
+                    reader.readAsDataURL(file);
+                    return false; // Prevent default upload behavior
+                    }}
+                >
+                    <Button icon={<UploadOutlined />}>อัปโหลดรูป</Button>
+                </Upload>
+                {roomImage && <img src={roomImage} alt="Room" style={{ maxWidth: "100%", marginTop: "10px" }} />}
             </Form.Item>
-          </Col> */}
+          </Col>
           <Row justify="end">
             <Col style={{ marginTop: "40px" }}>
               <Form.Item>
