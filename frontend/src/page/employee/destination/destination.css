@@ -1,0 +1,99 @@
+.destination-header {
+  margin-left: 1%;
+  color: white;
+  font-size: bolder;
+  font-style: italic;
+}
+
+.cruise-bg {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: flex-start; */
+  width: 100%;
+  height: 100vh;
+  background-color: #363062;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.destination-headline {
+  width: 100%;
+  height: 7px;
+  background-color: white;
+}
+
+.destination-add-button {
+  top: 10px;
+  left: 85%;
+  width: 150px;
+  height: 35px;
+}
+
+.destination-form {
+  width: 40%;
+  background: rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(15px);
+  border-radius: 5px;
+
+  padding: 20px;
+  margin: auto;
+}
+
+.destination-form-control {
+  margin-top: 10px;
+}
+
+.destination-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+.destination-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.destination-select {
+  position: relative;
+}
+
+.destination-select-custom {
+  width: 100%;
+  font-size: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+
+  appearance: none;
+  padding: 12px 20px;
+  padding-right: 38px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: color 0.3s ease, background-color 0.3s ease,
+    border-bottom-color 0.3s ease;
+}
+
+.destination-option {
+}
+
+.destination-input-file {
+}
+.destination-text {
+  color: rgb(0, 0, 0);
+}
