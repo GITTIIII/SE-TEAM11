@@ -1,0 +1,31 @@
+.Bottom-menu a.active li{
+    background-color: #F0A500;
+    color: white;
+}
+
+.Bottom-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.Bottom-menu li {
+    padding: 8px 12px;
+}
+  
+.Bottom-menu li:hover {
+    background-color: #435585;
+    color: wheat;
+    cursor: pointer;
+}
+
+.Bottom-menu{
+    position: absolute;
+    right: 85%;
+    width: max-content;
+    font-size: 2vh;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+    background-color: #89CFF3;
+    display: flex;
+    text-align: center;
+}

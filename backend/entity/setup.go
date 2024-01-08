@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -59,40 +60,36 @@ func SetupDatabase() {
 	}
 	db.Model(&RepairType{}).Create(&electricity)
 
-	standard := RoomType{
-		RoomType_name: "Standard Room",
-	}
-	db.Model(&RoomType{}).Create(&standard)
+	database.Where(RoomType{RoomType_name: "Standard Room"}).FirstOrCreate(&RoomType{RoomType_name: "Standard Room"})
+	database.Where(RoomType{RoomType_name: "Deluxe Room"}).FirstOrCreate(&RoomType{RoomType_name: "Deluxe Room"})
+	database.Where(RoomType{RoomType_name: "Excutive Room"}).FirstOrCreate(&RoomType{RoomType_name: "Excutive Room"})
+	database.Where(RoomType{RoomType_name: "Suite Room"}).FirstOrCreate(&RoomType{RoomType_name: "Suite Room"})
 
-	deluxe := RoomType{
-		RoomType_name: "Deluxe Room",
-	}
-	db.Model(&RoomType{}).Create(&deluxe)
+	database.Where(RoomZone{RoomZone_name: "Sea view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Sea view"})
+	database.Where(RoomZone{RoomZone_name: "Garden view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Garden view"})
+	database.Where(RoomZone{RoomZone_name: "Pool view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Pool view"})
 
-	excutive := RoomType{
-		RoomType_name: "Excutive Room",
-	}
-	db.Model(&RoomType{}).Create(&excutive)
+	adminRole := EmployeeRole{Name: "Admin"}
+	db.Create(&adminRole)
 
-	suite := RoomType{
-		RoomType_name: "Suite Room",
-	}
-	db.Model(&RoomType{}).Create(&suite)
-	
+	employeeRole := EmployeeRole{Name: "Employee"}
+	db.Create(&employeeRole)
 
-	sea := RoomZone{
-		RoomZone_name: "Sea view",
-	}
-	db.Model(&RoomZone{}).Create(&sea)
+	adminPassword := "admin"
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(adminPassword), 14)
 
-	garden := RoomZone{
-		RoomZone_name: "Garden view",
+	Employees := []Employee{
+		{	Name: "admin",
+			Gender:      "Male",
+			Tel: "0123456789",
+			Picture:     "",
+			Email:    "admin@gmail.com",
+			Password:    string(hashedPassword),
+			EmployeeRoleID:    &adminRole.ID,
+		},
 	}
-	db.Model(&RoomZone{}).Create(&garden)
 
-	pool := RoomZone{
-		RoomZone_name: "Pool view",
+	for _, employee := range Employees {
+		db.Create(&employee) // Assuming 'db' is your GORM database instance
 	}
-	db.Model(&RoomZone{}).Create(&pool)
-
 }

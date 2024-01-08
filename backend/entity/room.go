@@ -6,10 +6,10 @@ import (
 
 type Room struct {
 	gorm.Model
-	Room_number    string 
-	Room_img	string
-	Status string 
-	Price float32
+	Room_number    	string	`gorm:"uniqueIndex"`
+	Room_img		string
+	Status 			string 
+	Room_price 		float64
 
 	RoomTypeID *uint
 	RoomType RoomType `gorm:"foreignKey:RoomTypeID"`
@@ -20,6 +20,6 @@ type Room struct {
 	EmployeeID *uint
 	Employee Employee `gorm:"foreignKey:EmployeeID"`
 
-	Repairs []Repair `gorm:"foreignKey:RoomID"`
-	BookPlans []BookPlan `gorm:"foreignKey:RoomID"`
+	Repairs 	[]Repair 	`gorm:"foreignKey:RoomID"`
+	BookPlans 	[]BookPlan 	`gorm:"foreignKey:RoomID"`
 }

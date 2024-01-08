@@ -34,7 +34,7 @@ const Register = () => {
         values.Phone = input.Phone
         values.Age = Number(input.Age)
         values.Gender = input.Gender
-        
+        values.Picture = ""
         console.log(values)
 
         let res = await CreateTourist(values);

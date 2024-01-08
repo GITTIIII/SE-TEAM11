@@ -10,6 +10,7 @@ type Tourist struct {
 	Password string 
 	Tourist_name string 
 	Phone string 
+	Picture string
 	Age int
 	Gender string
 

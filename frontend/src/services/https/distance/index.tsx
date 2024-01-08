@@ -23,6 +23,11 @@ async function GetAllDistance() {
   return res;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3d294ae335a5ccaf38f4c0d3d14b999de491402b
 async function GetDistanceById(id: Number | undefined) {
   const requestOptions = {
     method: "GET",
@@ -105,4 +110,8 @@ export {
   CreateDistance,
   DeleteDistanceByID,
   UpdateDistance,
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 3d294ae335a5ccaf38f4c0d3d14b999de491402b

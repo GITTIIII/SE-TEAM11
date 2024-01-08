@@ -36,8 +36,8 @@ const LoginEmployee = () => {
             localStorage.setItem('EmployeeID', res.message.id);
 
             setTimeout(function () {
-                navigate("/employee")  
-            }, 2000);
+                navigate("/employee/employeeProfile")  
+            }, 500);
 
         } else {
             messageApi.open({

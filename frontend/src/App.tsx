@@ -13,18 +13,20 @@ import Planner from "./page/employee/planner";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
+import EditRoom from "./page/employee/room/editRoom";
 import Payment from "./page/employee/payment";
 import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
-import Employee from "./page/employee";
+import Employee from "./page/employee/employeeCreate";
 import LoginEmployee from "./page/login/loginEmployee/loginEmployee";
 import TouristLayout from "./layout/touristLayout/touristLayout";
-import Profile from "./page/tourist/profile";
 import BookPlan from "./page/tourist/bookPlan";
 import BookActivity from "./page/tourist/bookActivity";
 import Activity from "./page/employee/activity";
-import ActivityCreate from "./page/employee/activity/activityCreate";
 import LoginTourist from "./page/login/loginTourist/loginTourist";
 import RepairCreate from "./page/employee/repair/repairCreate";
+import TouristProfile from "./page/tourist/touristProfile";
+import EmployeeProfile from "./page/employee/employeeProfile";
+import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +36,7 @@ const router = createBrowserRouter(
       <Route path="register" element={<Register />} />
 
       <Route path="employee" element={<EmployeeLayout />}>
+        <Route path="employeeProfile" element={<EmployeeProfile />} />
         <Route path="admin" element={<Employee />} />
         <Route path="payment" element={<Payment />} />
         <Route path="check-in" element={<CheckIn />} />
@@ -44,8 +47,8 @@ const router = createBrowserRouter(
         <Route path="repair/create" element={<RepairCreate />} />
         <Route path="room" element={<Room />} />
         <Route path="room/create" element={<CreateRoom />} />
+        <Route path="room/edit/:id" element={<EditRoom />} />
         <Route path="activity" element={<Activity />} />
-        <Route path="activity/create" element={<ActivityCreate />} />
       </Route>
 
       <Route path="tourist" element={<TouristLayout />}>
@@ -54,8 +57,10 @@ const router = createBrowserRouter(
         <Route path="planner" element={<Planner />} />
         <Route path="room" element={<Room />} />
         <Route path="bookActivity" element={<BookActivity />} />
+        <Route path="bookActivity/bookActivityCreate" element={<BookActivityCreate />} />
         <Route path="payment" element={<Payment />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="touristProfile" element={<TouristProfile />} />
+        <Route path="destination" element={<Destination />} />
       </Route>
     </>
   )

@@ -9,7 +9,6 @@ import { LoginT } from "../../../services/https/login";
 import { LoginPayloadInterface } from "../../../interface/ILogin";
 import { Form, message } from "antd";
 
-
 const LoginTourist = () => {
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
@@ -17,7 +16,7 @@ const LoginTourist = () => {
         Email: "",
         Password: "",
     });
-
+    
     const handleInput = (e: any) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
@@ -37,8 +36,8 @@ const LoginTourist = () => {
             localStorage.setItem('TouristID', res.message.id);
 
             setTimeout(function () {
-                navigate("/tourist")  
-            }, 2000);
+                navigate("/tourist/touristProfile")  
+            }, 500);
 
         } else {
             messageApi.open({

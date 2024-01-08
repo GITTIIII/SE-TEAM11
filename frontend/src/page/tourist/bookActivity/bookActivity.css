@@ -1,0 +1,20 @@
+.activity-button{
+    width: auto;
+    background-color:deepskyblue;
+    color: black;
+    padding: 20px;
+}
+
+.activity-input-box{
+    width: max-content;
+    background-color:aquamarine ;
+    padding: 5%;
+    border-radius: 10px;
+}
+
+.activity-input input{
+    height: 50px;
+    font-size: 130%;
+    padding: 5%;
+}
+

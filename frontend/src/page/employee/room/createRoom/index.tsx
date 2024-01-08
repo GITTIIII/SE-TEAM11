@@ -1,18 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
-// import './index.css';
-import { LoadingOutlined, PlusOutlined,UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { message, Upload, Form, Button } from 'antd';
-import type { UploadChangeParam } from 'antd/es/upload';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import type { UploadProps } from 'antd/es/upload/interface';
 import { RoomInterface } from '../../../../interface/IRoom';
-import {RoomTypeInterface} from "./../../../../interface/IRoomType" ;
+import { RoomTypeInterface } from "./../../../../interface/IRoomType" ;
 import { RoomZoneInterface } from '../../../../interface/IRoomZone';
-import { EmployeeInterface } from '../../../../interface/IEmployee';
 import { CreateRoom } from '../../../../services/https/room';
-import {GetAllRoomType} from './../../../../services/https/roomType' ;
+import { GetAllRoomType } from './../../../../services/https/roomType' ;
 import { GetAllRoomZone } from '../../../../services/https/roomZone';
-import { GetAllEmployee } from '../../../../services/https/employee';
+
 import "./../room.css"
 import "./createRoom.css"
 import cruise from "../../../../asset/cruise.png"
@@ -21,8 +18,6 @@ import cruise from "../../../../asset/cruise.png"
 export default function CreateRooms() {
 
   const [roomType, setRoomType] = useState<RoomTypeInterface[]>([]);
-  const [selectedRoomType, setSelectedRoomType] = useState<string | undefined>(undefined);
-  
   const getRoomType = async () => {
     let res = await GetAllRoomType();
     if (res) {
@@ -35,7 +30,6 @@ export default function CreateRooms() {
 
 
   const [roomZone, setRoomZone] = useState<RoomZoneInterface[]>([]);
-  const [selectedRoomZone, setSelectedRoomZone] = useState<string | undefined>(undefined);
   const getRoomZone = async () => {
     let res = await GetAllRoomZone();
     if (res) {
@@ -64,11 +58,14 @@ export default function CreateRooms() {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [roomNumber, setRoom_number] = useState("");
+  const [roomPrice, setRoom_price] = useState("");
+  const [room_img, setRoom_Img] = useState("");
 
   const handleSubmit = async (values: RoomInterface) => {
     values.Room_number = roomNumber
     values.RoomTypeID = input.RoomTypeID
     values.RoomZoneID = input.RoomZoneID
+    values.Room_price = Number(roomPrice)
     values.Room_img = room_img
 
     console.log(values)
@@ -90,7 +87,7 @@ export default function CreateRooms() {
     }
   };
 
-  const [room_img, setRoom_Img] = useState("");
+
 
   const props: UploadProps = {
     beforeUpload: (file) => {
@@ -115,6 +112,7 @@ export default function CreateRooms() {
 
   return (
     <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      {contextHolder}
 
       <h1 className='room-header'>Add a Room</h1>
 
@@ -126,7 +124,11 @@ export default function CreateRooms() {
         <div className='create-room-form-control'>
           <label className='create-room-text'>Number of room</label>
           <br></br>
-          <input className='create-room-input' type="text" placeholder = 'Enter number of room' required value={roomNumber} onChange={(e) => setRoom_number(e.target.value)} />
+          <input 
+            className='create-room-input' 
+            type="text" placeholder = 'Enter number of room' 
+            required value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
+          />
         </div>
 
         <div className='create-room-form-control'>
@@ -167,7 +169,12 @@ export default function CreateRooms() {
         <div className='create-room-form-control'>
           <label className='create-room-text'>Price of Room</label>
           <br></br>
-          <input className='create-room-input' type="number" step="0.01" placeholder = 'Enter price of room' required />
+          <input 
+            className='create-room-input' 
+            type="number" step="0.001" 
+            placeholder = 'Enter price of room' 
+            required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
+          />
         </div>
 
         <div className='create-room-form-control'>

@@ -20,7 +20,6 @@ func CreateEmployeeRole(c *gin.Context) {
 	// สร้าง employeeRole
 	a := entity.EmployeeRole{
 		Name:employeeRole.Name,
-		Role:employeeRole.Role,
 	}
 
 	// บันทึก

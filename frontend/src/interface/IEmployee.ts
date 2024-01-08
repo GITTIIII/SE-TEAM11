@@ -2,11 +2,11 @@ import {EmployeeRoleInterface} from "./IEmployeeRole";
 
 export interface EmployeeInterface {
     ID?: number;
-    Employee_name?: string;
-    Employee_gender?: string;
-    Employee_tel?: string;
-    Employee_email?: string;
-    Employee_sex?: string;
+    Name?: string;
+    Gender?: string;
+    Tel?: string;
+    Picture?: string;
+    Email?: string;
 
     EmployeeRoleID?: number;
     EmployeeRole?: EmployeeRoleInterface;
