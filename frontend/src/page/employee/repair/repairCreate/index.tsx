@@ -5,7 +5,6 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { Button, message, Upload, Form, Select } from "antd";
 import ship from "../../../../asset/ship.jpg";
-
 import { CreateRepair } from "../../../../services/https/repair";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { GetAllRepairType } from "../../../../services/https/repairType";

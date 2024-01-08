@@ -9,7 +9,6 @@ import { LoginT } from "../../../services/https/login";
 import { LoginPayloadInterface } from "../../../interface/ILogin";
 import { Form, message } from "antd";
 
-
 const LoginTourist = () => {
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();

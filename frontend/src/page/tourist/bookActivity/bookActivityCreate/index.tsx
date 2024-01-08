@@ -1,9 +1,8 @@
 import { Form, Link } from "react-router-dom"
-import ship from "../../../../asset/ship.jpg"
-import { DatePicker, TimePicker } from "antd"
+import { DatePicker } from "antd"
 import dayjs from 'dayjs';
 import type { RangePickerProps } from 'antd/es/date-picker';
-
+import "../bookActivity.css"
 export default function BookActivityCreate() {
     const range = (start: number, end: number) => {
         const result = [];
@@ -25,23 +24,29 @@ export default function BookActivityCreate() {
 
     return (
         <>
-            <div className="login-bg" style={{ backgroundColor: `black` }}>
+            <div className="login-bg" style={{ backgroundColor: `white` }}>
                 <div className="form-box">
                     <h1>จองกิจกรรม</h1>
-                    <Form>
-                    <DatePicker
-                        format="YYYY-MM-DD HH:mm"
-                        disabledDate={disabledDate}
-                    />
-                    <TimePicker defaultValue={dayjs('00:00')} format={'HH:mm'} minuteStep={30}/>
-                    <TimePicker secondStep={56} minuteStep={30} hourStep={4} />;
-                    </Form>
-                </div>
-                <Link to="/tourist/bookActivity">
-                    <div className="activity-button">
-                        ย้อนกลับ
+                    <div className="activity-input-box">
+                        <Form>
+                            <DatePicker format="YYYY-MM-DD HH:mm" disabledDate={disabledDate}/>
+                            <div className="activity-input">
+                                <input type="number" min={3} max={10}/>
+                            </div>
+                            <div className="activity-input">
+                                <input type="textarea" />
+                            </div>
+                            <div className="activity-input">
+                                <input type="text" />
+                            </div>
+                        </Form>
+                    <Link to="/tourist/bookActivity">
+                        <div className="activity-button">
+                            ย้อนกลับ
+                        </div>
+                    </Link>
                     </div>
-                </Link>
+                </div>
             </div>
         </>
     )
