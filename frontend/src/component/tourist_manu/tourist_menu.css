@@ -16,9 +16,11 @@
 }
 
 .tourist-menu ul li a:hover{
-    color: rgba(0, 0, 0, 0.74);
+    color: rgb(255, 255, 255);
+    transition: .2s;
 }
 
 .tourist-menu ul li a.active{
-    border-bottom: 2px solid black;
+    color: aliceblue;
+    border-bottom: 2px solid aliceblue;
 }

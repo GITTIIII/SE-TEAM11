@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -68,9 +69,27 @@ func SetupDatabase() {
 	database.Where(RoomZone{RoomZone_name: "Garden view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Garden view"})
 	database.Where(RoomZone{RoomZone_name: "Pool view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Pool view"})
 
-	EmployeeRole := []EmployeeRole{
-		{Name: "employee"},
-		{Name: "admin"},
+	adminRole := EmployeeRole{Name: "Admin"}
+	db.Create(&adminRole)
+
+	employeeRole := EmployeeRole{Name: "Employee"}
+	db.Create(&employeeRole)
+
+	adminPassword := "admin"
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(adminPassword), 14)
+
+	Employees := []Employee{
+		{	Name: "admin",
+			Gender:      "Male",
+			Tel: "0123456789",
+			Picture:     "",
+			Email:    "admin@gmail.com",
+			Password:    string(hashedPassword),
+			EmployeeRoleID:    &adminRole.ID,
+		},
 	}
-	db.Create(&EmployeeRole)
+
+	for _, employee := range Employees {
+		db.Create(&employee) // Assuming 'db' is your GORM database instance
+	}
 }

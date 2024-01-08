@@ -25,7 +25,7 @@ export default function BookActivityCreate() {
 
     return (
         <>
-            <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}>
+            <div className="login-bg" style={{ backgroundColor: `black` }}>
                 <div className="form-box">
                     <h1>จองกิจกรรม</h1>
                     <Form>

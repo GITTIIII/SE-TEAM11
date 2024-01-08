@@ -37,7 +37,7 @@ const LoginTourist = () => {
             localStorage.setItem('TouristID', res.message.id);
 
             setTimeout(function () {
-                navigate("/tourist")  
+                navigate("/tourist/touristProfile")  
             }, 500);
 
         } else {

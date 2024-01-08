@@ -6,7 +6,7 @@ export default function BookActivity() {
 
   return (
     <>
-      <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}>
+      <div className="login-bg">
         <Link to="bookActivityCreate">
           <div className="activity-button">
             เพิ่มการจองกิจกรรม
