@@ -92,4 +92,5 @@ func SetupDatabase() {
 	for _, employee := range Employees {
 		db.Create(&employee) // Assuming 'db' is your GORM database instance
 	}
+
 }
