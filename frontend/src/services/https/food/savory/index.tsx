@@ -1,8 +1,8 @@
-import { FoodSetInterface } from "../../../interface/IFoodSet";
+import { SavoryInterface } from "../../../../interface/ISavory";
 
 const apiUrl = "http://localhost:8080";
 
-async function GetAllFoodSet() {
+async function GetAllSavory() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -10,7 +10,7 @@ async function GetAllFoodSet() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/FoodSet`, requestOptions)
+  let res = await fetch(`${apiUrl}/Savory`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -24,33 +24,14 @@ async function GetAllFoodSet() {
 }
 
 
-
-async function GetFoodSetById(id: Number | undefined) {
-  const requestOptions = {
-    method: "GET",
-  };
-
-  let res = await fetch(`${apiUrl}/FoodSet/byId/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function CreateFoodSet(data: FoodSetInterface) {
+async function CreateSavory(data: SavoryInterface) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/FoodSet`, requestOptions)
+  let res = await fetch(`${apiUrl}/Savory`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -63,14 +44,14 @@ async function CreateFoodSet(data: FoodSetInterface) {
   return res;
 }
 
-async function UpdateFoodSet(data: FoodSetInterface) {
+async function UpdateSavory(data: SavoryInterface) {
   const requestOptions = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/FoodSet`, requestOptions)
+  let res = await fetch(`${apiUrl}/Savory`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -83,12 +64,30 @@ async function UpdateFoodSet(data: FoodSetInterface) {
   return res;
 }
 
-async function DeleteFoodSetByID(id: Number | undefined) {
+async function DeleteSavoryByID(id: Number | undefined) {
   const requestOptions = {
     method: "DELETE",
   };
 
-  let res = await fetch(`${apiUrl}/FoodSet/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/Savory/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetSavoryById(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  let res = await fetch(`${apiUrl}/Savory/byId/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -102,9 +101,9 @@ async function DeleteFoodSetByID(id: Number | undefined) {
 }
 
 export {
-  GetAllFoodSet,
-  GetFoodSetById,
-  CreateFoodSet,
-  DeleteFoodSetByID,
-  UpdateFoodSet,
+  GetAllSavory,
+  CreateSavory,
+  DeleteSavoryByID,
+  UpdateSavory,
+  GetSavoryById,
 };

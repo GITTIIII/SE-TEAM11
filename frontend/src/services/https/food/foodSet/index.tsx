@@ -1,8 +1,8 @@
-import { DessertInterface } from "../../../interface/IDessert";
+import { FoodSetInterface } from "../../../../interface/IFoodSet";
 
 const apiUrl = "http://localhost:8080";
 
-async function GetAllDessert() {
+async function GetAllFoodSet() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -10,7 +10,7 @@ async function GetAllDessert() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/Dessert`, requestOptions)
+  let res = await fetch(`${apiUrl}/FoodSet`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -24,33 +24,14 @@ async function GetAllDessert() {
 }
 
 
-
-async function GetDessertById(id: Number | undefined) {
-  const requestOptions = {
-    method: "GET",
-  };
-
-  let res = await fetch(`${apiUrl}/Dessert/byId/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function CreateDessert(data: DessertInterface) {
+async function CreateFoodSet(data: FoodSetInterface) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Dessert`, requestOptions)
+  let res = await fetch(`${apiUrl}/FoodSet`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -63,14 +44,14 @@ async function CreateDessert(data: DessertInterface) {
   return res;
 }
 
-async function UpdateDessert(data: DessertInterface) {
+async function UpdateFoodSet(data: FoodSetInterface) {
   const requestOptions = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Dessert`, requestOptions)
+  let res = await fetch(`${apiUrl}/FoodSet`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -83,12 +64,30 @@ async function UpdateDessert(data: DessertInterface) {
   return res;
 }
 
-async function DeleteDessertByID(id: Number | undefined) {
+async function DeleteFoodSetByID(id: Number | undefined) {
   const requestOptions = {
     method: "DELETE",
   };
 
-  let res = await fetch(`${apiUrl}/Dessert/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/FoodSet/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetFoodSetById(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  let res = await fetch(`${apiUrl}/FoodSet/byId/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -102,9 +101,9 @@ async function DeleteDessertByID(id: Number | undefined) {
 }
 
 export {
-  GetAllDessert,
-  GetDessertById,
-  CreateDessert,
-  DeleteDessertByID,
-  UpdateDessert,
+  GetAllFoodSet,
+  CreateFoodSet,
+  DeleteFoodSetByID,
+  UpdateFoodSet,
+  GetFoodSetById,
 };

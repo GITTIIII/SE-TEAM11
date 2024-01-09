@@ -1,8 +1,8 @@
-import { DrinkInterface } from "../../../interface/IDrink";
+import { DessertInterface } from "../../../../interface/IDessert";
 
 const apiUrl = "http://localhost:8080";
 
-async function GetAllDrink() {
+async function GetAllDessert() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -10,7 +10,7 @@ async function GetAllDrink() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/Drink`, requestOptions)
+  let res = await fetch(`${apiUrl}/Dessert`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -24,33 +24,14 @@ async function GetAllDrink() {
 }
 
 
-
-async function GetDrinkById(id: Number | undefined) {
-  const requestOptions = {
-    method: "GET",
-  };
-
-  let res = await fetch(`${apiUrl}/Drink/byId/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function CreateDrink(data: DrinkInterface) {
+async function CreateDessert(data: DessertInterface) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Drink`, requestOptions)
+  let res = await fetch(`${apiUrl}/Dessert`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -63,14 +44,14 @@ async function CreateDrink(data: DrinkInterface) {
   return res;
 }
 
-async function UpdateDrink(data: DrinkInterface) {
+async function UpdateDessert(data: DessertInterface) {
   const requestOptions = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/Drink`, requestOptions)
+  let res = await fetch(`${apiUrl}/Dessert`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -83,12 +64,30 @@ async function UpdateDrink(data: DrinkInterface) {
   return res;
 }
 
-async function DeleteDrinkByID(id: Number | undefined) {
+async function DeleteDessertByID(id: Number | undefined) {
   const requestOptions = {
     method: "DELETE",
   };
 
-  let res = await fetch(`${apiUrl}/Drink/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/Dessert/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetDessertById(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  let res = await fetch(`${apiUrl}/Dessert/byId/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -102,9 +101,9 @@ async function DeleteDrinkByID(id: Number | undefined) {
 }
 
 export {
-  GetAllDrink,
-  GetDrinkById,
-  CreateDrink,
-  DeleteDrinkByID,
-  UpdateDrink,
+  GetAllDessert,
+  CreateDessert,
+  DeleteDessertByID,
+  UpdateDessert,
+  GetDessertById,
 };
