@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./repairCreate.css";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import { Button, message, Upload, Form, Select } from "antd";
+import { Button, message, Upload, Form, Select,DatePicker } from "antd";
 import ship from "../../../../asset/ship.jpg";
 
 import { CreateRepair } from "../../../../services/https/repair";
@@ -106,6 +106,8 @@ export default function RepairCreate() {
     },
   };
 
+  const [Cdate, setDate] = useState(new Date().toLocaleDateString('th-TH'));
+
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
@@ -200,20 +202,22 @@ export default function RepairCreate() {
               </Upload>
             </div>
 
-            {/* <div className='repair-form-control'>
-            <label className='repair-text'>Date</label>
-            <br></br>
-            <input type='datetime-local'/>
-          </div>
 
           <div className='repair-form-control'>
             <label className='repair-text'>Date</label>
             <br></br>
             <DatePicker
+             
               format="YYYY-MM-DD HH:mm:ss"
               showTime
+              // value={Cdate}
+              // onChange={(date) => {
+              //   const d = new Date(date).toLocaleDateString('th-TH');
+              //   console.log(d);
+              //   setDate(d);
+              // }}
             />
-          </div> */}
+          </div>
 
             <div className="buttom-area">
               <button type="submit">ยืนยัน</button>

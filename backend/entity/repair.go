@@ -7,8 +7,8 @@ import (
 
 type Repair struct {
 	gorm.Model
-	Comment    string  
-	Repair_img	string 
+	Comment    string  `valid:"required~Issue is required"`
+	Repair_img	string `valid:"required~Image is required"`
 	Repair_date time.Time
 	Repair_status string
 
