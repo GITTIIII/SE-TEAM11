@@ -69,6 +69,22 @@ func SetupDatabase() {
 	database.Where(RoomZone{RoomZone_name: "Garden view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Garden view"})
 	database.Where(RoomZone{RoomZone_name: "Pool view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Pool view"})
 
+	//destination
+	database.Where(PortOrigin{PortOrigin_name: "Nagoya"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Nagoya"})
+	database.Where(PortOrigin{PortOrigin_name: "Wales"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Wales"})
+	database.Where(PortOrigin{PortOrigin_name: "Madagascar"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Madagascar"})
+	database.Where(PortOrigin{PortOrigin_name: "Oslo"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Oslo"})
+
+	database.Where(PortDestination{PortDestination_name: "Phuket"}).FirstOrCreate(&PortDestination{PortDestination_name: "Phuket"})
+	database.Where(PortDestination{PortDestination_name: "New York"}).FirstOrCreate(&PortDestination{PortDestination_name: "New York"})
+	database.Where(PortDestination{PortDestination_name: "Barcelona"}).FirstOrCreate(&PortDestination{PortDestination_name: "Barcelona"})
+	database.Where(PortDestination{PortDestination_name: "London"}).FirstOrCreate(&PortDestination{PortDestination_name: "London"})
+
+	database.Where(Distance{Distance: "3000"}).FirstOrCreate(&Distance{Distance: "3000"})
+	database.Where(Distance{Distance: "Pool view"}).FirstOrCreate(&Distance{Distance: "Pool view"})
+	database.Where(Distance{Distance: "Sea view"}).FirstOrCreate(&Distance{Distance: "Sea view"})
+
+
 	adminRole := EmployeeRole{Name: "Admin"}
 	db.Create(&adminRole)
 

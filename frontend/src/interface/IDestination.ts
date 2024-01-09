@@ -11,6 +11,6 @@ export interface DestinationInterface {
   PortDestinationID?: number;
   PortDestinaton?: PortDestinationInterface;
 
-  BaggageID?: number;
-  Baggage?: DistanceInterface;
+  DistanceID?: number;
+  Distance?: DistanceInterface;
 }

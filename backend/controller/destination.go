@@ -45,7 +45,7 @@ func CreateDestination(c *gin.Context) {
 func GetDestinationById(c *gin.Context) {
 	var destination entity.Destination
 	id := c.Param("id")
-	if err := entity.DB().Preload("PortOrigin").Preload("PortDestination").Preload("Baggage").Raw("SELECT * FROM destinations WHERE id = ?", id).Find(&destination).Error; err != nil {
+	if err := entity.DB().Preload("PortOrigin").Preload("PortDestination").Preload("Distance").Raw("SELECT * FROM destinations WHERE id = ?", id).Find(&destination).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -55,7 +55,7 @@ func GetDestinationById(c *gin.Context) {
 // GET /destination
 func GetAllDestination(c *gin.Context) {
 	var destination []entity.Destination
-	if err := entity.DB().Preload("PortOrigin").Preload("PortDestination").Preload("Baggage").Raw("SELECT * FROM destinations").Find(&destination).Error; err != nil {
+	if err := entity.DB().Preload("PortOrigin").Preload("PortDestination").Preload("Distance").Raw("SELECT * FROM destinations").Find(&destination).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

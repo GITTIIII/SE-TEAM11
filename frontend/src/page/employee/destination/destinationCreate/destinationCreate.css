@@ -1,4 +1,4 @@
-.create-room-form {
+.create-destination-form {
   width: 40%;
   background: rgba(255, 255, 255, 0.1);
 
@@ -9,11 +9,11 @@
   margin: auto;
 }
 
-.create-room-form-control {
+.create-destination-form-control {
   margin-top: 10px;
 }
 
-.create-room-textarea {
+.create-destination-textarea {
   width: 100%;
   height: 150px;
   padding: 12px 20px;
@@ -24,7 +24,7 @@
   resize: none;
 }
 
-.create-room-input {
+.create-destination-input {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -34,15 +34,15 @@
   box-sizing: border-box;
 }
 
-.create-room-text {
+.create-destination-text {
   color: rgb(255, 255, 255);
 }
 
-.create-room-select {
+.create-destination-select {
   position: relative;
 }
 
-.create-room-select-custom {
+.create-destination-select-custom {
   width: 100%;
   font-size: 100%;
   cursor: pointer;
@@ -58,5 +58,5 @@
     border-bottom-color 0.3s ease;
 }
 
-.create-room-option {
+.create-destination-option {
 }
