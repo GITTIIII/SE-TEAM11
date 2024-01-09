@@ -24,6 +24,8 @@ func CreateRepair(c *gin.Context) {
 	a := entity.Repair{
 		Comment: repair.Comment,
 		Repair_img: repair.Repair_img,
+		Repair_date: repair.Repair_date,
+		Repair_status: repair.Repair_status,
 		
 		RepairTypeID: repair.RepairTypeID,
 		RepairType: repairType,
