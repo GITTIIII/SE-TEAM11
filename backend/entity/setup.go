@@ -81,8 +81,9 @@ func SetupDatabase() {
 	database.Where(PortDestination{PortDestination_name: "London"}).FirstOrCreate(&PortDestination{PortDestination_name: "London"})
 
 	database.Where(Distance{Distance: "3000"}).FirstOrCreate(&Distance{Distance: "3000"})
-	database.Where(Distance{Distance: "Pool view"}).FirstOrCreate(&Distance{Distance: "Pool view"})
-	database.Where(Distance{Distance: "Sea view"}).FirstOrCreate(&Distance{Distance: "Sea view"})
+	database.Where(Distance{Distance: "4000"}).FirstOrCreate(&Distance{Distance: "4000"})
+	database.Where(Distance{Distance: "5000"}).FirstOrCreate(&Distance{Distance: "5000"})
+	database.Where(Distance{Distance: "6000"}).FirstOrCreate(&Distance{Distance: "6000"})
 
 
 	adminRole := EmployeeRole{Name: "Admin"}
