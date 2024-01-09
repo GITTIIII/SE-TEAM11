@@ -4,8 +4,8 @@ import { ActivityInterface } from "./IActivity";
 
 export interface BookActivityInterface {
     ID?: number;
-    TimeStart?: string;
-    TimeEnd?: string;
+    TimeStart?: Date;
+    TimeEnd?: Date;
     NumberOfPeople?: number;
     Comment?: string;
     Phone_number?: string;

@@ -36,8 +36,8 @@ export default function BookActivity() {
       <div className="bookactivity-list">
               {BookActivity.map((item, index) => (
                 <div key={index} className="infomation">
-                  <div>เวลาเริ่ม {item.TimeStart}</div>
-                  <div>เวลาสิ้นสุด {item.TimeEnd}</div>
+                  <div>เวลาเริ่ม {new Date(item.TimeStart!).toLocaleString()}</div>
+                  <div>เวลาสิ้นสุด {new Date(item.TimeEnd!).toLocaleString()}</div>
                   <div>จำนวนคน {item.NumberOfPeople}</div>
                   <div>เบอร์โทร {item.Phone_number}</div>
                   <div>หมายเหตุ {item.Comment}</div>

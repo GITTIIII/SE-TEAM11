@@ -1,4 +1,5 @@
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
+import type { Dayjs } from 'dayjs';
 import { Link, useNavigate } from "react-router-dom"
 import { DatePicker, Form, message } from "antd"
 import { useState } from "react";
@@ -8,7 +9,9 @@ import "../bookActivity.css"
 
 export default function BookActivityCreate() {
     let navigate = useNavigate();
+    type RangeValue = [Dayjs | null, Dayjs | null] | null;
     const { RangePicker } = DatePicker;
+    const [dates, setDates] = useState<RangeValue>(null);
     const [StartDate, setStartDate] = useState("");
     const [EndDate, setEndDate] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
@@ -18,14 +21,43 @@ export default function BookActivityCreate() {
         Phone_number : ""
     });
 
-    const onDateChange = (
+    const handdleDateChange = (
         value: DatePickerProps['value'] | RangePickerProps['value'],
         dateString: [string, string] | string,
     ) => {
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
         setStartDate(dateString[0]);
         setEndDate(dateString[1]);
+    };
+
+    const disabledDate = (current: Dayjs) => {
+        if (!dates) {
+            return false;
+        }
+        const tooLate = dates[0] && current.diff(dates[0], 'days') >= 1;
+        const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 0;
+        return !!tooEarly || !!tooLate;
+    };
+
+    function disabledDateTime() {
+        return {
+            disabledHours: () => range(0, 24).splice(0,8)
+        };
+    }
+
+    function range(start:any, end:any) {
+        const result = [];
+        for (let i = start; i < end; i++) {
+            result.push(i);
+        }
+        return result;
+    }
+
+    const onOpenChange = (open: boolean) => {
+        if (open) {
+            setDates([null, null]);
+        } else {
+            setDates(null);
+        }
     };
 
     const handleInput = (e: any) => {
@@ -34,9 +66,9 @@ export default function BookActivityCreate() {
     };
 
     const handleSubmit = async (values: BookActivityInterface) => {
-        values.TimeStart = StartDate  + ":00"
-        values.TimeEnd = EndDate + ":00"
-        values.NumberOfPeople = input.NumberOfPeople
+        values.TimeStart = new Date(StartDate) 
+        values.TimeEnd = new Date(EndDate) 
+        values.NumberOfPeople = Number(input.NumberOfPeople)
         values.Phone_number = input.Phone_number
         values.Comment = input.Comment
         console.log(values)
@@ -69,9 +101,16 @@ export default function BookActivityCreate() {
                             <label>เลือกวัน</label>
                             <div className="activity-input">
                             <RangePicker
+                                onCalendarChange={(val) => {
+                                    setDates(val);
+                                }}
+                                onOpenChange={onOpenChange}
+                                disabledDate={disabledDate}
+                                disabledTime={disabledDateTime}
+                                minuteStep={30 as const}
                                 showTime={{ format: 'HH:mm:00' }}
                                 format="YYYY-MM-DD HH:mm"
-                                onChange={onDateChange}
+                                onChange={handdleDateChange}
                             />
                             </div>
 
