@@ -29,7 +29,7 @@ export default function BookActivityCreate() {
                     <h1>จองกิจกรรม</h1>
                     <div className="activity-input-box">
                         <Form>
-                            <DatePicker format="YYYY-MM-DD HH:mm" disabledDate={disabledDate}/>
+                            <DatePicker format="YYYY-MM-DD HH:mm:ss" disabledDate={disabledDate}/>
                             <div className="activity-input">
                                 <input type="number" min={3} max={10}/>
                             </div>
