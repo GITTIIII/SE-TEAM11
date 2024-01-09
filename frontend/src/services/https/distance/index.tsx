@@ -23,8 +23,6 @@ async function GetAllDistance() {
   return res;
 }
 
-
-
 async function GetDistanceById(id: Number | undefined) {
   const requestOptions = {
     method: "GET",

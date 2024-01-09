@@ -4,3 +4,16 @@
     color: black;
     padding: 20px;
 }
+
+.activity-input-box{
+    width: 100vh;
+    background-color:aquamarine ;
+    padding: 5%;
+    border-radius: 10px;
+}
+
+.activity-input input{
+    font-size: 2vh;
+    padding: 10px;
+}
+

@@ -8,7 +8,8 @@ import (
 type BookActivity struct {
 	gorm.Model
 
-	Time time.Time
+	TimeStart time.Time
+	TimeEnd time.Time
 	NumberOfPeople int
 	Comment string
 	Phone_number string

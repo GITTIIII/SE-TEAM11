@@ -22,7 +22,8 @@ func CreateBookActivity(c *gin.Context) {
 
 	// สร้าง bookActivity
 	a := entity.BookActivity{
-		Time: bookActivity.Time,
+		TimeStart: bookActivity.TimeStart,
+		TimeEnd: bookActivity.TimeEnd,
 		NumberOfPeople: bookActivity.NumberOfPeople,
 		Comment: bookActivity.Comment,
 		Phone_number: bookActivity.Phone_number,
