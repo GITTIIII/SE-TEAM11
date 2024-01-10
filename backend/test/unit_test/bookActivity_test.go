@@ -1,4 +1,4 @@
-// package unit_test
+package unit_test
 
 // import (
 // 	"testing"
