@@ -6,10 +6,10 @@ import (
 
 type Room struct {
 	gorm.Model
-	Room_number    	string	`gorm:"uniqueIndex"`
-	Room_img		string
+	Room_number    	string	`gorm:"uniqueIndex" valid:"required~Issue is required, matches(^[SDAT]\\d{4}$)"`
+	Room_img		string	`valid:"required~Issue is required"`
 	Status 			string 
-	Room_price 		float64
+	Room_price 		float64	`valid:"required~Issue is required"`
 
 	RoomTypeID *uint
 	RoomType RoomType `gorm:"foreignKey:RoomTypeID"`
