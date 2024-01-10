@@ -74,8 +74,8 @@ export default function BookActivityCreate() {
     };
 
     const handleSubmit = async (values: BookActivityInterface) => {
-        values.TimeStart = new Date(StartDate) 
-        values.TimeEnd = new Date(EndDate) 
+        values.TimeStart = new Date(StartDate)
+        values.TimeEnd = new Date(EndDate)
         values.NumberOfPeople = Number(input.NumberOfPeople)
         values.Phone_number = input.Phone_number
         values.Comment = input.Comment
@@ -112,10 +112,10 @@ export default function BookActivityCreate() {
                 {contextHolder}
                 <div className="form-box">
                     <h1>จองกิจกรรม</h1>
-                    <div className="activity-input-box">
+                    <div className="book-activity-input-box">
                         <Form onFinish={handleSubmit}>
                             <label>เลือกกิจกรรม</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <select name="Activity" onChange={handleInput} required>
                                     <option value="none" hidden>เลือกกิจกรรม</option>
                                     {Activity.map((item, index) => (
@@ -125,7 +125,7 @@ export default function BookActivityCreate() {
                             </div>
 
                             <label>เลือกวัน</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                             <RangePicker
                                 onCalendarChange={(val) => {
                                     setDates(val);
@@ -141,7 +141,7 @@ export default function BookActivityCreate() {
                             </div>
 
                             <label>ระบุจำนวนคน</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <input 
                                 type="number" 
                                 min={3} 
@@ -152,7 +152,7 @@ export default function BookActivityCreate() {
                             </div>
 
                             <label>กรอกเบอร์โทร</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <input 
                                 type="text" 
                                 name="Phone_number"
@@ -161,7 +161,7 @@ export default function BookActivityCreate() {
                             </div>
 
                             <label>ระบุความเห็น</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <input 
                                 type="textarea" 
                                 name="Comment"

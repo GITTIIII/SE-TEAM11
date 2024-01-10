@@ -28,6 +28,7 @@ import RepairCreate from "./page/employee/repair/repairCreate";
 import TouristProfile from "./page/tourist/touristProfile";
 import EmployeeProfile from "./page/employee/employeeProfile";
 import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
+import BookActivityUpdate from "./page/tourist/bookActivity/bookActivityUpdate";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,10 +60,8 @@ const router = createBrowserRouter(
         <Route path="planner" element={<Planner />} />
         <Route path="room" element={<Room />} />
         <Route path="bookActivity" element={<BookActivity />} />
-        <Route
-          path="bookActivity/bookActivityCreate"
-          element={<BookActivityCreate />}
-        />
+        <Route path="bookActivity/bookActivityCreate" element={<BookActivityCreate />}/>
+        <Route path="bookActivity/bookActivityUpdate" element={<BookActivityUpdate />}/>
         <Route path="payment" element={<Payment />} />
         <Route path="touristProfile" element={<TouristProfile />} />
         <Route path="destination" element={<Destination />} />
