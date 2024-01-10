@@ -110,4 +110,19 @@ func SetupDatabase() {
 		db.Create(&employee) // Assuming 'db' is your GORM database instance
 	}
 
+	Activitys := []Activity{
+		{ Activity_name: "มินิกอล์ฟ" },
+		{ Activity_name: "โต๊ะปิงปอง" },
+		{ Activity_name: "ปีนหน้าผา" },
+		{ Activity_name: "สนามบาสเก็ตบอล" },
+		{ Activity_name: "สวนน้ำและสไลเดอร์น้ำ" },
+		{ Activity_name: "คาราโอเกะ" },
+		{ Activity_name: "ฟิตเนส" },
+		{ Activity_name: "บริการสปา" },
+	}
+
+	for _, activity := range Activitys {
+		db.Create(&activity) // Assuming 'db' is your GORM database instance
+	}
+
 }

@@ -2,9 +2,11 @@ import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
 import type { Dayjs } from 'dayjs';
 import { Link, useNavigate } from "react-router-dom"
 import { DatePicker, Form, message } from "antd"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookActivityInterface } from "../../../../interface/IBookActivity";
 import { CreateBookActivity } from "../../../../services/https/bookActivity";
+import { GetAllActivity } from '../../../../services/https/activity';
+import { ActivityInterface } from '../../../../interface/IActivity';
 import "../bookActivity.css"
 
 export default function BookActivityCreate() {
@@ -15,11 +17,17 @@ export default function BookActivityCreate() {
     const [StartDate, setStartDate] = useState("");
     const [EndDate, setEndDate] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
+    const [Activity, setActivity] = useState<ActivityInterface[]>([])
     const [input, setInput] = useState({
         NumberOfPeople : 0,
         Comment : "",
-        Phone_number : ""
+        Phone_number : "",
+        Activity : 0,
     });
+
+    async function getActivity() {
+        setActivity(await GetAllActivity());
+    }
 
     const handdleDateChange = (
         value: DatePickerProps['value'] | RangePickerProps['value'],
@@ -71,6 +79,9 @@ export default function BookActivityCreate() {
         values.NumberOfPeople = Number(input.NumberOfPeople)
         values.Phone_number = input.Phone_number
         values.Comment = input.Comment
+        // values.BookPlanID = 
+        values.ActivityID = Number(input.Activity)
+        values.TouristID = Number(localStorage.getItem("TouristID"))
         console.log(values)
 
         let res = await CreateBookActivity(values);
@@ -90,6 +101,11 @@ export default function BookActivityCreate() {
         }
     };
 
+    useEffect(() => { 
+        getActivity()
+    },[])
+    
+
     return (
         <>
             <div className="login-bg" style={{ backgroundColor: `wheat` }}>
@@ -98,6 +114,16 @@ export default function BookActivityCreate() {
                     <h1>จองกิจกรรม</h1>
                     <div className="activity-input-box">
                         <Form onFinish={handleSubmit}>
+                            <label>เลือกกิจกรรม</label>
+                            <div className="activity-input">
+                                <select name="Activity" onChange={handleInput} required>
+                                    <option value="none" hidden>เลือกกิจกรรม</option>
+                                    {Activity.map((item, index) => (
+                                    <option key={index} value={item.ID}>{item.Activity_name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
                             <label>เลือกวัน</label>
                             <div className="activity-input">
                             <RangePicker

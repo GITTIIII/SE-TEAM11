@@ -36,7 +36,8 @@
     margin-bottom: 10px;
 }
 
-.activity-input input{
+.activity-input input,
+.activity-input select{
     border: 0;
     border-radius: 10px;
     font-size: 2vh;
