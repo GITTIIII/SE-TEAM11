@@ -11,6 +11,7 @@ import {
   message,
   Upload,
   Select,
+  InputNumber,
 } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { RoomInterface } from "../../../../interface/IRoom";
@@ -19,7 +20,7 @@ import { RoomZoneInterface } from "../../../../interface/IRoomZone";
 import { CreateRoom, GetRoomById, UpdateRoom } from "../../../../services/https/room";
 import { GetAllRoomType } from "../../../../services/https/roomType";
 import { GetAllRoomZone } from "../../../../services/https/roomZone";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -30,6 +31,7 @@ function EditRoom() {
 //   const [user, setUser] = useState<UsersInterface>();
   const [room, setRoom] = useState<RoomInterface>();
 //   const [genders, setGenders] = useState<GendersInterface[]>([]);
+  const [roomPrice, setRoom_price] = useState("");
   const [roomTypes, setRoomTypes] = useState<RoomTypeInterface[]>([]);
   const [roomZones, setRoomZones] = useState<RoomZoneInterface[]>([]);
   const [roomImage, setRoomImage] = useState<string | null>(null);
@@ -42,6 +44,7 @@ function EditRoom() {
   const onFinish = async (values: RoomInterface) => {
     values.ID = room?.ID;
     let res = await UpdateRoom(values);
+    // values.Room_price = Number(roomPrice);
     if (res.status) {
       messageApi.open({
         type: "success",
@@ -107,10 +110,6 @@ function EditRoom() {
         RoomTypeID:     res.RoomTypeID,    
         RoomZoneID:     res.RoomZoneID,
         EmployeeID:     res.EmployeeID,
-        // GenderID: res.GenderID,
-        // Email: res.Email,
-        // Phone: res.Phone,
-        // LinkedIn: res.LinkedIn
       });
     }
   };
@@ -162,21 +161,10 @@ function EditRoom() {
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              {/* <Form.Item
-                label="นามกสุล"
-                name="LastName"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณากรอกนามสกุล !",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item> */}
               <Form.Item
                 label="ราคา"
                 name="Room_price"
+                // type="number" step="0.001"
                 rules={[
                   {
                     required: true,
@@ -184,37 +172,21 @@ function EditRoom() {
                   },
                 ]}
               >
-                <Input />
+                <InputNumber />
               </Form.Item>
+              {/* <div className='create-room-form-control'>
+          <label className='create-room-text'>Price of Room</label>
+          <br></br>
+          <input 
+            className='create-room-input' 
+            type="number" step="0.001" 
+            placeholder = 'Enter price of room' 
+            name="Room_price"
+            // required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
+          />
+        </div> */}
             </Col>
-            {/* <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="รหัสนักศึกษา"
-                name="StudentID"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณากรอกรหัสนักศึกษา !",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col> */}
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              {/* <Form.Item
-                name="GenderID"
-                label="เพศ"
-                rules={[{ required: true, message: "กรุณาระบุเพศ !" }]}
-              >
-                <Select allowClear>
-                  {genders.map((item) => (
-                    <Option value={item.ID} key={item.Name}>
-                      {item.Name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item> */}
               <Form.Item
                 name="RoomTypeID"
                 label="ประเภท"
@@ -244,28 +216,14 @@ function EditRoom() {
                 </Select>
               </Form.Item>
             </Col>
-            {/* <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="เบอร์โทรศัพท์"
-                name="Phone"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณากรอกเบอร์โทรศัพท์ !",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col> */}
           </Row>
           <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             <Form.Item
-                label="รูปห้อง"
+                // label="รูปห้อง"
                 name="Room_img"
                 getValueFromEvent={(e) => e.file.originFileObj}
                 >
-                <Upload
+                {/* <Upload
                     name="Room_img"
                     listType="picture"
                     showUploadList={false}
@@ -279,7 +237,7 @@ function EditRoom() {
                     }}
                 >
                     <Button icon={<UploadOutlined />}>อัปโหลดรูป</Button>
-                </Upload>
+                </Upload> */}
                 {roomImage && <img src={roomImage} alt="Room" style={{ maxWidth: "100%", marginTop: "10px" }} />}
             </Form.Item>
           </Col>
@@ -287,9 +245,11 @@ function EditRoom() {
             <Col style={{ marginTop: "40px" }}>
               <Form.Item>
                 <Space>
-                  <Button htmlType="button" style={{ marginRight: "10px" }}>
-                    ยกเลิก
-                  </Button>
+                  <NavLink to="/employee/room">
+                    <Button htmlType="button" style={{ marginRight: "10px" }}>
+                      ยกเลิก
+                    </Button>
+                  </NavLink>
                   <Button
                     type="primary"
                     htmlType="submit"
