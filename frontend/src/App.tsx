@@ -27,6 +27,7 @@ import LoginTourist from "./page/login/loginTourist/loginTourist";
 import RepairCreate from "./page/employee/repair/repairCreate";
 import TouristProfile from "./page/tourist/touristProfile";
 import EmployeeProfile from "./page/employee/employeeProfile";
+import ShowRoom from "./page/tourist/room"
 import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
 import BookActivityUpdate from "./page/tourist/bookActivity/bookActivityUpdate";
 
@@ -58,7 +59,7 @@ const router = createBrowserRouter(
         <Route path="bookPlan" element={<BookPlan />} />
         <Route path="food" element={<Food />} />
         <Route path="planner" element={<Planner />} />
-        <Route path="room" element={<Room />} />
+        <Route path="showRoom" element={<ShowRoom />} />
         <Route path="bookActivity" element={<BookActivity />} />
         <Route path="bookActivity/bookActivityCreate" element={<BookActivityCreate />}/>
         <Route path="bookActivity/bookActivityUpdate" element={<BookActivityUpdate />}/>
