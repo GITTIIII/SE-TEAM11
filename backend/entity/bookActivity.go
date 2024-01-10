@@ -15,12 +15,12 @@ type BookActivity struct {
 	Comment string
 	Phone_number string `valid:"required~PhoneNumber is required, matches(^[0]\\d{9}$)~PhoneNumber length is not 10 digits"`
 
-	BookPlanID *uint
+	BookPlanID uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID" valid:"-"`
 
-	TouristID *uint
+	TouristID uint
 	Tourist Tourist `gorm:"foreignKey:TouristID"`
 
-	ActivityID *uint
+	ActivityID uint
 	Activity Activity `gorm:"foreignKey:ActivityID"`
 }

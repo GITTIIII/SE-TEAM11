@@ -9,11 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestBookActivity(t *testing.T) {
-	BookPlanID := uint(1)
-	TouristID := uint(1)
-	ActivityID := uint(1)
-	
+func TestUserBookActivityValidation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	t.Run(`valid bookactivity`, func(t *testing.T) {
@@ -23,9 +19,9 @@ func TestBookActivity(t *testing.T) {
 			NumberOfPeople: 5,
 			Comment: "test",
 			Phone_number: "0123456789",
-			BookPlanID: &BookPlanID,
-			TouristID: &TouristID,
-			ActivityID: &ActivityID,
+			BookPlanID: 1,
+			TouristID:  1,
+			ActivityID: 1,
 		}
 
 		ok, err := govalidator.ValidateStruct(bookActivity)
