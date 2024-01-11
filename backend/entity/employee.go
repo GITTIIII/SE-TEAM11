@@ -10,7 +10,7 @@ type Employee struct {
 	Gender   string
 	Tel      string
 	Picture  string
-	Email    string `valid:"required~Email is required, email~Email is invalid"`
+	Email    string `gorm:"uniqueIndex" valid:"required~Email is required, email~Email is invalid"`
 	Password string
 	Age      int
 

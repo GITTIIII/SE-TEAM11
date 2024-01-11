@@ -100,6 +100,7 @@ func SetupDatabase() {
 			Gender:      "Male",
 			Tel: "0123456789",
 			Picture:     "",
+			Age: 18,
 			Email:    "admin@gmail.com",
 			Password:    string(hashedPassword),
 			EmployeeRoleID:    &adminRole.ID,
