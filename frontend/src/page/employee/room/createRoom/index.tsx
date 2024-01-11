@@ -78,7 +78,7 @@ export default function CreateRooms() {
       });
       setTimeout(function () {
         navigate("/employee/room");
-      }, 2000);
+      }, 20000);
     } else {
       messageApi.open({
         type: "error",
@@ -127,7 +127,8 @@ export default function CreateRooms() {
           <input 
             className='create-room-input' 
             type="text" placeholder = 'Enter number of room' 
-            required value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
+            // required 
+            value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
           />
         </div>
 
@@ -180,7 +181,7 @@ export default function CreateRooms() {
         <div className='create-room-form-control'>
           <label className='create-room-text'>Image of Room</label>
           <br></br>
-          <Upload {...props} accept='image/png, image/jpeg' action="/Repair">
+          <Upload {...props} accept='image/png, image/jpeg' action="/Room" id="room_img">
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
         </div>

@@ -6,7 +6,7 @@ import (
 
 type Room struct {
 	gorm.Model
-	Room_number    	string	`gorm:"uniqueIndex" valid:"required~Issue is required, matches(^[SDAT]\\d{4}$)~Format incorrect"`
+	Room_number    	string	` valid:"required~Issue is required"` //gorm:"uniqueIndex"
 	Room_img		string	`valid:"required~Room image is required"`
 	Status 			string 
 	Room_price 		float64	`valid:"required~Room price is required"`
