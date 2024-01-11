@@ -1,13 +1,27 @@
-.bookactivity-list{
+/* Book Activity */
+.book-activity-list-box{
     color: black;
+    background-color: aquamarine;
+    padding: 20px;
 }
+
+.book-activity-list-box h1{
+    display: inline-block;
+}
+
+.information{
+    background-color: rgb(240, 248, 255);
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+/* Book Activity Form */
 
 .form-box h1{
     color: black;
 }
 
-
-.activity-input-box{
+.book-activity-input-box{
     display: flex;
     flex-direction: column;
     width: 100vh;
@@ -16,27 +30,28 @@
     border-radius: 10px;
 }
 
-.activity-input-box label{
+.book-activity-input-box label{
     color: black;
 }
 
-.activity-input-box form a,
-.activity-input-box form button{
+.book-activity-input-box form a,
+.book-activity-input-box form button{
     margin-top: 2%;
 }
 
-.activity-input-box form button{
+.book-activity-input-box form button{
     margin-left: 5%;
     border: 0;
     cursor: pointer;
     border-radius: 10px;
 }
 
-.activity-input{
+.book-activity-input{
     margin-bottom: 10px;
 }
 
-.activity-input input{
+.book-activity-input input,
+.book-activity-input select{
     border: 0;
     border-radius: 10px;
     font-size: 2vh;

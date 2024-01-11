@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
 )
@@ -16,6 +17,12 @@ func CreateRepair(c *gin.Context) {
 
 	// bind เข้าตัวแปร repair
 	if err := c.ShouldBindJSON(&repair); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// validate struct
+	if _, err := govalidator.ValidateStruct(repair); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

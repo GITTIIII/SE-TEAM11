@@ -1,9 +1,17 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./repairCreate.css";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import { Button, message, Upload, Form, Select,DatePicker } from "antd";
+import {
+  Button,
+  message,
+  Upload,
+  Form,
+  Select,
+  DatePicker,
+  DatePickerProps,
+} from "antd";
 import ship from "../../../../asset/ship.jpg";
 import { CreateRepair } from "../../../../services/https/repair";
 import { RepairInterface } from "../../../../interface/IRepair";
@@ -11,15 +19,18 @@ import { GetAllRepairType } from "../../../../services/https/repairType";
 import { RepairTypeInterface } from "../../../../interface/IRepairType";
 import { RoomInterface } from "../../../../interface/IRoom";
 import { GetAllRoom } from "../../../../services/https/room";
+import dayjs from 'dayjs'
+
 
 export default function RepairCreate() {
   let navigate = useNavigate();
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [comment, setComment] = useState("");
 
   const [roomNumber, setRoomNumber] = useState<RoomInterface[]>([]);
-
+  const [rDate, setRDate] = useState<any>(new Date());
+  const [repair_img, setRepair_Img] = useState("");
+  const [comment, setComment] = useState("");
   const [type, setType] = useState<RepairTypeInterface[]>([]);
   const [input, setInput] = useState({
     RepairTypeID: 0,
@@ -63,6 +74,9 @@ export default function RepairCreate() {
     values.RepairTypeID = input.RepairTypeID;
     values.EmployeeID = Number(EmployeeID);
     values.RoomID = input.RoomID;
+    values.Repair_date = rDate;
+
+    console.log(rDate);
 
     console.log(values);
 
@@ -74,16 +88,27 @@ export default function RepairCreate() {
       });
       setTimeout(function () {
         navigate("../repair");
-      }, 2000);
+      }, 10000);
     } else {
       messageApi.open({
         type: "error",
-        content: "บันทึกข้อมูลไม่สำเร็จ",
+        content: res.message,
       });
     }
   };
 
-  const [repair_img, setRepair_Img] = useState("");
+  // const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files && e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result as string; // Type assertion to string
+  //       // เปลี่ยน setImage เพื่อทำการใช้ base64String
+  //       setRepair_Img(base64String);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const props: UploadProps = {
     beforeUpload: (file) => {
@@ -105,7 +130,10 @@ export default function RepairCreate() {
     },
   };
 
-  const [Cdate, setDate] = useState(new Date().toLocaleDateString('th-TH'));
+  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
+    console.log(date, dateString);
+    setRDate(date);
+  }
 
   const filterOption = (
     input: string,
@@ -142,19 +170,6 @@ export default function RepairCreate() {
               />
             </div>
 
-            {/* <div className='repair-form-control'>
-            <label className='repair-text'>Number of room</label>
-            <br></br>
-            <div className='repair-select'>
-            <select className="repair-select-custom" name="RoomID" onChange={handleInput} required>
-                  <option value="none" hidden>เลือกประเภท</option>
-                  {roomNumber.map((item) => (
-                  <option value={item.ID} key={item.Room_number}>{item.Room_number}</option>
-                  ))}
-            </select>
-            </div>
-          </div> */}
-
             <div className="repair-form-control">
               <label className="repair-text">Repair Type</label>
               <br></br>
@@ -172,6 +187,7 @@ export default function RepairCreate() {
                     <option value={item.ID} key={item.Repair_name}>
                       {item.Repair_name}
                     </option>
+                    
                   ))}
                 </select>
               </div>
@@ -183,9 +199,19 @@ export default function RepairCreate() {
               <textarea
                 className="repair-textarea"
                 placeholder="Enter your detail"
-                required
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+
+            <div className="repair-form-control">
+              <label className="repair-text">Date</label>
+              <br></br>
+              <DatePicker
+                value={dayjs(rDate)}
+                onChange={onChange}
+                format="YYYY-MM-DD HH:mm:ss"
+                showTime
               />
             </div>
 
@@ -196,28 +222,14 @@ export default function RepairCreate() {
                 {...props}
                 accept="image/png, image/jpeg"
                 action="/Repair"
+                id="repair_img"
               >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                <Button icon={<UploadOutlined />} >Click to Upload</Button>
               </Upload>
+
+              
             </div>
-
-
-          <div className='repair-form-control'>
-            <label className='repair-text'>Date</label>
-            <br></br>
-            <DatePicker
-             
-              format="YYYY-MM-DD HH:mm:ss"
-              showTime
-              // value={Cdate}
-              // onChange={(date) => {
-              //   const d = new Date(date).toLocaleDateString('th-TH');
-              //   console.log(d);
-              //   setDate(d);
-              // }}
-            />
-          </div>
-
+       
             <div className="buttom-area">
               <button type="submit">ยืนยัน</button>
             </div>

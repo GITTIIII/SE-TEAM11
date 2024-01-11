@@ -6,16 +6,17 @@ import (
 
 type Employee struct {
 	gorm.Model
-	Name string 
-	Gender string 
-	Tel string 
-	Picture string 
-	Email string `gorm:"uniqueIndex"`
-	Password string 
+	Name     string
+	Gender   string
+	Tel      string
+	Picture  string
+	Email    string `gorm:"uniqueIndex" valid:"required~Email is required, email~Email is invalid"`
+	Password string
+	Age      int
 
 	EmployeeRoleID *uint
-	EmployeeRole EmployeeRole `gorm:"foreignKey:EmployeeRoleID"`
+	EmployeeRole   EmployeeRole `gorm:"foreignKey:EmployeeRoleID"`
 
-	Rooms []Room `gorm:"foreignKey:EmployeeID"`
+	Rooms   []Room   `gorm:"foreignKey:EmployeeID"`
 	Repairs []Repair `gorm:"foreignKey:EmployeeID"`
 }

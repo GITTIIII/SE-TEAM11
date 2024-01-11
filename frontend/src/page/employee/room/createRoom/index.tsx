@@ -74,11 +74,11 @@ export default function CreateRooms() {
       });
       setTimeout(function () {
         navigate("/employee/room");
-      }, 2000);
+      }, 20000);
     } else {
       messageApi.open({
         type: "error",
-        content: "บันทึกข้อมูลไม่สำเร็จ",
+        content: res.message,
       });
     }
   };
@@ -111,6 +111,7 @@ export default function CreateRooms() {
 
       <div className="room-headline"></div>
 
+<<<<<<< HEAD
       <div className="create-room-form">
         <Form onFinish={handleSubmit}>
           <div className="create-room-form-control">
@@ -124,6 +125,36 @@ export default function CreateRooms() {
               value={roomNumber}
               onChange={(e) => setRoom_number(e.target.value)}
             />
+=======
+      <div className='create-room-form'>
+
+      <Form onFinish={handleSubmit}>
+        <div className='create-room-form-control'>
+          <label className='create-room-text'>Number of room</label>
+          <br></br>
+          <input 
+            className='create-room-input' 
+            type="text" placeholder = 'Enter number of room' 
+            // required 
+            value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
+          />
+        </div>
+
+        <div className='create-room-form-control'>
+          <label className='create-room-text'>Room Type</label>
+          <br></br>
+          <div className='create-room-select'>
+            <select className='create-room-select-custom' name="RoomTypeID" onChange={handleInput} required>
+              <option value="" disabled selected>
+                select room type
+              </option>
+              {roomType.map((item) => (
+                <option value={item.ID} key={item.RoomType_name}>
+                  {item.RoomType_name}
+                </option>
+              ))}
+            </select>
+>>>>>>> c49c6e4b2faba9141d8f5eb237a8eacddcb196e7
           </div>
 
           <div className="create-room-form-control">
@@ -170,6 +201,7 @@ export default function CreateRooms() {
             </div>
           </div>
 
+<<<<<<< HEAD
           <div className="create-room-form-control">
             <label className="create-room-text">Price of Room</label>
             <br></br>
@@ -183,6 +215,15 @@ export default function CreateRooms() {
               onChange={(e) => setRoom_price(e.target.value)}
             />
           </div>
+=======
+        <div className='create-room-form-control'>
+          <label className='create-room-text'>Image of Room</label>
+          <br></br>
+          <Upload {...props} accept='image/png, image/jpeg' action="/Room" id="room_img">
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+        </div>
+>>>>>>> c49c6e4b2faba9141d8f5eb237a8eacddcb196e7
 
           <div className="create-room-form-control">
             <label className="create-room-text">Image of Room</label>

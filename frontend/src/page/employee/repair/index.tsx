@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {  NavLink } from "react-router-dom";
 import "./repair.css";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined,EditOutlined } from "@ant-design/icons";
 import {
   Button,
   message,
@@ -17,54 +17,15 @@ import {
   DeleteRepairByID,
 } from "../../../services/https/repair";
 import { RepairInterface } from "../../../interface/IRepair";
+import { RepairTypeInterface } from "../../../interface/IRepairType";
+import { render } from "@testing-library/react";
+import RepairEdit from "./repairEdit";
 
 export default function Repair() {
-  const columns: ColumnsType<RepairInterface> = [
-    {
-      title: "ลำดับ",
-      dataIndex: "ID",
-      key: "id",
-    },
-    {
-      title: "รูปห้องพัก",
-      dataIndex: "Repair_img",
-      key: "repair_img",
-      render: (text, record, index) => (
-        <img src={record.Repair_img} className="" width="50%" alt="" />
-      ),
-    },
-    {
-      title: "รายละเอียด",
-      dataIndex: "Comment",
-      key: "comment",
-    },
-    {
-      title: "ประเภท",
-      dataIndex: "RepairType",
-      key: "repair_type",
-      render: (item) => Object.values(item.Repair_name),
-    },
-    {
-      title: "จัดการ",
-      dataIndex: "Manage",
-      key: "manage",
-      render: (text, record, index) => (
-        <>
-          <Button
-            onClick={() => showModal(record)}
-            style={{ marginLeft: 10 }}
-            shape="circle"
-            icon={<DeleteOutlined />}
-            size={"large"}
-            danger
-          />
-        </>
-      ),
-    },
-  ];
 
   const [messageApi, contextHolder] = message.useMessage();
   const [listRepair, setAllRepair] = useState<RepairInterface[]>([]);
+  const [showEdit, setShowEdit] = useState(false);
 
   // Model
   const [open, setOpen] = useState(false);
@@ -83,71 +44,77 @@ export default function Repair() {
     getAllRepair();
   }, []);
 
-  const showModal = (val: RepairInterface) => {
-    setModalText(`คุณต้องการลบข้อมูลการแจ้งซ่อมลำดับที่ "${val.ID}" หรือไม่ ?`);
-    setDeleteId(val.ID);
-    setOpen(true);
-  };
+  const handleDelete  = async (id : Number|undefined) => {
+    let res = await await DeleteRepairByID(id);
+      if (res) {
+        messageApi.open({
+          type: "success",
+          content: "ลบข้อมูลสำเร็จ",
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 500);
+      } else {
+        messageApi.open({
+          type: "error",
+          content: "ลบข้อมูลไม่สำเร็จ",
+        });
+      }
+  }
 
-  const handleOk = async () => {
-    setConfirmLoading(true);
-    let res = await DeleteRepairByID(deleteId);
-    if (res) {
-      setOpen(false);
-      messageApi.open({
-        type: "success",
-        content: "ลบข้อมูลสำเร็จ",
-      });
-      getAllRepair();
-    } else {
-      setOpen(false);
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาด !",
-      });
-    }
-    setConfirmLoading(false);
-  };
+  const handleClose = () => setShowEdit(false);
 
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  console.log(showEdit);
 
   return (
     <>
+      <RepairEdit open={showEdit} onClose={handleClose}></RepairEdit>
       <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}>
         {contextHolder}
         <h1 className="repair-text">Repair</h1>
         <div className="repair-form">
-          <NavLink to="/employee/repair/create">
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: "#CDF5FD",
-                  colorTextLightSolid: "#000000",
-                  colorPrimaryHover: "#89CFF3",
-                  colorPrimaryActive: "#818FB4",
-                },
-              }}
-            >
-              <Button className="repair-add-button" type="primary">
-                Repair Request
-              </Button>
-            </ConfigProvider>
-          </NavLink>
-          <div style={{ marginTop: 20 }}>
-            <Table rowKey="ID" columns={columns} dataSource={listRepair} />
-          </div>
-
-          <Modal
-            title="ลบข้อมูล ?"
-            open={open}
-            onOk={handleOk}
-            confirmLoading={confirmLoading}
-            onCancel={handleCancel}
+        
+        <NavLink to="/employee/repair/create">
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#CDF5FD',
+                colorTextLightSolid: '#000000',
+                colorPrimaryHover: '#89CFF3',
+                colorPrimaryActive: '#818FB4'
+              },
+            }}
           >
-            <p>{modalText}</p>
-          </Modal>
+            <Button className='room-add-button' type="primary">Repair Request</Button>
+          </ConfigProvider>
+        </NavLink>
+          <thead className="repair-head-table">
+            <tr className="repair-head-row">
+              <th>ID</th>
+              <th>Image</th>
+              <th>Type</th>
+              <th>Problem</th>
+              <th>Time</th>
+              {/* <th>Status</th> */}
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listRepair.map((item,index) => (
+              <tr key={index}>
+                <td>{item.ID}</td>
+                <td><img src={`${item.Repair_img}`} style={{maxWidth:"100px",maxHeight:"100px"}}></img></td>
+                <td>{(item.RepairType as RepairTypeInterface) ?.Repair_name}</td>
+                <td>{item.Comment}</td>
+                <td>{new Date(item.Repair_date!).toLocaleString()}</td>
+                <td>
+                  <Button icon={<DeleteOutlined/>} onClick={() => handleDelete(item.ID)} ></Button>
+                  <Button icon={<EditOutlined />} onClick={() => setShowEdit(true)}></Button>
+                </td>
+                  
+              </tr>
+            ))}
+          </tbody>
         </div>
       </div>
     </>

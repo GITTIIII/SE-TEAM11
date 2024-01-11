@@ -106,6 +106,8 @@ const Register = () => {
                             type="number" 
                             name="Age"
                             onChange={handleInput}
+                            min={18}
+                            max={100}
                             required/>
                             <label>Age</label>
                         </div>

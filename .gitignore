@@ -1,0 +1,6 @@
+/.vscode
+
+/backend/*.db
+/backend/tests/*/*.db
+/backend/main
+!/backend/main.go

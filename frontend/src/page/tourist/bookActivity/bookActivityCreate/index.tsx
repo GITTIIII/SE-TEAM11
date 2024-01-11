@@ -2,9 +2,11 @@ import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
 import type { Dayjs } from 'dayjs';
 import { Link, useNavigate } from "react-router-dom"
 import { DatePicker, Form, message } from "antd"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookActivityInterface } from "../../../../interface/IBookActivity";
 import { CreateBookActivity } from "../../../../services/https/bookActivity";
+import { GetAllActivity } from '../../../../services/https/activity';
+import { ActivityInterface } from '../../../../interface/IActivity';
 import "../bookActivity.css"
 
 export default function BookActivityCreate() {
@@ -15,11 +17,17 @@ export default function BookActivityCreate() {
     const [StartDate, setStartDate] = useState("");
     const [EndDate, setEndDate] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
+    const [Activity, setActivity] = useState<ActivityInterface[]>([])
     const [input, setInput] = useState({
         NumberOfPeople : 0,
         Comment : "",
-        Phone_number : ""
+        Phone_number : "",
+        Activity : 0,
     });
+
+    async function getActivity() {
+        setActivity(await GetAllActivity());
+    }
 
     const handdleDateChange = (
         value: DatePickerProps['value'] | RangePickerProps['value'],
@@ -66,11 +74,14 @@ export default function BookActivityCreate() {
     };
 
     const handleSubmit = async (values: BookActivityInterface) => {
-        values.TimeStart = new Date(StartDate) 
-        values.TimeEnd = new Date(EndDate) 
+        values.TimeStart = new Date(StartDate)
+        values.TimeEnd = new Date(EndDate)
         values.NumberOfPeople = Number(input.NumberOfPeople)
         values.Phone_number = input.Phone_number
         values.Comment = input.Comment
+        values.BookPlanID = 1
+        values.ActivityID = Number(input.Activity)
+        values.TouristID = Number(localStorage.getItem("TouristID"))
         console.log(values)
 
         let res = await CreateBookActivity(values);
@@ -81,14 +92,19 @@ export default function BookActivityCreate() {
             });
             setTimeout(function () {
                 navigate("/tourist/bookActivity");
-            }, 500);
+            }, 5000);
         } else {
             messageApi.open({
                 type: "error",
-                content: "บันทึกข้อมูลไม่สำเร็จ",
+                content: res.message,
             });
         }
     };
+
+    useEffect(() => { 
+        getActivity()
+    },[])
+    
 
     return (
         <>
@@ -96,10 +112,20 @@ export default function BookActivityCreate() {
                 {contextHolder}
                 <div className="form-box">
                     <h1>จองกิจกรรม</h1>
-                    <div className="activity-input-box">
+                    <div className="book-activity-input-box">
                         <Form onFinish={handleSubmit}>
+                            <label>เลือกกิจกรรม</label>
+                            <div className="book-activity-input">
+                                <select name="Activity" onChange={handleInput} required>
+                                    <option value="none" hidden>เลือกกิจกรรม</option>
+                                    {Activity.map((item, index) => (
+                                    <option key={index} value={item.ID}>{item.Activity_name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
                             <label>เลือกวัน</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                             <RangePicker
                                 onCalendarChange={(val) => {
                                     setDates(val);
@@ -115,18 +141,16 @@ export default function BookActivityCreate() {
                             </div>
 
                             <label>ระบุจำนวนคน</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <input 
                                 type="number" 
-                                min={3} 
-                                max={10}
                                 name="NumberOfPeople"
                                 onChange={handleInput}
                                 />
                             </div>
 
                             <label>กรอกเบอร์โทร</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <input 
                                 type="text" 
                                 name="Phone_number"
@@ -135,7 +159,7 @@ export default function BookActivityCreate() {
                             </div>
 
                             <label>ระบุความเห็น</label>
-                            <div className="activity-input">
+                            <div className="book-activity-input">
                                 <input 
                                 type="textarea" 
                                 name="Comment"

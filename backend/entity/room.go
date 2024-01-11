@@ -6,19 +6,19 @@ import (
 
 type Room struct {
 	gorm.Model
-	Room_number    	string	`gorm:"uniqueIndex"`
-	Room_img		string
+	Room_number    	string	` valid:"required~Issue is required"` //gorm:"uniqueIndex"
+	Room_img		string	`valid:"required~Room image is required"`
 	Status 			string 
-	Room_price 		float64
+	Room_price 		float64	`valid:"required~Room price is required"`
 
-	RoomTypeID *uint
-	RoomType RoomType `gorm:"foreignKey:RoomTypeID"`
+	RoomTypeID *uint	//`valid:"required~Room type is required"`
+	RoomType RoomType	`gorm:"foreignKey:RoomTypeID" valid:"-"`
 
-	RoomZoneID *uint
-	RoomZone RoomZone `gorm:"foreignKey:RoomZoneID"`
+	RoomZoneID *uint	//`valid:"required~Room zone is required"`
+	RoomZone RoomZone	`gorm:"foreignKey:RoomZoneID" valid:"-"`
 
 	EmployeeID *uint
-	Employee Employee `gorm:"foreignKey:EmployeeID"`
+	Employee Employee	`gorm:"foreignKey:EmployeeID" valid:"-"`
 
 	Repairs 	[]Repair 	`gorm:"foreignKey:RoomID"`
 	BookPlans 	[]BookPlan 	`gorm:"foreignKey:RoomID"`

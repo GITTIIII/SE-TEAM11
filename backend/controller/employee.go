@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -25,18 +26,23 @@ func CreateEmployee(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hash password"})
 		return
 	}
-	
+
 	// สร้าง employee
 	a := entity.Employee{
-		Name: employee.Name,
-		Tel: employee.Tel,
-		Email: employee.Email,
-		Picture: employee.Picture,
+		Name:     employee.Name,
+		Tel:      employee.Tel,
+		Email:    employee.Email,
+		Picture:  employee.Picture,
 		Password: string(hashPassword),
-		Gender: employee.Gender,
-
+		Gender:   employee.Gender,
+		Age: employee.Age,
 		EmployeeRoleID: employee.EmployeeRoleID,
-		EmployeeRole: employeeRole,
+		EmployeeRole:   employeeRole,
+	}
+	// validate
+	if _, err := govalidator.ValidateStruct(employee); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// บันทึก

@@ -100,6 +100,7 @@ func SetupDatabase() {
 			Gender:      "Male",
 			Tel: "0123456789",
 			Picture:     "",
+			Age: 18,
 			Email:    "admin@gmail.com",
 			Password:    string(hashedPassword),
 			EmployeeRoleID:    &adminRole.ID,
@@ -107,7 +108,22 @@ func SetupDatabase() {
 	}
 
 	for _, employee := range Employees {
-		db.Create(&employee) // Assuming 'db' is your GORM database instance
+		db.Create(&employee) 
+	}
+
+	Activitys := []Activity{
+		{ Activity_name: "มินิกอล์ฟ" },
+		{ Activity_name: "โต๊ะปิงปอง" },
+		{ Activity_name: "ปีนหน้าผา" },
+		{ Activity_name: "สนามบาสเก็ตบอล" },
+		{ Activity_name: "สวนน้ำและสไลเดอร์น้ำ" },
+		{ Activity_name: "คาราโอเกะ" },
+		{ Activity_name: "ฟิตเนส" },
+		{ Activity_name: "บริการสปา" },
+	}
+
+	for _, activity := range Activitys {
+		db.Create(&activity)
 	}
 
 }

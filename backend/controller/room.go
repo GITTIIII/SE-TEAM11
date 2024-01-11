@@ -3,16 +3,14 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /room
 func CreateRoom(c *gin.Context) {
 	var room entity.Room
-	var roomType entity.RoomType
-	var roomZone entity.RoomZone
-	var employee entity.Employee
 
 	// bind เข้าตัวแปร room
 	if err := c.ShouldBindJSON(&room); err != nil {
@@ -20,21 +18,48 @@ func CreateRoom(c *gin.Context) {
 		return
 	}
 
+	// validate struct
+    if _, err := govalidator.ValidateStruct(room); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+	var roomType entity.RoomType
+	// db.First(&roomType, room.RoomTypeID)
+	// if roomType.ID == 0 {
+	// 	c.JSON(http.StatusNotFound, gin.H{"error": "roomType not found"})
+	// 	return
+	// }
+
+	var roomZone entity.RoomZone
+	// db.First(&roomZone, room.RoomZoneID)
+	// if roomZone.ID == 0 {
+	// 	c.JSON(http.StatusNotFound, gin.H{"error": "roomZone not found"})
+	// 	return
+	// }
+
+	var employee entity.Employee
+	// db.First(&employee, room.EmployeeID)
+	// if employee.ID == 0 {
+	// 	c.JSON(http.StatusNotFound, gin.H{"error": "employee not found"})
+	// 	return
+	// }
+
 	// สร้าง room
 	a := entity.Room{
 		Room_number: room.Room_number,
-		Room_img: room.Room_img,
-		Status: "ว่าง",
-		Room_price: room.Room_price,
+		Room_img:    room.Room_img,
+		Status:      "ว่าง",
+		Room_price:  room.Room_price,
 
 		RoomTypeID: room.RoomTypeID,
-		RoomType: roomType,
+		RoomType:   roomType,
 
 		RoomZoneID: room.RoomZoneID,
-		RoomZone: roomZone,
-		
+		RoomZone:   roomZone,
+
 		EmployeeID: room.EmployeeID,
-		Employee: employee,
+		Employee:   employee,
 	}
 
 	// บันทึก

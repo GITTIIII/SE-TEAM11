@@ -1,4 +1,4 @@
-import {PlannerInterface} from "./IPlanner";
+import {BookPlanInterface} from "./IBookPlan";
 import { TouristInterface } from "./ITourist";
 import { ActivityInterface } from "./IActivity";
 
@@ -10,8 +10,8 @@ export interface BookActivityInterface {
     Comment?: string;
     Phone_number?: string;
 
-    PlannerID?: number;
-    Planner?: PlannerInterface;
+    BookPlanID?: number;
+    BookPlan?: BookPlanInterface;
 
     TouristID?: number;
     Tourist?: TouristInterface;
