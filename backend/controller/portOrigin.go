@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /portOrigin
@@ -21,8 +21,6 @@ func CreatePortOrigin(c *gin.Context) {
 	// สร้าง portOrigin
 	a := entity.PortOrigin{
 		PortOrigin_name: portOrigin.PortOrigin_name,
-		Place: portOrigin.Place,
-		Country: portOrigin.Country,
 	}
 
 	// บันทึก

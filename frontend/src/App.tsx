@@ -9,8 +9,10 @@ import Register from "./page/register/register";
 import CheckIn from "./page/employee/checkIn";
 import Destination from "./page/employee/destination";
 import CreateDestination from "./page/employee/destination/destinationCreate";
+import EditDestination from "./page/employee/destination/destinationEdit";
 import Food from "./page/employee/food";
-import Planner from "./page/employee/planner";
+// import Planner from "./page/employee/planner";
+// import CreatePlanner from "./page/employee/planner/plannerCreate";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
@@ -43,8 +45,10 @@ const router = createBrowserRouter(
         <Route path="check-in" element={<CheckIn />} />
         <Route path="destination" element={<Destination />} />
         <Route path="destination/create" element={<CreateDestination />} />
+        <Route path="destination/edit/:id" element={<EditDestination />} />
         <Route path="food" element={<Food />} />
-        <Route path="planner" element={<Planner />} />
+        {/* <Route path="planner" element={<Planner />} /> */}
+        {/* <Route path="planner/create" element={<CreatePlanner />} /> */}
         <Route path="repair" element={<Repair />} />
         <Route path="repair/create" element={<RepairCreate />} />
         <Route path="room" element={<Room />} />
@@ -56,7 +60,7 @@ const router = createBrowserRouter(
       <Route path="tourist" element={<TouristLayout />}>
         <Route path="bookPlan" element={<BookPlan />} />
         <Route path="food" element={<Food />} />
-        <Route path="planner" element={<Planner />} />
+        {/* <Route path="planner" element={<Planner />} /> */}
         <Route path="room" element={<Room />} />
         <Route path="bookActivity" element={<BookActivity />} />
         <Route

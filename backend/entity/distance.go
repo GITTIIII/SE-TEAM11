@@ -6,7 +6,7 @@ import (
 
 type Distance struct {
 	gorm.Model
-	Distance string 
+	Distance string `gorm:"uniqueIndex"`
 
 	Destinations []Destination `gorm:"foreignKey:DistanceID"`
 }
