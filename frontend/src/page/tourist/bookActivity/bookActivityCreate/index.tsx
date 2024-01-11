@@ -79,7 +79,7 @@ export default function BookActivityCreate() {
         values.NumberOfPeople = Number(input.NumberOfPeople)
         values.Phone_number = input.Phone_number
         values.Comment = input.Comment
-        // values.BookPlanID = 
+        values.BookPlanID = 1
         values.ActivityID = Number(input.Activity)
         values.TouristID = Number(localStorage.getItem("TouristID"))
         console.log(values)
@@ -92,11 +92,11 @@ export default function BookActivityCreate() {
             });
             setTimeout(function () {
                 navigate("/tourist/bookActivity");
-            }, 500);
+            }, 5000);
         } else {
             messageApi.open({
                 type: "error",
-                content: "บันทึกข้อมูลไม่สำเร็จ",
+                content: res.message,
             });
         }
     };
@@ -144,8 +144,6 @@ export default function BookActivityCreate() {
                             <div className="book-activity-input">
                                 <input 
                                 type="number" 
-                                min={3} 
-                                max={10}
                                 name="NumberOfPeople"
                                 onChange={handleInput}
                                 />

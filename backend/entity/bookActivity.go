@@ -11,9 +11,9 @@ type BookActivity struct {
 
 	TimeStart time.Time
 	TimeEnd time.Time
-	NumberOfPeople int `valid:"range(3|10)~NumberOfPeople must be between 3 and 10"`
+	NumberOfPeople int `valid:"required~NumberOfPeople is required,range(3|10)~NumberOfPeople must be between 3 and 10"`
 	Comment string
-	Phone_number string `valid:"required~PhoneNumber is required, matches(^[0]\\d{9}$)~PhoneNumber length is not 10 digits"`
+	Phone_number string `valid:"required~PhoneNumber is required, matches(^[0]\\d{9}$)~PhoneNumber must start with 0 and have length 10 digits"`
 
 	BookPlanID uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID" valid:"-"`
