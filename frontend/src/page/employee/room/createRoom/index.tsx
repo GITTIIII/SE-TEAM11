@@ -82,7 +82,7 @@ export default function CreateRooms() {
     } else {
       messageApi.open({
         type: "error",
-        content: "บันทึกข้อมูลไม่สำเร็จ",
+        content: res.message,
       });
     }
   };
