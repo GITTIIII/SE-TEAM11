@@ -1,0 +1,9 @@
+.repair-edit{
+    position: fixed;
+    inset: 0px;
+    width: 500px;
+    height: 500px;
+    background-color: aquamarine;
+    z-index: 30;
+    
+}
