@@ -50,12 +50,12 @@ export default function BookActivity() {
                     <div>จำนวนคน {item.NumberOfPeople}</div>
                     <div>เบอร์โทร {item.Phone_number}</div>
                     <div>หมายเหตุ {item.Comment}</div>
-                    <Link to="bookActivityUpdate">
+                    {/* <Link to="bookActivityUpdate">
                       <BookActivityID.Provider value={item.ID??0}>                     
                         <BookActivityUpdate />        
                       </BookActivityID.Provider>
                       <button className="submit_button">เเก้ไข</button>
-                    </Link>
+                    </Link> */}
                     <button className="submit_button" onClick={() => DeleteBookActivity(item.ID)}>ลบ</button>
                   </div>
               ))}
