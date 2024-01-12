@@ -2,6 +2,11 @@ package entity
 
 import (
 	"gorm.io/gorm"
+	// "os"
+	// "reflect"
+
+	// "github.com/asaskevich/govalidator"
+	// "github.com/gabriel-vasile/mimetype"
 )
 
 type Room struct {
@@ -23,3 +28,41 @@ type Room struct {
 	Repairs 	[]Repair 	`gorm:"foreignKey:RoomID"`
 	BookPlans 	[]BookPlan 	`gorm:"foreignKey:RoomID"`
 }
+
+// func init() {
+// 	govalidator.TagMap["isImage"] = govalidator.Validator(func(fl govalidator.FieldLevel) bool {
+// 		mimetypes := map[string]bool{
+// 			"image/jpeg": true,
+// 		}
+// 		field := fl.Field()
+	
+// 		switch field.Kind() {
+// 		case reflect.String:
+// 			filePath := field.String()
+// 			fileInfo, err := os.Stat(filePath)
+	
+// 			if err != nil {
+// 				return false
+// 			}
+	
+// 			if fileInfo.IsDir() {
+// 				return false
+// 			}
+	
+// 			file, err := os.Open(filePath)
+// 			if err != nil {
+// 				return false
+// 			}
+// 			defer file.Close()
+	
+// 			mime, err := mimetype.DetectReader(file)
+// 			if err != nil {
+// 				return false
+// 			}
+	
+// 			return mimetypes[mime.String()]
+// 		}
+	
+// 		return false
+// 	})
+// }
