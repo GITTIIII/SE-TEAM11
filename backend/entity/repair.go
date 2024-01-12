@@ -7,7 +7,7 @@ import (
 
 type Repair struct {
 	gorm.Model
-	Comment    string  `valid:"required~Detail is required,stringlength(2|256)~Detail must be between 2 and 256 characters"`
+	Comment    string  `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
 	Repair_img	string `valid:"required~Image is required"`
 	Repair_date time.Time
 	Repair_status string
