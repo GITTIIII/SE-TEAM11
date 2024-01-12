@@ -19,8 +19,7 @@ import { GetAllRepairType } from "../../../../services/https/repairType";
 import { RepairTypeInterface } from "../../../../interface/IRepairType";
 import { RoomInterface } from "../../../../interface/IRoom";
 import { GetAllRoom } from "../../../../services/https/room";
-import dayjs from 'dayjs'
-
+import dayjs from "dayjs";
 
 export default function RepairCreate() {
   let navigate = useNavigate();
@@ -88,7 +87,7 @@ export default function RepairCreate() {
       });
       setTimeout(function () {
         navigate("../repair");
-      }, 10000);
+      }, 2000);
     } else {
       messageApi.open({
         type: "error",
@@ -97,43 +96,43 @@ export default function RepairCreate() {
     }
   };
 
-  // const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files && e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const base64String = reader.result as string; // Type assertion to string
-  //       // เปลี่ยน setImage เพื่อทำการใช้ base64String
-  //       setRepair_Img(base64String);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
-  const props: UploadProps = {
-    beforeUpload: (file) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
       const reader = new FileReader();
-
-      reader.onload = (e) => {
-        if (e.target) {
-          const base64Image = e.target.result as string; // Ensure it's a string
-          // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
-          setRepair_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
-        }
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Type assertion to string
+        // เปลี่ยน setImage เพื่อทำการใช้ base64String
+        setRepair_Img(base64String);
       };
-
       reader.readAsDataURL(file);
-      return false; // Prevent automatic upload
-    },
-    onChange: (info) => {
-      console.log(info.fileList);
-    },
+    }
   };
+
+  // const props: UploadProps = {
+  //   beforeUpload: (file) => {
+  //     const reader = new FileReader();
+
+  //     reader.onload = (e) => {
+  //       if (e.target) {
+  //         const base64Image = e.target.result as string; // Ensure it's a string
+  //         // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
+  //         setRepair_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
+  //       }
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //     return false; // Prevent automatic upload
+  //   },
+  //   onChange: (info) => {
+  //     console.log(info.fileList);
+  //   },
+  // };
 
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
     setRDate(date);
-  }
+  };
 
   const filterOption = (
     input: string,
@@ -187,7 +186,6 @@ export default function RepairCreate() {
                     <option value={item.ID} key={item.Repair_name}>
                       {item.Repair_name}
                     </option>
-                    
                   ))}
                 </select>
               </div>
@@ -215,7 +213,7 @@ export default function RepairCreate() {
               />
             </div>
 
-            <div className="repair-form-control">
+            {/* <div className="repair-form-control">
               <label className="repair-text">Upload your image</label>
               <br></br>
               <Upload
@@ -224,12 +222,27 @@ export default function RepairCreate() {
                 action="/Repair"
                 id="repair_img"
               >
-                <Button icon={<UploadOutlined />} >Click to Upload</Button>
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
               </Upload>
+            </div> */}
 
-              
+            <div className="repair-form-control">
+              <label className="repair-text">Upload your image</label>
+              <br></br>
+              <input
+                id="repair_img"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
             </div>
-       
+
+            {/* <div className="repair-form-control">
+              <label className="repair-text">Upload your image</label>
+              <br></br>
+              
+            </div> */}
+
             <div className="buttom-area">
               <button type="submit">ยืนยัน</button>
             </div>

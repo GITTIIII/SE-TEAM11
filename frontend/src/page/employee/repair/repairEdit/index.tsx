@@ -14,7 +14,7 @@ function RepairEdit({
   return (
     <>
     <div className='repair-edit'>
-    <Button icon={<CloseOutlined />} onClick={() => onClose}></Button>
+    <a onClick={onClose}>Close</a>
     
     </div>
     
