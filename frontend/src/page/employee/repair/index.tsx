@@ -4,8 +4,7 @@ import "./repair.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, message, ConfigProvider, Table, Modal } from "antd";
 
-
-import ship from "../../../asset/ship.jpg";
+import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 
 import { GetAllRepair, DeleteRepairByID } from "../../../services/https/repair";
 import { RepairInterface } from "../../../interface/IRepair";
@@ -49,6 +48,22 @@ export default function Repair() {
     }
   };
 
+  const employeeIdFromLocalStorage = localStorage.getItem("EmployeeID");
+  const employeeIdAsNumber = employeeIdFromLocalStorage
+    ? parseInt(employeeIdFromLocalStorage, 10)
+    : undefined;
+
+  // Filter repairRequest based on memberId
+  const filteredRepairRequest = listRepair.filter(
+    (listRepair) => listRepair.EmployeeID === employeeIdAsNumber
+  );
+
+  // เลือกหน้า =----------------------------------------------------------------------------------------------------------------------------------------
+  const rowsPerPage = 3;
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const visibleRows = filteredRepairRequest.slice(startIndex, endIndex);
+
   const handleClose = () => setShowEdit(false);
 
   console.log(showEdit);
@@ -58,7 +73,7 @@ export default function Repair() {
       <RepairEdit open={showEdit} onClose={handleClose}></RepairEdit>
       {/* <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}> */}
       {contextHolder}
-      <div>
+      <div className="repair-table-show">
         <h1 className="repair-text-home">Repair</h1>
         <div>
           <div>
@@ -73,7 +88,7 @@ export default function Repair() {
                   },
                 }}
               >
-                <Button className="room-add-button" type="primary">
+                <Button className="repair-request-button" type="primary">
                   Repair Request
                 </Button>
               </ConfigProvider>
@@ -93,7 +108,7 @@ export default function Repair() {
                 </tr>
               </thead>
               <tbody>
-                {listRepair.map((item, index) => (
+                {visibleRows.map((item, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
@@ -122,6 +137,21 @@ export default function Repair() {
                 ))}
               </tbody>
             </table>
+            <div>
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <IoIosArrowBack />
+              </button>
+              <span>{currentPage}</span>
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={endIndex >= listRepair.length}
+              >
+                <IoIosArrowForward />
+              </button>
+            </div>
           </div>
         </div>
       </div>
