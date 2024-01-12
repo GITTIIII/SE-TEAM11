@@ -19,11 +19,9 @@ async function GetAllPlanner() {
         return false;
       }
     });
-
+  //
   return res;
 }
-
-
 
 async function GetPlannerById(id: Number | undefined) {
   const requestOptions = {

@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /planner
@@ -20,10 +20,9 @@ func CreatePlanner(c *gin.Context) {
 
 	// สร้าง planner
 	a := entity.Planner{
+		Status: "ว่าง",
 		Plan_name: planner.Plan_name,
 		Price: planner.Price,
-		Plan_time: planner.Plan_time,
-		Plan_date: planner.Plan_date,
 
 		DestinationID: planner.DestinationID,
 		Destination: destination,

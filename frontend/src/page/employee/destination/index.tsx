@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { NavLink, useNavigate } from "react-router-dom";
 
 import "./destination.css";
 import { Button, ConfigProvider, Modal, Table, message } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import cruise from "../../../asset/cruise.png";
 import { DestinationInterface } from "../../../interface/IDestination";
 import {
@@ -14,6 +13,7 @@ import {
 import { ColumnsType } from "antd/es/table";
 
 export default function Destination() {
+  const navigate = useNavigate();
   const columns: ColumnsType<DestinationInterface> = [
     {
       title: "ลำดับ",
@@ -44,6 +44,12 @@ export default function Destination() {
       key: "manage",
       render: (text, record, index) => (
         <>
+          <Button
+            onClick={() => navigate(`/employee/destination/edit/${record.ID}`)}
+            shape="circle"
+            icon={<EditOutlined />}
+            size={"large"}
+          />
           <Button
             onClick={() => showModal(record)}
             style={{ marginLeft: 10 }}
@@ -108,6 +114,7 @@ export default function Destination() {
   const handleCancel = () => {
     setOpen(false);
   };
+
   return (
     <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
       {contextHolder}

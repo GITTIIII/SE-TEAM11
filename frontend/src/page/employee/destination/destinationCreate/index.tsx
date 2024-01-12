@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { UploadOutlined } from "@ant-design/icons";
-import { message, Upload, Form, Button } from "antd";
+import { message, Form, Button, Upload } from "antd";
+import type { UploadProps } from "antd/es/upload/interface";
 import { PortOriginInterface } from "../../../../interface/IPortOrigin";
 import { PortDestinationInterface } from "../../../../interface/IPortDestination";
 import { DistanceInterface } from "../../../../interface/IDistance";
@@ -13,6 +13,7 @@ import { GetAllPortOrigin } from "../../../../services/https/portOrigin";
 import { GetAllPortDestination } from "../../../../services/https/portDestination";
 import { GetAllDistance } from "../../../../services/https/distance";
 import { CreateDestination } from "../../../../services/https/destination";
+import { UploadOutlined } from "@ant-design/icons";
 
 export default function DestinationCreates() {
   const [portOrigin, setPortOrigin] = useState<PortOriginInterface[]>([]);
@@ -65,10 +66,12 @@ export default function DestinationCreates() {
   };
 
   let navigate = useNavigate();
+  const [Destination_Img, setDestination_Img] = useState("");
 
   const [messageApi, contextHolder] = message.useMessage();
 
   const handleSubmit = async (values: DestinationInterface) => {
+    values.Destination_Img = Destination_Img;
     values.PortOriginID = input.portOriginID;
     values.PortDestinationID = input.portDestinationID;
     values.DistanceID = input.DistanceID;
@@ -91,6 +94,25 @@ export default function DestinationCreates() {
       });
     }
   };
+  const props: UploadProps = {
+    beforeUpload: (file) => {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        if (e.target) {
+          const base64Image = e.target.result as string; // Ensure it's a string
+          // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
+          setDestination_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
+        }
+      };
+
+      reader.readAsDataURL(file);
+      return false; // Prevent automatic upload
+    },
+    onChange: (info) => {
+      console.log(info.fileList);
+    },
+  };
 
   return (
     <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
@@ -99,7 +121,6 @@ export default function DestinationCreates() {
       <h1 className="destination-header">Add a Destination</h1>
 
       <div className="destination-headline"></div>
-
       <div className="create-destination-form">
         <Form onFinish={handleSubmit}>
           <div className="create-destination-form-control">
@@ -110,7 +131,6 @@ export default function DestinationCreates() {
                 className="create-destination-select-custom"
                 name="portOriginID"
                 onChange={handleInput}
-                required
               >
                 <option value="" disabled selected>
                   select port origin
@@ -132,7 +152,6 @@ export default function DestinationCreates() {
                 className="create-destination-select-custom"
                 name="portDestinationID"
                 onChange={handleInput}
-                required
               >
                 <option value="" disabled selected>
                   select port destination
@@ -154,7 +173,6 @@ export default function DestinationCreates() {
                 className="create-destination-select-custom"
                 name="DistanceID"
                 onChange={handleInput}
-                required
               >
                 <option value="" disabled selected>
                   select distance
@@ -167,7 +185,6 @@ export default function DestinationCreates() {
               </select>
             </div>
           </div>
-
           <div className="buttom-area">
             <button type="submit">ยืนยัน</button>
           </div>

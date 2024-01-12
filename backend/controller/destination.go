@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,10 +19,15 @@ func CreateDestination(c *gin.Context) {
 	if err := c.ShouldBindJSON(&destination); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	// validation
 	}
-
+	if _, err := govalidator.ValidateStruct(destination); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	// สร้าง destination
 	a := entity.Destination{
+		// Destination_Img: destination.Destination_Img,
 		PortOriginID: destination.PortOriginID,
 		PortOrigin: portOrigin,
 
