@@ -66,6 +66,7 @@ const router = createBrowserRouter(
         <Route path="food" element={<Food />} />
         <Route path="planner" element={<Planner />} />
         <Route path="room" element={<Room />} />
+        <Route path="showroom" element={<ShowRoom />} />
         <Route path="bookActivity" element={<BookActivity />} />
         <Route
           path="bookActivity/bookActivityCreate"

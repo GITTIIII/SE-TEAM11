@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Room() {
+export default function ShowRoom() {
   return (
-    <div>Room</div>
+    <div>ShowRoom</div>
   )
 }
