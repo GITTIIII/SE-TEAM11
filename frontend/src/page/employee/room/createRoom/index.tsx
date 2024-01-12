@@ -126,8 +126,7 @@ export default function CreateRooms() {
           <br></br>
           <input 
             className='create-room-input' 
-            type="text" placeholder = 'Enter number of room' 
-            // required 
+            type="text" placeholder = 'Enter number of room'
             value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
           />
         </div>
@@ -136,7 +135,7 @@ export default function CreateRooms() {
           <label className='create-room-text'>Room Type</label>
           <br></br>
           <div className='create-room-select'>
-            <select className='create-room-select-custom' name="RoomTypeID" onChange={handleInput} required>
+            <select className='create-room-select-custom' name="RoomTypeID" onChange={handleInput}>
               <option value="" disabled selected>
                 select room type
               </option>
@@ -154,7 +153,7 @@ export default function CreateRooms() {
           <br></br>
           <div className='create-room-select'>
             <select 
-              className='create-room-select-custom' name="RoomZoneID" onChange={handleInput} required>
+              className='create-room-select-custom' name="RoomZoneID" onChange={handleInput}>
               <option value="" disabled selected>
                 select room zone
               </option>
@@ -173,8 +172,7 @@ export default function CreateRooms() {
           <input 
             className='create-room-input' 
             type="number" step="0.001" 
-            placeholder = 'Enter price of room' 
-            // required 
+            placeholder = 'Enter price of room'
             value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
           />
         </div>
