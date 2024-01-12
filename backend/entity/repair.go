@@ -17,9 +17,9 @@ type Repair struct {
 
 	
 	EmployeeID *uint
-	Employee Employee `gorm:"foreignKey:EmployeeID"`
+	Employee Employee `gorm:"foreignKey:EmployeeID" valid:"-"`
 	
 	RoomID *uint
-	Room Room `gorm:"foreignKey:RoomID"`
+	Room Room `gorm:"foreignKey:RoomID" valid:"-"`
 	
 }
