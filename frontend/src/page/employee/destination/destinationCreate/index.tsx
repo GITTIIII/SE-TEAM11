@@ -66,12 +66,12 @@ export default function DestinationCreates() {
   };
 
   let navigate = useNavigate();
-  const [Destination_Img, setDestination_Img] = useState("");
+  // const [Destination_Img, setDestination_Img] = useState("");
 
   const [messageApi, contextHolder] = message.useMessage();
 
   const handleSubmit = async (values: DestinationInterface) => {
-    values.Destination_Img = Destination_Img;
+    // values.Destination_Img = Destination_Img;
     values.PortOriginID = input.portOriginID;
     values.PortDestinationID = input.portDestinationID;
     values.DistanceID = input.DistanceID;
@@ -94,25 +94,25 @@ export default function DestinationCreates() {
       });
     }
   };
-  const props: UploadProps = {
-    beforeUpload: (file) => {
-      const reader = new FileReader();
+  // const props: UploadProps = {
+  //   beforeUpload: (file) => {
+  //     const reader = new FileReader();
 
-      reader.onload = (e) => {
-        if (e.target) {
-          const base64Image = e.target.result as string; // Ensure it's a string
-          // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
-          setDestination_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
-        }
-      };
+  //     reader.onload = (e) => {
+  //       if (e.target) {
+  //         const base64Image = e.target.result as string; // Ensure it's a string
+  //         // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
+  //         setDestination_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
+  //       }
+  //     };
 
-      reader.readAsDataURL(file);
-      return false; // Prevent automatic upload
-    },
-    onChange: (info) => {
-      console.log(info.fileList);
-    },
-  };
+  //     reader.readAsDataURL(file);
+  //     return false; // Prevent automatic upload
+  //   },
+  //   onChange: (info) => {
+  //     console.log(info.fileList);
+  //   },
+  // };
 
   return (
     <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>

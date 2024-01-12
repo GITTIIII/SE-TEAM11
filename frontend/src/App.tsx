@@ -11,8 +11,9 @@ import Destination from "./page/employee/destination";
 import CreateDestination from "./page/employee/destination/destinationCreate";
 import EditDestination from "./page/employee/destination/destinationEdit";
 import Food from "./page/employee/food";
-// import Planner from "./page/employee/planner";
-// import CreatePlanner from "./page/employee/planner/plannerCreate";
+import Planner from "./page/employee/planner";
+import CreatePlanner from "./page/employee/planner/plannerCreate";
+import EditPlanner from "./page/employee/planner/plannerEdit";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
@@ -29,7 +30,7 @@ import LoginTourist from "./page/login/loginTourist/loginTourist";
 import RepairCreate from "./page/employee/repair/repairCreate";
 import TouristProfile from "./page/tourist/touristProfile";
 import EmployeeProfile from "./page/employee/employeeProfile";
-import ShowRoom from "./page/tourist/room"
+import ShowRoom from "./page/tourist/room";
 import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
 import BookActivityUpdate from "./page/tourist/bookActivity/bookActivityUpdate";
 
@@ -49,8 +50,9 @@ const router = createBrowserRouter(
         <Route path="destination/create" element={<CreateDestination />} />
         <Route path="destination/edit/:id" element={<EditDestination />} />
         <Route path="food" element={<Food />} />
-        {/* <Route path="planner" element={<Planner />} /> */}
-        {/* <Route path="planner/create" element={<CreatePlanner />} /> */}
+        {<Route path="planner" element={<Planner />} />}
+        {<Route path="planner/create" element={<CreatePlanner />} />}
+        <Route path="planner/edit/:id" element={<EditPlanner />} />
         <Route path="repair" element={<Repair />} />
         <Route path="repair/create" element={<RepairCreate />} />
         <Route path="room" element={<Room />} />
@@ -62,16 +64,17 @@ const router = createBrowserRouter(
       <Route path="tourist" element={<TouristLayout />}>
         <Route path="bookPlan" element={<BookPlan />} />
         <Route path="food" element={<Food />} />
-<<<<<<< HEAD
-        {/* <Route path="planner" element={<Planner />} /> */}
-        <Route path="room" element={<Room />} />
-=======
         <Route path="planner" element={<Planner />} />
-        <Route path="showRoom" element={<ShowRoom />} />
->>>>>>> c49c6e4b2faba9141d8f5eb237a8eacddcb196e7
+        <Route path="room" element={<Room />} />
         <Route path="bookActivity" element={<BookActivity />} />
-        <Route path="bookActivity/bookActivityCreate" element={<BookActivityCreate />}/>
-        <Route path="bookActivity/bookActivityUpdate" element={<BookActivityUpdate />}/>
+        <Route
+          path="bookActivity/bookActivityCreate"
+          element={<BookActivityCreate />}
+        />
+        <Route
+          path="bookActivity/bookActivityUpdate"
+          element={<BookActivityUpdate />}
+        />
         <Route path="payment" element={<Payment />} />
         <Route path="touristProfile" element={<TouristProfile />} />
         <Route path="destination" element={<Destination />} />
