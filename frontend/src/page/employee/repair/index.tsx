@@ -10,6 +10,8 @@ import { GetAllRepair, DeleteRepairByID } from "../../../services/https/repair";
 import { RepairInterface } from "../../../interface/IRepair";
 import { RepairTypeInterface } from "../../../interface/IRepairType";
 
+
+
 import RepairEdit from "./repairEdit";
 
 export default function Repair() {
@@ -71,7 +73,7 @@ export default function Repair() {
   return (
     <>
       <RepairEdit open={showEdit} onClose={handleClose}></RepairEdit>
-      {/* <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}> */}
+      {/* <div className="login-bg" style={{ backgroundImage: `url(${background})` }}> */}
       {contextHolder}
       <div className="repair-table-show">
         <h1 className="repair-text-home">Repair</h1>
@@ -137,17 +139,19 @@ export default function Repair() {
                 ))}
               </tbody>
             </table>
-            <div>
+            <div className="repair-paging">
               <button
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
+                className="repair-paging-backward"
               >
                 <IoIosArrowBack />
               </button>
-              <span>{currentPage}</span>
+              <span className="repair-current-page">{currentPage}</span>
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={endIndex >= listRepair.length}
+                className="repair-paging-forward"
               >
                 <IoIosArrowForward />
               </button>
