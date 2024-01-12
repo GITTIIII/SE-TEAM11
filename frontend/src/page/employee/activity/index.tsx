@@ -36,7 +36,7 @@ export default function Activity() {
         } else {
             messageApi.open({
                 type: "error",
-                content: "บันทึกข้อมูลไม่สำเร็จ",
+                content: res.message,
             });
         }
     };

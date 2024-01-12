@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /activity
@@ -13,6 +14,11 @@ func CreateActivity(c *gin.Context) {
 	
 	// bind เข้าตัวแปร activity
 	if err := c.ShouldBindJSON(&activity); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(activity); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
