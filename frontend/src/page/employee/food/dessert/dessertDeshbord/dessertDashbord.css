@@ -1,0 +1,90 @@
+.dessertDashbord-form{
+    width: 40%;
+    background:rgba(255, 255, 255, 0.1);
+   
+    backdrop-filter: blur(15px);
+    border-radius: 5px;
+
+    display: grid;
+    column-gap: 16px;
+    row-gap: 16px;
+    max-width: 1500px;
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+
+.dessertDashbord-form-control{
+    margin-top: 10px;
+}
+
+.dessertDashbord-textarea{
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.dessertDashbord-input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.dessertDashbord-select{
+    position: relative;
+
+}
+
+.dessertDashbord-select-custom {
+    width: 100%;
+    font-size: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+
+    appearance: none;
+    padding: 12px 20px;
+    padding-right: 38px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+
+  .dessertDashbord-bg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.dessertDashbord-header{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 25vh;
+    min-width: 100vb;
+    display: flex;
+    /* background-color: rgb(255, 255, 255); */
+}

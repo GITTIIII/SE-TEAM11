@@ -1,5 +1,5 @@
 export interface SavoryInterface {
     ID?: number;
-    Savory_name?: string;
+    Name?: string;
     Count?: number;
 }

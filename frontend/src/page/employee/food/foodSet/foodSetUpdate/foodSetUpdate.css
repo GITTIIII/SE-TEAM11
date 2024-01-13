@@ -1,0 +1,73 @@
+.foodSetUpdate-form{
+    width: 40%;
+    background:rgba(255, 255, 255, 0.1);
+   
+    backdrop-filter: blur(15px);
+    border-radius: 5px;
+
+    padding: 20px;
+    margin: auto;
+    
+}
+
+.foodSetUpdate-form-control{
+    margin-top: 10px;
+}
+
+
+
+.foodSetUpdate-textarea{
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.foodSetUpdate-input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.foodSetUpdate-select{
+    position: relative;
+
+}
+
+.foodSetUpdate-select-custom {
+    width: 100%;
+    font-size: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+
+    appearance: none;
+    padding: 12px 20px;
+    padding-right: 38px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+
+  .foodSetUpdate-bg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
