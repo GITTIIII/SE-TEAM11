@@ -22,5 +22,5 @@ type BookActivity struct {
 	Tourist Tourist `gorm:"foreignKey:TouristID"`
 
 	ActivityID uint
-	Activity Activity `gorm:"foreignKey:ActivityID"`
+	Activity Activity `gorm:"foreignKey:ActivityID" valid:"-"`
 }

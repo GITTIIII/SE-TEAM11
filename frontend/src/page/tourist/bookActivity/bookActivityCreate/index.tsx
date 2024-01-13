@@ -92,7 +92,7 @@ export default function BookActivityCreate() {
             });
             setTimeout(function () {
                 navigate("/tourist/bookActivity");
-            }, 5000);
+            }, 500);
         } else {
             messageApi.open({
                 type: "error",

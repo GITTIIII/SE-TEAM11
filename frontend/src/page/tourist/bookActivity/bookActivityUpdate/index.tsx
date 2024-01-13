@@ -1,26 +1,25 @@
 import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
 import type { Dayjs } from 'dayjs';
-import { Link, useNavigate } from "react-router-dom"
 import { DatePicker, Form, message } from "antd"
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState , useContext} from "react";
 import { BookActivityInterface } from "../../../../interface/IBookActivity";
-import { CreateBookActivity, GetBookActivityById } from "../../../../services/https/bookActivity";
+import { GetBookActivityById, UpdateBookActivity } from "../../../../services/https/bookActivity";
 import { GetAllActivity } from '../../../../services/https/activity';
 import { ActivityInterface } from '../../../../interface/IActivity';
-import { BookActivityID } from "../index";
+import { idBookActivity } from "../index"
+import dayjs from 'dayjs';
 import "../bookActivity.css"
 
 export default function BookActivityUpdate() {
-    const bookActivityID = useContext(BookActivityID)
-    let navigate = useNavigate();
     type RangeValue = [Dayjs | null, Dayjs | null] | null;
     const { RangePicker } = DatePicker;
-    const [dates, setDates] = useState<RangeValue>(null);
-    const [StartDate, setStartDate] = useState("");
-    const [EndDate, setEndDate] = useState("");
+    const BookActivityId = useContext(idBookActivity);
+    const [BookActivity, setBookActivity] = useState<BookActivityInterface[]>([])
+    const [StartDate, setStartDate] = useState(Object(BookActivity).StartDate);
+    const [EndDate, setEndDate] = useState(Object(BookActivity).EndDate);
+    const [dates, setDates] = useState<RangeValue>(StartDate);
     const [messageApi, contextHolder] = message.useMessage();
     const [Activity, setActivity] = useState<ActivityInterface[]>([])
-    const [BookActivity, setBookActivity] = useState<BookActivityInterface[]>([])
     const [input, setInput] = useState({
         NumberOfPeople : 0,
         Comment : "",
@@ -29,7 +28,7 @@ export default function BookActivityUpdate() {
     });
 
     async function getBookActivity() {
-        setBookActivity(await GetBookActivityById(bookActivityID));
+        setBookActivity(await GetBookActivityById(Number(BookActivityId)));
     }
 
     async function getActivity() {
@@ -91,19 +90,16 @@ export default function BookActivityUpdate() {
         values.TouristID = Number(localStorage.getItem("TouristID"))
         console.log(values)
 
-        let res = await CreateBookActivity(values);
+        let res = await UpdateBookActivity(values);
         if (res.status) {
             messageApi.open({
                 type: "success",
-                content: "บันทึกข้อมูลสำเร็จ",
+                content: "เเก้ไขข้อมูลสำเร็จ",
             });
-            setTimeout(function () {
-                navigate("/tourist/bookActivity");
-            }, 500);
         } else {
             messageApi.open({
                 type: "error",
-                content: "บันทึกข้อมูลไม่สำเร็จ",
+                content: res.message,
             });
         }
     };
@@ -112,20 +108,17 @@ export default function BookActivityUpdate() {
         getActivity()
         getBookActivity()
     },[])
-    
 
     return (
         <>
-            <div className="login-bg" style={{ backgroundColor: `wheat` }}>
                 {contextHolder}
                 <div className="form-box">
-                    <h1>จองกิจกรรม</h1>
                     <div className="book-activity-input-box">
                         <Form onFinish={handleSubmit}>
                             <label>เลือกกิจกรรม</label>
                             <div className="book-activity-input">
                                 <select name="Activity" onChange={handleInput} required>
-                                    <option value="none" hidden>{Object(BookActivity).Activity_name}</option>
+                                    <option value="none" hidden defaultValue={Object(BookActivity).ActivityID}>{(Object(BookActivity).Activity?.Activity_name)}</option>
                                     {Activity.map((item, index) => (
                                     <option key={index} value={item.ID}>{item.Activity_name}</option>
                                     ))}
@@ -135,6 +128,10 @@ export default function BookActivityUpdate() {
                             <label>เลือกวัน</label>
                             <div className="book-activity-input">
                             <RangePicker
+                                defaultValue={[
+                                    dayjs((Object(BookActivity).StartDate)),
+                                    dayjs((Object(BookActivity).EndDate))
+                                ]}
                                 onCalendarChange={(val) => {
                                     setDates(val);
                                 }}
@@ -155,6 +152,7 @@ export default function BookActivityUpdate() {
                                 min={3} 
                                 max={10}
                                 name="NumberOfPeople"
+                                defaultValue={Object(BookActivity).NumberOfPeople}
                                 onChange={handleInput}
                                 />
                             </div>
@@ -164,6 +162,7 @@ export default function BookActivityUpdate() {
                                 <input 
                                 type="text" 
                                 name="Phone_number"
+                                defaultValue={Object(BookActivity).Phone_number}
                                 onChange={handleInput}
                                 />
                             </div>
@@ -173,25 +172,20 @@ export default function BookActivityUpdate() {
                                 <input 
                                 type="textarea" 
                                 name="Comment"
+                                defaultValue={Object(BookActivity).Comment}
                                 onChange={handleInput}
                                 />
                             </div>
-                            
-                            <Link to="/tourist/bookActivity">
-                                <div className="activity-button">
-                                    ย้อนกลับ
-                                </div>
-                            </Link>
-
+                          
                             <button type="submit">
                                 <div className="activity-button">
-                                    ยืนยัน
+                                    เเก้ไขข้อมูล
                                 </div>
                             </button>
                         </Form>
                     </div>
                 </div>
-            </div>
+          
         </>
     )
 }

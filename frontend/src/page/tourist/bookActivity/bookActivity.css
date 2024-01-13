@@ -67,3 +67,19 @@
     font-size: 2vh;
     border-radius: 10px;
 }
+
+.updatePopup{
+    position: fixed;
+    justify-self: center;
+    align-self: center;
+    margin-top: 20vh;
+    top: 0;
+    border: 2px solid black;
+    z-index: 999;
+}
+
+.updatePopup-icon{
+    position: absolute;
+    top: 2%;
+    right: 5%;
+}
