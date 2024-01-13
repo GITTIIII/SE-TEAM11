@@ -72,6 +72,7 @@
 
 .repair-table {
   margin-left: 70px;
+  
 }
 
 .repair-test {
@@ -131,8 +132,6 @@
 .repair-paging {
   display: flex;
   position: absolute;
-  top: 70%;
-  left: 85%;
   align-self: center;
 }
 
