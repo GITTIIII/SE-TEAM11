@@ -10,7 +10,7 @@ import CheckIn from "./page/employee/checkIn";
 import Destination from "./page/employee/destination";
 import CreateDestination from "./page/employee/destination/destinationCreate";
 import EditDestination from "./page/employee/destination/destinationEdit";
-import Food from "./page/employee/food";
+import FoodSetDashbord from "./page/employee/food/foodSet/foodSetDeshbord";
 import Planner from "./page/employee/planner";
 import CreatePlanner from "./page/employee/planner/plannerCreate";
 import EditPlanner from "./page/employee/planner/plannerEdit";
@@ -49,7 +49,7 @@ const router = createBrowserRouter(
         <Route path="destination" element={<Destination />} />
         <Route path="destination/create" element={<CreateDestination />} />
         <Route path="destination/edit/:id" element={<EditDestination />} />
-        <Route path="food" element={<Food />} />
+        <Route path="food" element={<FoodSetDashbord />} />
         {<Route path="planner" element={<Planner />} />}
         {<Route path="planner/create" element={<CreatePlanner />} />}
         <Route path="planner/edit/:id" element={<EditPlanner />} />
@@ -63,7 +63,7 @@ const router = createBrowserRouter(
 
       <Route path="tourist" element={<TouristLayout />}>
         <Route path="bookPlan" element={<BookPlan />} />
-        <Route path="food" element={<Food />} />
+        <Route path="food" element={<FoodSetDashbord />} />
         <Route path="planner" element={<Planner />} />
         <Route path="room" element={<Room />} />
         <Route path="showroom" element={<ShowRoom />} />
