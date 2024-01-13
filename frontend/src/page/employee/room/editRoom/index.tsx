@@ -247,7 +247,7 @@ function EditRoom() {
                 <Space>
                   <NavLink to="/employee/room">
                     <Button htmlType="button" style={{ marginRight: "10px" }}>
-                      ยกเลิก
+                      cancle
                     </Button>
                   </NavLink>
                   <Button
@@ -255,7 +255,7 @@ function EditRoom() {
                     htmlType="submit"
                     icon={<PlusOutlined />}
                   >
-                    ยืนยัน
+                    confirm
                   </Button>
                 </Space>
               </Form.Item>
