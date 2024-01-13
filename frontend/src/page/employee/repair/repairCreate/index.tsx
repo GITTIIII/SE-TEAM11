@@ -109,25 +109,6 @@ export default function RepairCreate() {
     }
   };
 
-  // const props: UploadProps = {
-  //   beforeUpload: (file) => {
-  //     const reader = new FileReader();
-
-  //     reader.onload = (e) => {
-  //       if (e.target) {
-  //         const base64Image = e.target.result as string; // Ensure it's a string
-  //         // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
-  //         setRepair_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
-  //       }
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //     return false; // Prevent automatic upload
-  //   },
-  //   onChange: (info) => {
-  //     console.log(info.fileList);
-  //   },
-  // };
 
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
@@ -213,18 +194,6 @@ export default function RepairCreate() {
               />
             </div>
 
-            {/* <div className="repair-form-control">
-              <label className="repair-text">Upload your image</label>
-              <br></br>
-              <Upload
-                {...props}
-                accept="image/png, image/jpeg"
-                action="/Repair"
-                id="repair_img"
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </div> */}
 
             <div className="repair-form-control">
               <label className="repair-text">Upload your image</label>

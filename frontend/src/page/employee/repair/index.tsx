@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./repair.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, message, ConfigProvider, Table, Modal } from "antd";
+import { Button, message, ConfigProvider } from "antd";
 
 import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 
 import { GetAllRepair, DeleteRepairByID } from "../../../services/https/repair";
 import { RepairInterface } from "../../../interface/IRepair";
 import { RepairTypeInterface } from "../../../interface/IRepairType";
-
-
-
 import RepairEdit from "./repairEdit";
+
+export const repairIDContext = createContext(0);
 
 export default function Repair() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -20,6 +19,7 @@ export default function Repair() {
   const [showEdit, setShowEdit] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRepairID, setSelectedRepairID] = useState<number>(0);
 
   const getAllRepair = async () => {
     let res = await GetAllRepair();
@@ -69,98 +69,106 @@ export default function Repair() {
   const handleClose = () => setShowEdit(false);
 
   console.log(showEdit);
+  console.log(selectedRepairID);
 
   return (
     <>
-      <RepairEdit open={showEdit} onClose={handleClose}></RepairEdit>
-      {/* <div className="login-bg" style={{ backgroundImage: `url(${background})` }}> */}
-      {contextHolder}
-      <div className="repair-table-show">
-        <h1 className="repair-text-home">Repair</h1>
-        <div>
+      <repairIDContext.Provider value={selectedRepairID}>
+        <RepairEdit open={showEdit} onClose={handleClose}></RepairEdit>
+        {/* <div className="login-bg" style={{ backgroundImage: `url(${background})` }}> */}
+        {contextHolder}
+        <div className="repair-table-show">
+          <h1 className="repair-text-home">Repair</h1>
           <div>
-            <NavLink to="/employee/repair/create">
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#CDF5FD",
-                    colorTextLightSolid: "#000000",
-                    colorPrimaryHover: "#89CFF3",
-                    colorPrimaryActive: "#818FB4",
-                  },
-                }}
-              >
-                <Button className="repair-request-button" type="primary">
-                  Repair Request
-                </Button>
-              </ConfigProvider>
-            </NavLink>
-          </div>
-          <div className="repair-table">
-            <table className="repair-content-table">
-              <thead>
-                <tr>
-                  <th>Row</th>
-                  <th>Image</th>
-                  <th>Type</th>
-                  <th>Problem</th>
-                  <th>Time</th>
-                  <th>Status</th>
-                  <th>Manage</th>
-                </tr>
-              </thead>
-              <tbody>
-                {visibleRows.map((item, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <img
-                        src={`${item.Repair_img}`}
-                        style={{ maxWidth: "100px", maxHeight: "100px" }}
-                      ></img>
-                    </td>
-                    <td>
-                      {(item.RepairType as RepairTypeInterface)?.Repair_name}
-                    </td>
-                    <td>{item.Comment}</td>
-                    <td>{new Date(item.Repair_date!).toLocaleString()}</td>
-                    <td>{item.Repair_status}</td>
-                    <td>
-                      <Button
-                        icon={<DeleteOutlined />}
-                        onClick={() => handleDelete(item.ID)}
-                      ></Button>
-                      <Button
-                        icon={<EditOutlined />}
-                        onClick={() => setShowEdit(true)}
-                      ></Button>
-                    </td>
+            <div>
+              <NavLink to="/employee/repair/create">
+                <ConfigProvider
+                  theme={{
+                    token: {
+                      colorPrimary: "#CDF5FD",
+                      colorTextLightSolid: "#000000",
+                      colorPrimaryHover: "#89CFF3",
+                      colorPrimaryActive: "#818FB4",
+                    },
+                  }}
+                >
+                  <Button className="repair-request-button" type="primary">
+                    Repair Request
+                  </Button>
+                </ConfigProvider>
+              </NavLink>
+            </div>
+            <div className="repair-table">
+              <table className="repair-content-table">
+                <thead>
+                  <tr>
+                    <th>Row</th>
+                    <th>Image</th>
+                    <th>Type</th>
+                    <th>Problem</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Manage</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="repair-paging">
-              <button
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="repair-paging-backward"
-              >
-                <IoIosArrowBack />
-              </button>
-              <span className="repair-current-page">{currentPage}</span>
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={endIndex >= listRepair.length}
-                className="repair-paging-forward"
-              >
-                <IoIosArrowForward />
-              </button>
+                </thead>
+                <tbody>
+                  {visibleRows.map((item, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <img
+                          src={`${item.Repair_img}`}
+                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                        ></img>
+                      </td>
+                      <td>
+                        {(item.RepairType as RepairTypeInterface)?.Repair_name}
+                      </td>
+                      <td>{item.Comment}</td>
+                      <td>{new Date(item.Repair_date!).toLocaleString()}</td>
+                      <td>{item.Repair_status}</td>
+                      <td>
+                        <Button
+                          icon={<DeleteOutlined />}
+                          onClick={() => handleDelete(item.ID)}
+                        ></Button>
+                        <Button
+                          icon={<EditOutlined />}
+                          onClick={() => {
+                            if (item.ID !== undefined) {
+                              setSelectedRepairID(item.ID);
+                              setShowEdit(true);
+                            }
+                          }}
+                        ></Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="repair-paging">
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="repair-paging-backward"
+                >
+                  <IoIosArrowBack />
+                </button>
+                <span className="repair-current-page">{currentPage}</span>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={endIndex >= listRepair.length}
+                  className="repair-paging-forward"
+                >
+                  <IoIosArrowForward />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* </div> */}
+        {/* </div> */}
+      </repairIDContext.Provider>
     </>
   );
 }
