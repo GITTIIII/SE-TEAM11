@@ -1,5 +1,5 @@
 export interface DrinkInterface {
     ID?: number;
-    Drink_name?: string;
+    Name?: string;
     Count?: number;
 }

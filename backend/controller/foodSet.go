@@ -79,7 +79,7 @@ func GetFoodSetById(c *gin.Context) {
 
 	id := c.Param("id")
 
-	if err := entity.DB().Raw("SELECT * FROM food_Sets WHERE id = ?", id).Scan(&foodSet).Error; err != nil {
+	if err := entity.DB().Preload("Dessert").Preload("Drink").Preload("Savory").Raw("SELECT * FROM food_Sets WHERE id = ?", id).Scan(&foodSet).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 

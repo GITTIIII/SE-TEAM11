@@ -1,5 +1,5 @@
 export interface DessertInterface {
     ID?: number;
-    Dessert_name?: string;
-    Count?: string;
+    Name?: string;
+    Count?: number;
 }
