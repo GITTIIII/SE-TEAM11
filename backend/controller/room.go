@@ -24,32 +24,26 @@ func CreateRoom(c *gin.Context) {
         return
     }
 
-	db, err := entity.SetupDatabase()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
 	var roomType entity.RoomType
-	db.First(&roomType, room.RoomTypeID)
-	if roomType.ID == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "roomType not found"})
-		return
-	}
+	// db.First(&roomType, room.RoomTypeID)
+	// if roomType.ID == 0 {
+	// 	c.JSON(http.StatusNotFound, gin.H{"error": "roomType not found"})
+	// 	return
+	// }
 
 	var roomZone entity.RoomZone
-	db.First(&roomZone, room.RoomZoneID)
-	if roomZone.ID == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "roomZone not found"})
-		return
-	}
+	// db.First(&roomZone, room.RoomZoneID)
+	// if roomZone.ID == 0 {
+	// 	c.JSON(http.StatusNotFound, gin.H{"error": "roomZone not found"})
+	// 	return
+	// }
 
 	var employee entity.Employee
-	db.First(&employee, room.EmployeeID)
-	if employee.ID == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "employee not found"})
-		return
-	}
+	// db.First(&employee, room.EmployeeID)
+	// if employee.ID == 0 {
+	// 	c.JSON(http.StatusNotFound, gin.H{"error": "employee not found"})
+	// 	return
+	// }
 
 	// สร้าง room
 	a := entity.Room{

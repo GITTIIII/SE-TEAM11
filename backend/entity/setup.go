@@ -12,7 +12,7 @@ func DB() *gorm.DB {
 	return db  
 }
 
-func SetupDatabase() (*gorm.DB, error) {
+func SetupDatabase() {
 	database, err := gorm.Open(sqlite.Open("cruiseship.db"), &gorm.Config{}) 
 	if err != nil {
 		panic("Failed to connect database")
@@ -125,6 +125,5 @@ func SetupDatabase() (*gorm.DB, error) {
 	for _, activity := range Activitys {
 		db.Create(&activity)
 	}
-	return database, nil
 
 }
