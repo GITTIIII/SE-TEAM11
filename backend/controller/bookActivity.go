@@ -2,11 +2,23 @@ package controller
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/GITTIIII/SE-TEAM11/entity"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
+
+type BookActivityUpdate struct {
+	TimeStart time.Time
+	TimeEnd time.Time
+	NumberOfPeople int `valid:"required~NumberOfPeople is required,range(3|10)~NumberOfPeople must be between 3 and 10"`
+	Comment string
+	Phone_number string `valid:"required~PhoneNumber is required, matches(^[0]\\d{9}$)~PhoneNumber must start with 0 and have length 10 digits"`
+	BookPlanID uint
+	TouristID uint
+	ActivityID uint
+}
 
 // POST /bookActivity
 func CreateBookActivity(c *gin.Context) {
@@ -86,22 +98,30 @@ func DeleteBookActivity(c *gin.Context) {
 
 // PATCH /bookActivity
 func UpdateBookActivity(c *gin.Context) {
-	var bookActivity entity.BookActivity
-	var result entity.BookActivity
+	// create variable for store data as type of horse
+	var bookActivitiy BookActivityUpdate
+	//get id from url
+	id := c.Param("id")
 
-	if err := c.ShouldBindJSON(&bookActivity); err != nil {
+	// get data from body and check error
+	if err := c.ShouldBindJSON(&bookActivitiy); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// ค้นหา bookActivity ด้วย id
-	if tx := entity.DB().Where("id = ?", bookActivity.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "BookActivity not found"})
-		return
-	}
 
-	if err := entity.DB().Save(&bookActivity).Error; err != nil {
+	//validate struct
+	if _, err := govalidator.ValidateStruct(bookActivitiy); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": bookActivity})
+
+	// update data in database and check error
+	if err := entity.DB().Table("book_activities").Where("id = ?", id).Updates(bookActivitiy).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// response updated data
+	c.JSON(http.StatusOK, gin.H{"data": "updated your book_activities successfully"})
+
 }

@@ -80,6 +80,7 @@ export default function BookActivityUpdate() {
     };
 
     const handleSubmit = async (values: BookActivityInterface) => {
+        values.ID = Number(BookActivityId)
         values.TimeStart = new Date(StartDate)
         values.TimeEnd = new Date(EndDate)
         values.NumberOfPeople = Number(input.NumberOfPeople)
