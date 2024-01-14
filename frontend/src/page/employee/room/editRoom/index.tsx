@@ -29,7 +29,7 @@ function EditRoom() {
   const [roomTypes, setRoomTypes] = useState<RoomTypeInterface[]>([]);
   const [roomZones, setRoomZones] = useState<RoomZoneInterface[]>([]);
   const [roomImage, setRoomImage] = useState<string | null>(null);
-
+  const EmployeeID = localStorage.getItem("EmployeeID");
   // รับข้อมูลจาก params
   let { id } = useParams();
   // อ้างอิง form กรอกข้อมูล

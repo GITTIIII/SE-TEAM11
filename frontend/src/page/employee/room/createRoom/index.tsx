@@ -56,12 +56,15 @@ export default function CreateRooms() {
   const [roomPrice, setRoom_price] = useState("");
   const [room_img, setRoom_Img] = useState("");
 
+  const EmployeeID = localStorage.getItem("EmployeeID");
+
   const handleSubmit = async (values: RoomInterface) => {
     values.Room_number = roomNumber
     values.RoomTypeID = input.RoomTypeID
     values.RoomZoneID = input.RoomZoneID
     values.Room_price = Number(roomPrice)
     values.Room_img = room_img
+    values.EmployeeID = Number(EmployeeID);
 
     console.log(values)
 
