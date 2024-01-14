@@ -111,11 +111,17 @@ func UpdateRoom(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	
 	// ค้นหา room ด้วย id
 	if tx := entity.DB().Where("id = ?", room.ID).First(&result); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Room not found"})
 		return
 	}
+
+	if _, err := govalidator.ValidateStruct(room); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
 
 	if err := entity.DB().Save(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -20,7 +20,6 @@ func CreateCheckIn(c *gin.Context) {
 
 	// สร้าง checkIn
 	a := entity.CheckIn{
-		CheckIn_time: checkIn.CheckIn_time,
 		CheckIn_date: checkIn.CheckIn_date,
 
 		BookPlanID: checkIn.BookPlanID,

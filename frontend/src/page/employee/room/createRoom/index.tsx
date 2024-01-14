@@ -9,14 +9,11 @@ import { RoomZoneInterface } from '../../../../interface/IRoomZone';
 import { CreateRoom } from '../../../../services/https/room';
 import { GetAllRoomType } from './../../../../services/https/roomType' ;
 import { GetAllRoomZone } from '../../../../services/https/roomZone';
-
 import "./../room.css"
 import "./createRoom.css"
 import cruise from "../../../../asset/cruise.png"
 
-
 export default function CreateRooms() {
-
   const [roomType, setRoomType] = useState<RoomTypeInterface[]>([]);
   const getRoomType = async () => {
     let res = await GetAllRoomType();
@@ -27,7 +24,6 @@ export default function CreateRooms() {
   useEffect(() => {
     getRoomType();
   }, []);
-
 
   const [roomZone, setRoomZone] = useState<RoomZoneInterface[]>([]);
   const getRoomZone = async () => {
@@ -52,7 +48,6 @@ export default function CreateRooms() {
       [name]: parseInt(value,10),
     });
   };
-
 
   let navigate = useNavigate();
 
@@ -128,6 +123,7 @@ export default function CreateRooms() {
             className='create-room-input' 
             type="text" placeholder = 'Enter number of room'
             value={roomNumber} onChange={(e) => setRoom_number(e.target.value)}
+            required
           />
         </div>
 
@@ -135,7 +131,12 @@ export default function CreateRooms() {
           <label className='create-room-text'>Room Type</label>
           <br></br>
           <div className='create-room-select'>
-            <select className='create-room-select-custom' name="RoomTypeID" onChange={handleInput}>
+            <select
+              className='create-room-select-custom'
+              name="RoomTypeID"
+              onChange={handleInput}
+              required
+            >
               <option value="" disabled selected>
                 select room type
               </option>
@@ -153,7 +154,11 @@ export default function CreateRooms() {
           <br></br>
           <div className='create-room-select'>
             <select 
-              className='create-room-select-custom' name="RoomZoneID" onChange={handleInput}>
+              className='create-room-select-custom'
+              name="RoomZoneID"
+              onChange={handleInput}
+              required
+            >
               <option value="" disabled selected>
                 select room zone
               </option>
@@ -174,6 +179,7 @@ export default function CreateRooms() {
             type="number" step="0.001" 
             placeholder = 'Enter price of room'
             value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
+            required
           />
         </div>
 
@@ -188,7 +194,6 @@ export default function CreateRooms() {
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
         </div>
-
 
         <div className='buttom-area'>
           <button type='submit'>ยืนยัน</button>
