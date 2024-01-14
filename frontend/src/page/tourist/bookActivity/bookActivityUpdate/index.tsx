@@ -7,28 +7,25 @@ import { GetBookActivityById, UpdateBookActivity } from "../../../../services/ht
 import { GetAllActivity } from '../../../../services/https/activity';
 import { ActivityInterface } from '../../../../interface/IActivity';
 import { idBookActivity } from "../index"
-import dayjs from 'dayjs';
 import "../bookActivity.css"
 
 export default function BookActivityUpdate() {
+    const dateFormat = 'YYYY/MM/DD HH:mm';
     type RangeValue = [Dayjs | null, Dayjs | null] | null;
     const { RangePicker } = DatePicker;
     const BookActivityId = useContext(idBookActivity);
-    const [BookActivity, setBookActivity] = useState<BookActivityInterface[]>([])
-    const [StartDate, setStartDate] = useState(Object(BookActivity).StartDate);
-    const [EndDate, setEndDate] = useState(Object(BookActivity).EndDate);
-    const [dates, setDates] = useState<RangeValue>(StartDate);
+    const [BookActivity, setBookActivity] = useState<BookActivityInterface>({})
+    const [StartDate, setStartDate] = useState("");
+    const [EndDate, setEndDate] = useState("");
+    const [dates, setDates] = useState<RangeValue>();
     const [messageApi, contextHolder] = message.useMessage();
     const [Activity, setActivity] = useState<ActivityInterface[]>([])
-    const [input, setInput] = useState({
-        NumberOfPeople : 0,
-        Comment : "",
-        Phone_number : "",
-        Activity : 0,
-    });
+    const [input, setInput] = useState({} as BookActivityInterface);
 
     async function getBookActivity() {
-        setBookActivity(await GetBookActivityById(Number(BookActivityId)));
+        const data = await GetBookActivityById(Number(BookActivityId));
+        setBookActivity(data);
+        setInput(data);
     }
 
     async function getActivity() {
@@ -79,29 +76,35 @@ export default function BookActivityUpdate() {
             ...input, [e.target.name]: e.target.value});
     };
 
-    const handleSubmit = async (values: BookActivityInterface) => {
-        values.ID = Number(BookActivityId)
-        values.TimeStart = new Date(StartDate)
-        values.TimeEnd = new Date(EndDate)
-        values.NumberOfPeople = Number(input.NumberOfPeople)
-        values.Phone_number = input.Phone_number
-        values.Comment = input.Comment
-        // values.BookPlanID = 
-        values.ActivityID = Number(input.Activity)
-        values.TouristID = Number(localStorage.getItem("TouristID"))
-        console.log(values)
-
-        let res = await UpdateBookActivity(values);
+    const handleSubmit = async () => {
+        let updatedValues: BookActivityInterface =  {
+            ID: Number(BookActivityId),
+            TimeStart: new Date(StartDate),
+            TimeEnd: new Date(EndDate),
+            NumberOfPeople: Number(input.NumberOfPeople),
+            Comment: input.Comment,
+            Phone_number: input.Phone_number,
+            BookPlanID: 1,
+            TouristID: Number(localStorage.getItem("TouristID")),
+            ActivityID: input.ActivityID
+        }
+        
+        console.log(updatedValues);
+        let res = await UpdateBookActivity(updatedValues);
         if (res.status) {
             messageApi.open({
                 type: "success",
                 content: "เเก้ไขข้อมูลสำเร็จ",
             });
+            setTimeout(function () {
+                window.location.reload();
+            }, 500);
         } else {
             messageApi.open({
                 type: "error",
                 content: res.message,
             });
+            console.log(res.message);
         }
     };
 
@@ -119,7 +122,7 @@ export default function BookActivityUpdate() {
                             <label>เลือกกิจกรรม</label>
                             <div className="book-activity-input">
                                 <select name="Activity" onChange={handleInput} required>
-                                    <option value="none" hidden defaultValue={Object(BookActivity).ActivityID}>{(Object(BookActivity).Activity?.Activity_name)}</option>
+                                    <option value="none" hidden defaultValue={Number(Object(BookActivity).ActivityID)}>{(Object(BookActivity).Activity?.Activity_name)}</option>
                                     {Activity.map((item, index) => (
                                     <option key={index} value={item.ID}>{item.Activity_name}</option>
                                     ))}
@@ -129,10 +132,6 @@ export default function BookActivityUpdate() {
                             <label>เลือกวัน</label>
                             <div className="book-activity-input">
                             <RangePicker
-                                defaultValue={[
-                                    dayjs((Object(BookActivity).StartDate)),
-                                    dayjs((Object(BookActivity).EndDate))
-                                ]}
                                 onCalendarChange={(val) => {
                                     setDates(val);
                                 }}
@@ -141,7 +140,7 @@ export default function BookActivityUpdate() {
                                 disabledTime={disabledDateTime}
                                 minuteStep={30 as const}
                                 showTime={{ format: 'HH:mm:00' }}
-                                format="YYYY-MM-DD HH:mm"
+                                format={dateFormat}
                                 onChange={handdleDateChange}
                             />
                             </div>
@@ -177,7 +176,7 @@ export default function BookActivityUpdate() {
                                 onChange={handleInput}
                                 />
                             </div>
-                          
+                    
                             <button type="submit">
                                 <div className="activity-button">
                                     เเก้ไขข้อมูล
@@ -186,7 +185,6 @@ export default function BookActivityUpdate() {
                         </Form>
                     </div>
                 </div>
-          
         </>
     )
 }
