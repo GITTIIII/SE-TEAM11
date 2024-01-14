@@ -159,3 +159,14 @@
   padding-right: 0.25rem;
   color: #000000;
 }
+
+.repair-update-button{
+
+  
+}
+
+.repair-update-button-icon{
+  position: absolute;
+  top: 2%;
+  right: 5%;
+}

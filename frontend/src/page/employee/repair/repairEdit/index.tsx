@@ -10,13 +10,7 @@ import { GetAllRepairType } from "../../../../services/https/repairType";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { RepairTypeInterface } from "../../../../interface/IRepairType";
 
-function RepairEdit({
-  open,
-  onClose,
-}: {
-  open: React.ReactNode;
-  onClose: React.MouseEventHandler<HTMLAnchorElement>;
-}) {
+function RepairEdit() {
   const [type, setType] = useState<RepairTypeInterface[]>([]);
   const [repair,setRepair] = useState<RepairInterface>();
 
@@ -44,13 +38,14 @@ function RepairEdit({
   const repairID = useContext(repairIDContext);
   console.log(repairID);
   console.log(repair?.Comment);
-  if (!open) return null;
+ 
   return (
     <>
       <div className="repair-edit">
         <h1>Repair Edit</h1>
 
         <h3>Issue : {repair?.Comment}</h3>
+        <h3>Issue : </h3>
 
         <Form>
           <select className="repair-edit-form" name="RepairTypeID">
@@ -69,7 +64,7 @@ function RepairEdit({
           />
           <input id="repair_img" type="file" accept="image/*" />
         </Form>
-        <a onClick={onClose}>Close</a>
+        <a>Close</a>
       </div>
     </>
   );

@@ -11,6 +11,9 @@ import { RepairInterface } from "../../../interface/IRepair";
 import { RepairTypeInterface } from "../../../interface/IRepairType";
 import RepairEdit from "./repairEdit";
 
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export const repairIDContext = createContext(0);
 
 export default function Repair() {
@@ -74,7 +77,6 @@ export default function Repair() {
   return (
     <>
       <repairIDContext.Provider value={selectedRepairID}>
-        <RepairEdit open={showEdit} onClose={handleClose}></RepairEdit>
         {/* <div className="login-bg" style={{ backgroundImage: `url(${background})` }}> */}
         {contextHolder}
         <div className="repair-table-show">
@@ -137,7 +139,7 @@ export default function Repair() {
                           onClick={() => {
                             if (item.ID !== undefined) {
                               setSelectedRepairID(item.ID);
-                              setShowEdit(true);
+                              setShowEdit(!showEdit);
                             }
                           }}
                         ></Button>
@@ -166,6 +168,15 @@ export default function Repair() {
             </div>
           </div>
         </div>
+        {showEdit && (
+          <div className="repair-update-button">
+            <div 
+            className="repair-update-button-icon" onClick={() => setShowEdit(!showEdit)}>
+              <FontAwesomeIcon icon={faXmark} size="2xl" />
+            </div>
+            <RepairEdit />
+          </div>
+        )}
 
         {/* </div> */}
       </repairIDContext.Provider>

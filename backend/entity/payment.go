@@ -9,6 +9,7 @@ type Payment struct {
 
 	Price float32
 	Payment_img string
+	Status string
 
 	BookPlanID *uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID"`
