@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 import "./repair.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, message, ConfigProvider } from "antd";
@@ -13,6 +13,7 @@ import RepairEdit from "./repairEdit";
 
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { RoomInterface } from "../../../interface/IRoom";
 
 export const repairIDContext = createContext(0);
 
@@ -69,8 +70,6 @@ export default function Repair() {
   const endIndex = startIndex + rowsPerPage;
   const visibleRows = filteredRepairRequest.slice(startIndex, endIndex);
 
-  const handleClose = () => setShowEdit(false);
-
   console.log(showEdit);
   console.log(selectedRepairID);
 
@@ -83,28 +82,18 @@ export default function Repair() {
           <h1 className="repair-text-home">Repair</h1>
           <div>
             <div>
-              <NavLink to="/employee/repair/create">
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorPrimary: "#CDF5FD",
-                      colorTextLightSolid: "#000000",
-                      colorPrimaryHover: "#89CFF3",
-                      colorPrimaryActive: "#818FB4",
-                    },
-                  }}
-                >
-                  <Button className="repair-request-button" type="primary">
-                    Repair Request
-                  </Button>
-                </ConfigProvider>
-              </NavLink>
+            <Link to="repairCreate">
+              <div className="repair-request-button">
+                Repair Request
+              </div>
+            </Link>
             </div>
             <div className="repair-table">
               <table className="repair-content-table">
                 <thead>
                   <tr>
                     <th>Row</th>
+                    <th>RoomNumber</th>
                     <th>Image</th>
                     <th>Type</th>
                     <th>Problem</th>
@@ -117,10 +106,10 @@ export default function Repair() {
                   {visibleRows.map((item, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
+                      <td>{(item.Room as RoomInterface)?.Room_number}</td>
                       <td>
                         <img
                           src={`${item.Repair_img}`}
-                          style={{ maxWidth: "100px", maxHeight: "100px" }}
                         ></img>
                       </td>
                       <td>
@@ -165,18 +154,20 @@ export default function Repair() {
                   <IoIosArrowForward />
                 </button>
               </div>
+              {showEdit && (
+                <div className="repair-update-button">
+                  <div
+                    className="repair-update-button-icon"
+                    onClick={() => setShowEdit(!showEdit)}
+                  >
+                    <FontAwesomeIcon icon={faXmark} size="2xl" />
+                  </div>
+                  <RepairEdit />
+                </div>
+              )}
             </div>
           </div>
         </div>
-        {showEdit && (
-          <div className="repair-update-button">
-            <div 
-            className="repair-update-button-icon" onClick={() => setShowEdit(!showEdit)}>
-              <FontAwesomeIcon icon={faXmark} size="2xl" />
-            </div>
-            <RepairEdit />
-          </div>
-        )}
 
         {/* </div> */}
       </repairIDContext.Provider>

@@ -9,6 +9,7 @@ import { GetRepairById, UpdateRepair } from "../../../../services/https/repair";
 import { GetAllRepairType } from "../../../../services/https/repairType";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { RepairTypeInterface } from "../../../../interface/IRepairType";
+import { RoomInterface } from "../../../../interface/IRoom";
 
 function RepairEdit() {
   const [type, setType] = useState<RepairTypeInterface[]>([]);
@@ -43,10 +44,7 @@ function RepairEdit() {
     <>
       <div className="repair-edit">
         <h1>Repair Edit</h1>
-
-        <h3>Issue : {repair?.Comment}</h3>
-        <h3>Issue : </h3>
-
+        <h3>RoomNumber : {(repair?.Room as RoomInterface)?.Room_number}</h3>
         <Form>
           <select className="repair-edit-form" name="RepairTypeID">
             <option value="none" hidden>
@@ -64,7 +62,6 @@ function RepairEdit() {
           />
           <input id="repair_img" type="file" accept="image/*" />
         </Form>
-        <a>Close</a>
       </div>
     </>
   );

@@ -74,6 +74,7 @@ export default function RepairCreate() {
     values.EmployeeID = Number(EmployeeID);
     values.RoomID = input.RoomID;
     values.Repair_date = rDate;
+    values.Repair_status = "กำลังดำเนินการ";
 
     console.log(rDate);
 
