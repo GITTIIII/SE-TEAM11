@@ -13,22 +13,31 @@
     display: inline-block;
 }
 
-.book-activity-list-box .activity-button{
-    float: right;
-    background-color: #3a47d5;
-    color: white;
+.card {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+    grid-template-columns: 25% 25% 25% 25%;
 }
 
 .information{
     background-color: #f3f3f3;
     margin-top: 1%;
-    height: max-content;
-    border-radius: 20px;
-    padding: 4%;
-    gap: 10px;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
     display: grid;
+    row-gap: 10px;
     grid-template-columns: auto;
-    width: 96%;
+    border-radius: 20px;
+}
+
+.information img{
+    border-radius: 10px;
+    margin: auto;
+    width: 150px;
 }
 
 .information div label{
@@ -45,7 +54,7 @@
 .information .delete-button{
     border: 0;
     font-size: 2vh;
-    background-color: #4654f5;
+    background-color: #0015ff;
     color: white;
     border-radius: 10px;
     justify-self: center;
@@ -54,39 +63,35 @@
     transition: .5s;
 }
 
+.information .submit-button:hover{
+    cursor: pointer;
+    background-color: #4a5aff;
+}
+
 .information .delete-button{
     margin-left: 5%;
     background-color: rgb(255, 0, 0)
 }
 
+.delete-button:hover{
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.655);
+}
+
 .activity-button{
     width: auto;
-    background-color:deepskyblue;
-    color: black;
+    background-color:#2c3efe;   
+    color: white;
     padding: 10px;
-    display: inline-block;
     font-size: 2vh;
     border-radius: 10px;
     transition: .5s;
+    float: right;
 }
 
-.activity-button:hover,
-.submit-button:hover{
+.activity-button:hover{
     cursor: pointer;
-    background-color: #3a47d5d1;
-}
-
-.delete-button:hover{
-    cursor: pointer;
-    background-color: rgba(255, 0, 0, 0.683);
-}
-
-.card {
-    display: grid;
-    width: 100%;
-    gap: 5px;
-    row-gap: 15px;
-    grid-template-columns: 25% 25% 25% 25%;
+    background-color: #4a59ffd0;
 }
 
 /* Book Activity Create Form */
@@ -131,11 +136,16 @@
     padding: 10px;
 }
 
+.button{
+    width: 100%;
+    display: flex;
+}
+
 /* Book Activity Update */
 .updatePopup{
     position: fixed;
     justify-self: center;
-    align-self: center;
+    right: 25%;
     margin-top: 20vh;
     top: 0;
     border: 2px solid black;

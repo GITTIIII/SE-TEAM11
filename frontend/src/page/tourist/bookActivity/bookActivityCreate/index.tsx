@@ -167,17 +167,19 @@ export default function BookActivityCreate() {
                                 />
                             </div>
                             
-                            <Link to="/tourist/bookActivity">
-                                <div className="activity-button">
-                                    ย้อนกลับ
-                                </div>
-                            </Link>
+                            <div className="button">
+                                <Link to="/tourist/bookActivity">
+                                    <div className="activity-button">
+                                        ย้อนกลับ
+                                    </div>
+                                </Link>
 
-                            <button type="submit">
-                                <div className="activity-button">
-                                    ยืนยัน
-                                </div>
-                            </button>
+                                <button type="submit">
+                                    <div className="activity-button">
+                                        ยืนยัน
+                                    </div>
+                                </button>
+                            </div>
                         </Form>
                     </div>
                 </div>

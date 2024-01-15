@@ -1,5 +1,5 @@
 import { Form, message } from 'antd';
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { ActivityInterface } from '../../../interface/IActivity';
 import { CreateActivity, DeleteActivityByID } from '../../../services/https/activity';
 import { GetAllActivity } from '../../../services/https/activity';
@@ -8,6 +8,7 @@ import "./activity.css"
 
 export default function Activity() {
     const [activity, setActivity] = useState<ActivityInterface[]>([]);
+    const [Activity_img, setActivity_img] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
     const [input, setInput] = useState({
         Activity_name : ""
@@ -20,8 +21,22 @@ export default function Activity() {
         });
     };
 
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string; // Type assertion to string
+          // เปลี่ยน setImage เพื่อทำการใช้ base64String
+          setActivity_img(base64String);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
     const handleSubmit = async (values: ActivityInterface) => {
-        values.Activity_name = input.Activity_name
+        values.Activity_name = input.Activity_name;
+        values.Activity_img = Activity_img;
         console.log(values)
 
         let res = await CreateActivity(values);
@@ -74,18 +89,32 @@ export default function Activity() {
               <h1>Activity</h1>
               <div className="activity-create-box">
                   <Form onFinish={handleSubmit}>
+                    <label>ชื่อกิจกรรม</label>
                     <input 
                     type="text" 
                     name='Activity_name'
                     onChange={handleInput}
                     />
+                    <label>รูปกิจกรรม</label>
+                    <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    />
+
                     <button type="submit" className='submit-button'>เพิ่ม</button>
                   </Form>
               </div>
+            
               <div className="activity-list-box">
                 {activity.map((data) => {
+                  const isBase64 = data.Activity_img?.startsWith('data:image/');
+                  const imageSource = isBase64
+                    ? data.Activity_img
+                    : require(`../../../asset/${data.Activity_img}`);
                   return (
                         <div key={data.ID} className="activity-item">
+                          <img src={imageSource} alt="activity_image" />
                           <div>{data.Activity_name}</div>
                           <button onClick={() => handleDelete(data)} className='submit-button'>ลบ</button>
                         </div>

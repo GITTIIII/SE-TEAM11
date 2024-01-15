@@ -112,14 +112,30 @@ func SetupDatabase() {
 	}
 
 	Activitys := []Activity{
-		{ Activity_name: "มินิกอล์ฟ" },
-		{ Activity_name: "โต๊ะปิงปอง" },
-		{ Activity_name: "ปีนหน้าผา" },
-		{ Activity_name: "สนามบาสเก็ตบอล" },
-		{ Activity_name: "สวนน้ำและสไลเดอร์น้ำ" },
-		{ Activity_name: "คาราโอเกะ" },
-		{ Activity_name: "ฟิตเนส" },
-		{ Activity_name: "บริการสปา" },
+		{ 	Activity_name: "มินิกอล์ฟ",
+			Activity_img: "minigolf.jpg",
+		},
+		{ 	Activity_name: "โต๊ะปิงปอง",
+			Activity_img: "tabletennis.jpg", 
+		},
+		{ 	Activity_name: "ปีนหน้าผา",
+			Activity_img: "rock climbing wall.jpg", 
+		},
+		{ 	Activity_name: "สนามบาสเก็ตบอล",
+			Activity_img: "basketball.jpg", 
+		},
+		{ 	Activity_name: "สวนน้ำและสไลเดอร์น้ำ",
+			Activity_img: "water park.jpg", 
+		},
+		{ 	Activity_name: "คาราโอเกะ",
+			Activity_img: "karaoke.jpg", 
+		},
+		{ 	Activity_name: "ฟิตเนส",
+			Activity_img: "fitness.jpg", 
+		},
+		{ 	Activity_name: "บริการสปา",
+			Activity_img: "spa.jpg", 
+		},
 	}
 
 	for _, activity := range Activitys {

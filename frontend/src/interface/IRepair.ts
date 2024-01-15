@@ -5,7 +5,7 @@ import { RoomInterface } from "./IRoom";
 export interface RepairInterface {
     ID?: number;
     Comment?: string;
-    Repair_img?: string
+    Repair_img?: string;
     Repair_date?: Date;
     Repair_status?: string;
 

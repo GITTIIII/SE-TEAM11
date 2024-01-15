@@ -39,7 +39,7 @@ export default function BookActivity() {
   return (
     <>
       <idBookActivity.Provider value={BookActivityID}>
-      <div className="login-bg" style={{ background: `#03256C` }}>
+      <div className="login-bg" style={{ background: `#4a5aff` }}>
         {contextHolder}
         <div className="book-activity-list-box">
             <h1>จองกิจกรรม</h1>
@@ -51,6 +51,13 @@ export default function BookActivity() {
             <div className="card">
               {BookActivity.map((item, index) => (
                   <div key={index} className="information">
+                      <img
+                      src={item.Activity?.Activity_img?.startsWith('data:image/') 
+                      ? item.Activity?.Activity_img 
+                      : require(`../../../asset/${item.Activity?.Activity_img}`)
+                      }
+                      alt="Activity_img"
+                      />
                     <div><label>กิจกรรม :</label> {item.Activity?.Activity_name}</div>
                     <div><label>เวลาเริ่ม :</label> {new Date(item.TimeStart!).toLocaleString()}</div>
                     <div><label>เวลาสิ้นสุด :</label> {new Date(item.TimeEnd!).toLocaleString()}</div>
@@ -75,7 +82,6 @@ export default function BookActivity() {
                       </div>}
                     <button className="delete-button" onClick={() => DeleteBookActivity(item.ID)}>ลบ</button>
                     </div>
-                    
                   </div>
               ))}
             </div>

@@ -26,6 +26,7 @@ func CreateActivity(c *gin.Context) {
 	// สร้าง Activity
 	a := entity.Activity{
 		Activity_name: activity.Activity_name,
+		Activity_img: activity.Activity_img,
 	}
 
 	// บันทึก

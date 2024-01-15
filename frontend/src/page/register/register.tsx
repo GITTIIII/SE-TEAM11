@@ -41,7 +41,7 @@ const Register = () => {
         if (res.status) {
             messageApi.open({
                 type: "success",
-                content: "บันทึกข้อมูลสำเร็จ",
+                content: "สร้างบัญชีสำเร็จ",
             });
             setTimeout(function () {
                 navigate("/");
@@ -49,7 +49,7 @@ const Register = () => {
         } else {
             messageApi.open({
                 type: "error",
-                content: "บันทึกข้อมูลไม่สำเร็จ",
+                content: res.message,
             });
         }
     };
