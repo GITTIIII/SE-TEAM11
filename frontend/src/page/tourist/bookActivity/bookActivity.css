@@ -1,22 +1,95 @@
 /* Book Activity */
 .book-activity-list-box{
     color: black;
-    background-color: aquamarine;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.815);
     padding: 20px;
+    width: 95%;
+    height: 90%;
+    overflow: auto;
 }
 
 .book-activity-list-box h1{
     display: inline-block;
 }
 
-.information{
-    background-color: rgb(240, 248, 255);
-    display: grid;
-    grid-template-columns: auto auto;
+.book-activity-list-box .activity-button{
+    float: right;
+    background-color: #3a47d5;
+    color: white;
 }
 
-/* Book Activity Form */
+.information{
+    background-color: #f3f3f3;
+    margin-top: 1%;
+    height: max-content;
+    border-radius: 20px;
+    padding: 4%;
+    gap: 10px;
+    display: grid;
+    grid-template-columns: auto;
+    width: 96%;
+}
 
+.information div label{
+    font-weight: bold;
+}
+
+.information .button{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.information .submit-button,
+.information .delete-button{
+    border: 0;
+    font-size: 2vh;
+    background-color: #4654f5;
+    color: white;
+    border-radius: 10px;
+    justify-self: center;
+    width: 35%;
+    padding: 10px;
+    transition: .5s;
+}
+
+.information .delete-button{
+    margin-left: 5%;
+    background-color: rgb(255, 0, 0)
+}
+
+.activity-button{
+    width: auto;
+    background-color:deepskyblue;
+    color: black;
+    padding: 10px;
+    display: inline-block;
+    font-size: 2vh;
+    border-radius: 10px;
+    transition: .5s;
+}
+
+.activity-button:hover,
+.submit-button:hover{
+    cursor: pointer;
+    background-color: #3a47d5d1;
+}
+
+.delete-button:hover{
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.683);
+}
+
+.card {
+    display: grid;
+    width: 100%;
+    gap: 5px;
+    row-gap: 15px;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+/* Book Activity Create Form */
 .form-box h1{
     color: black;
 }
@@ -58,16 +131,7 @@
     padding: 10px;
 }
 
-.activity-button{
-    width: auto;
-    background-color:deepskyblue;
-    color: black;
-    padding: 10px;
-    display: inline-block;
-    font-size: 2vh;
-    border-radius: 10px;
-}
-
+/* Book Activity Update */
 .updatePopup{
     position: fixed;
     justify-self: center;

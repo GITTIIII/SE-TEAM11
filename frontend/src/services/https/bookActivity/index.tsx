@@ -43,6 +43,24 @@ async function GetBookActivityById(id: Number | undefined) {
   return res;
 }
 
+async function GetAllBookActivityByTouristId(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  let res = await fetch(`${apiUrl}/BookActivity/byTouristId/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function CreateBookActivity(data: BookActivityInterface) {
   const requestOptions = {
     method: "POST",
@@ -104,6 +122,7 @@ async function DeleteBookActivityByID(id: Number | undefined) {
 export {
   GetAllBookActivity,
   GetBookActivityById,
+  GetAllBookActivityByTouristId,
   CreateBookActivity,
   DeleteBookActivityByID,
   UpdateBookActivity,

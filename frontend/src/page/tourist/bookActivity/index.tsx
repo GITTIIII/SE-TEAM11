@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { message } from "antd"
 import { useEffect, useState, createContext } from "react"
-import { DeleteBookActivityByID, GetAllBookActivity } from "../../../services/https/bookActivity"
+import { DeleteBookActivityByID, GetAllBookActivityByTouristId } from "../../../services/https/bookActivity"
 import { BookActivityInterface } from "../../../interface/IBookActivity"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,8 +14,9 @@ export default function BookActivity() {
   const [updateClick, setupdateClick] = useState(false);
   const [BookActivity, setBookActivity] = useState<BookActivityInterface[]>([])
   const [BookActivityID, setBookActivityID] = useState(0);
+  const TouristID = localStorage.getItem("TouristID");
   async function GetBookActivity() {
-    setBookActivity(await GetAllBookActivity())
+    setBookActivity(await GetAllBookActivityByTouristId(Number(TouristID)))
   }
 
   async function DeleteBookActivity(id: number | undefined) {
@@ -38,7 +39,7 @@ export default function BookActivity() {
   return (
     <>
       <idBookActivity.Provider value={BookActivityID}>
-      <div className="login-bg" style={{ backgroundColor: `wheat` }}>
+      <div className="login-bg" style={{ background: `#03256C` }}>
         {contextHolder}
         <div className="book-activity-list-box">
             <h1>จองกิจกรรม</h1>
@@ -47,15 +48,17 @@ export default function BookActivity() {
                 เพิ่มการจองกิจกรรม
               </div>
             </Link>
+            <div className="card">
               {BookActivity.map((item, index) => (
                   <div key={index} className="information">
-                    <div>กิจกรรม {item.Activity?.Activity_name}</div>
-                    <div>เวลาเริ่ม {new Date(item.TimeStart!).toLocaleString()}</div>
-                    <div>เวลาสิ้นสุด {new Date(item.TimeEnd!).toLocaleString()}</div>
-                    <div>จำนวนคน {item.NumberOfPeople}</div>
-                    <div>เบอร์โทร {item.Phone_number}</div>
-                    <div>หมายเหตุ {item.Comment}</div>
-                    <button className="submit_button" 
+                    <div><label>กิจกรรม :</label> {item.Activity?.Activity_name}</div>
+                    <div><label>เวลาเริ่ม :</label> {new Date(item.TimeStart!).toLocaleString()}</div>
+                    <div><label>เวลาสิ้นสุด :</label> {new Date(item.TimeEnd!).toLocaleString()}</div>
+                    <div><label>จำนวนคน :</label> {item.NumberOfPeople}</div>
+                    <div><label>เบอร์โทร :</label> {item.Phone_number}</div>
+                    <div><label>หมายเหตุ :</label> {item.Comment}</div>
+                    <div className="button">
+                    <button className="submit-button" 
                       onClick={() => {
                         if(item.ID !== undefined){
                         setupdateClick(!updateClick);
@@ -70,9 +73,12 @@ export default function BookActivity() {
                         </div>
                         <BookActivityUpdate/>
                       </div>}
-                    <button className="submit_button" onClick={() => DeleteBookActivity(item.ID)}>ลบ</button>
+                    <button className="delete-button" onClick={() => DeleteBookActivity(item.ID)}>ลบ</button>
+                    </div>
+                    
                   </div>
               ))}
+            </div>
         </div>
       </div>
       </idBookActivity.Provider>

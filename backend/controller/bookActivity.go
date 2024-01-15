@@ -86,6 +86,16 @@ func GetAllBookActivity(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": bookActivity})
 }
 
+func GetAllBookActivityByTouristId(c *gin.Context) {
+	var bookActivity []entity.BookActivity
+	id := c.Param("id")
+	if err := entity.DB().Preload("BookPlan").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities WHERE tourist_id = ?",id).Find(&bookActivity).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": bookActivity})
+}
+
 // DELETE /bookActivity/:id
 func DeleteBookActivity(c *gin.Context) {
 	id := c.Param("id")
