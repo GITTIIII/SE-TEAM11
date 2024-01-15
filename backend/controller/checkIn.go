@@ -2,9 +2,10 @@ package controller
 
 import (
 	"net/http"
+	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /checkIn
@@ -20,10 +21,14 @@ func CreateCheckIn(c *gin.Context) {
 
 	// สร้าง checkIn
 	a := entity.CheckIn{
-		CheckIn_date: checkIn.CheckIn_date,
+		CheckIn_date: time.Now().Local(),
 
 		BookPlanID: checkIn.BookPlanID,
 		BookPlan: bookPlan,
+	}
+
+	if err := entity.DB().Create(&a).Error; err != nil {
+		
 	}
 
 	// บันทึก

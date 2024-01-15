@@ -106,7 +106,6 @@ func SetupDatabase() {
 			EmployeeRoleID:    &adminRole.ID,
 		},
 	}
-
 	for _, employee := range Employees {
 		db.Create(&employee) 
 	}
@@ -142,4 +141,16 @@ func SetupDatabase() {
 		db.Create(&activity)
 	}
 
+	book_plan := BookPlan{
+		PlannerID: 1,
+		TouristID: 1,
+		RoomID: 1,
+		FoodSetID: 1,
+	}
+	db.Model(&BookPlan{}).Create(&book_plan)
+
+	food1 := FoodSet{
+		Name: "food1",
+	}
+	db.Model(&FoodSet{}).Create(&food1)
 }
