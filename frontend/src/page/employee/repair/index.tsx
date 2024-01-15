@@ -20,7 +20,7 @@ export const repairIDContext = createContext(0);
 export default function Repair() {
   const [messageApi, contextHolder] = message.useMessage();
   const [listRepair, setAllRepair] = useState<RepairInterface[]>([]);
-  const [showEdit, setShowEdit] = useState(false);
+  const [showEdit, setShowEdit] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRepairID, setSelectedRepairID] = useState<number>(0);
@@ -82,7 +82,7 @@ export default function Repair() {
           <h1 className="repair-text-home">Repair</h1>
           <div>
             <div>
-            <Link to="repairCreate">
+            <Link to="create">
               <div className="repair-request-button">
                 Repair Request
               </div>
@@ -92,14 +92,14 @@ export default function Repair() {
               <table className="repair-content-table">
                 <thead>
                   <tr>
-                    <th>Row</th>
-                    <th>RoomNumber</th>
-                    <th>Image</th>
-                    <th>Type</th>
-                    <th>Problem</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th>Manage</th>
+                    <th>ลำดับ</th>
+                    <th>ห้องพัก</th>
+                    <th>รูปภาพ</th>
+                    <th>ประเภท</th>
+                    <th>รายละเอียด</th>
+                    <th>วันที่ต้องการรับบริการ</th>
+                    <th>สถานะ</th>
+                    <th>จัดการ</th>
                   </tr>
                 </thead>
                 <tbody>

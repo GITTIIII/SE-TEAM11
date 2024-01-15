@@ -95,12 +95,6 @@
   background-color: #fff5;
 }
 
-.repair-test {
-  width: 100%;
-  height: 100%;
-  border: 1px solid red;
-}
-
 .repair-content-table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -191,12 +185,12 @@
 }
 
 .repair-update-button{
-
   
 }
 
 .repair-update-button-icon{
   position: absolute;
-  top: 2%;
-  right: 5%;
+  right: 32%;
+  top: 18%;
+  z-index: 999;
 }

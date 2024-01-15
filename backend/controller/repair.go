@@ -2,11 +2,23 @@ package controller
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
 )
+
+type RepairUpdate struct {
+	
+	Comment    string  `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
+	Repair_img	string `valid:"required~Image is required"`
+	Repair_date time.Time `valid:"required~Date is required`
+	Repair_status string
+	RepairTypeID uint
+	EmployeeID uint
+	RoomID uint
+}
 
 // POST /repair
 func CreateRepair(c *gin.Context) {
@@ -84,18 +96,48 @@ func DeleteRepair(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /repair
+// PATCH /Updaterepair
 func UpdateRepair(c *gin.Context) {
-	var repair entity.Repair
-	var result entity.Repair
+	// create variable for store data as type of horse
+	var repair RepairUpdate
+	//get id from url
+	id := c.Param("id")
 
+	// get data from body and check error
 	if err := c.ShouldBindJSON(&repair); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// ค้นหา repair ด้วย id
+
+	//validate struct
+	if _, err := govalidator.ValidateStruct(repair); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// update data in database and check error
+	if err := entity.DB().Table("repairs").Where("id = ?", id).Updates(repair).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// response updated data
+	c.JSON(http.StatusOK, gin.H{"data": "updated your repairs successfully"})
+
+}
+
+
+// PATCH /checkIn
+func UpdateRepair1(c *gin.Context) {
+	var repair entity.Repair
+	var result entity.Repair
+	if err := c.ShouldBindJSON(&repair); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// ค้นหา checkIn ด้วย id
 	if tx := entity.DB().Where("id = ?", repair.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Repair not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "CheckIn not found"})
 		return
 	}
 
@@ -105,4 +147,3 @@ func UpdateRepair(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": repair})
 }
-

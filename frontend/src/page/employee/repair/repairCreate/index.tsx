@@ -190,8 +190,7 @@ export default function RepairCreate() {
               <DatePicker
                 value={dayjs(rDate)}
                 onChange={onChange}
-                format="YYYY-MM-DD HH:mm:ss"
-                showTime
+                format="YYYY-MM-DD"
               />
             </div>
 

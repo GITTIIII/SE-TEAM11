@@ -1,9 +1,11 @@
 .repair-edit{
     position: fixed;
-    inset: 0px;
+    bottom: 15%;
+    right:30%;
     width: 500px;
     height: 500px;
     background-color: aquamarine;
     z-index: 30;
+    padding: 20px;
     
 }
