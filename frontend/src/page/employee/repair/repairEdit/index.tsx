@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState,useRef } from "react";
 import "./repairEdit.css";
 import { Button, Form, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
@@ -19,6 +19,8 @@ function RepairEdit() {
   const [messageApi, contextHolder] = message.useMessage();
 
   const repairID = useContext(repairIDContext);
+
+  const inputRef = useRef(null);
 
   const getRepairType = async () => {
     let res = await GetAllRepairType();
@@ -59,6 +61,13 @@ function RepairEdit() {
     }
   };
 
+  console.log(repairID);
+  console.log(repair?.Comment);
+  console.log((Object(repair).repairType?.Repair_name));
+  
+  
+
+
 
   
 
@@ -67,7 +76,7 @@ function RepairEdit() {
       ID: Number(repairID),
       Comment: input.Comment,
       Repair_img: repair_img,
-      Repair_status: "กำลังดำเนินการ",
+      Repair_status: "เสร็จสิ้น",
       RepairTypeID: Number(input.RepairTypeID),
       EmployeeID: Number(localStorage.getItem("EmployeeID")),
       RoomID: input.RoomID,
@@ -81,9 +90,9 @@ function RepairEdit() {
         type: "success",
         content: "เเก้ไขข้อมูลสำเร็จ",
       });
-      // setTimeout(function () {
-      //   window.location.reload();
-      // }, 500);
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
     } else {
       messageApi.open({
         type: "error",
@@ -93,8 +102,6 @@ function RepairEdit() {
     }
   };
 
-  console.log(repairID);
-  console.log(repair?.Comment);
 
   return (
     <>
@@ -107,10 +114,11 @@ function RepairEdit() {
             className="repair-edit-form"
             name="RepairTypeID"
             onChange={handleInput}
+           
           >
-            <option value="none" hidden>
-              เลือกประเภท
-            </option>
+            <option value="none" hidden defaultValue={Number(Object(repair).RepairTypeID)}>
+            {(Object(repair).RepairType?.Repair_name)}
+            </option> 
             {type.map((item) => (
               <option value={item.ID} key={item.Repair_name}>
                 {item.Repair_name}
@@ -122,6 +130,7 @@ function RepairEdit() {
             className="repair-textarea"
             placeholder="Enter your detail"
             name="Comment"
+            defaultValue={Object(repair).Comment}
             onChange={handleInput}
           />
           <input

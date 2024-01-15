@@ -20,15 +20,15 @@
 } */
 
 .repair-request-button {
+  display: inline-block;
+  float: right;
+  margin-bottom: 10px;
   width: auto;
   background-color:#89CFF3;
   color: black;
   padding: 10px;
-  display: inline-block;
   font-size: 2vh;
   border-radius: 10px;
-  left: 0;
-
 }
 
 
@@ -84,7 +84,7 @@
 }
 
 .repair-table {
-  
+  margin-top: 10px;
   
 }
 

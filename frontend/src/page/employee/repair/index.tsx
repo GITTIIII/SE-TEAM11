@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext } from "react";
-import { NavLink,Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./repair.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, message, ConfigProvider } from "antd";
@@ -20,7 +20,7 @@ export const repairIDContext = createContext(0);
 export default function Repair() {
   const [messageApi, contextHolder] = message.useMessage();
   const [listRepair, setAllRepair] = useState<RepairInterface[]>([]);
-  const [showEdit, setShowEdit] = useState(true);
+  const [showEdit, setShowEdit] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRepairID, setSelectedRepairID] = useState<number>(0);
@@ -79,15 +79,12 @@ export default function Repair() {
         {/* <div className="login-bg" style={{ backgroundImage: `url(${background})` }}> */}
         {contextHolder}
         <div className="repair-table-show">
-          <h1 className="repair-text-home">Repair</h1>
+          <h1 className="repair-text-home">แจ้งซ่อม</h1>
           <div>
-            <div>
             <Link to="create">
-              <div className="repair-request-button">
-                Repair Request
-              </div>
+              <div className="repair-request-button">Repair Request</div>
             </Link>
-            </div>
+
             <div className="repair-table">
               <table className="repair-content-table">
                 <thead>
@@ -108,9 +105,7 @@ export default function Repair() {
                       <td>{index + 1}</td>
                       <td>{(item.Room as RoomInterface)?.Room_number}</td>
                       <td>
-                        <img
-                          src={`${item.Repair_img}`}
-                        ></img>
+                        <img src={`${item.Repair_img}`}></img>
                       </td>
                       <td>
                         {(item.RepairType as RepairTypeInterface)?.Repair_name}
