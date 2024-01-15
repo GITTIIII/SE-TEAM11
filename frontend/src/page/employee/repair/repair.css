@@ -19,16 +19,21 @@
     margin-top: 10px;
 } */
 
+
+
+
 .repair-request-button {
   display: inline-block;
   float: right;
-  margin-bottom: 10px;
+  margin-top: 15px ;
+  margin-bottom: 15px ;
   width: auto;
-  background-color:#89CFF3;
-  color: black;
+  background-color:#4f95e9;
+  color: white;
   padding: 10px;
   font-size: 2vh;
   border-radius: 10px;
+  box-shadow: 0 0 5px rgb(142, 135, 135);
 }
 
 
@@ -76,23 +81,33 @@
 .repair-option {
 }
 
+.repair-show-header{
+  display: inline-block;
+}
+
 .repair-input-file {
 }
 .repair-text-home {
-  color: rgb(0, 0, 0);
-  margin-left: 20px;
+  
+  color: #535b66;
+  font-weight: bold;
+  
+  margin-top:  10px;
+  
+  padding: 0 20px;
+
 }
 
 .repair-table {
-  margin-top: 10px;
+
   
 }
 
 
 .repair-table-show{
   width: 100%;
-  padding: 0 20px;
-  background-color: #fff5;
+  padding: 0 70px;
+  background-color: #f2f3f5;
 }
 
 .repair-content-table {
@@ -109,8 +124,8 @@
 }
 
 .repair-content-table thead tr {
-  background-color: #435585;
-  color: #ffffff;
+  background-color: #eceef2;
+  color: #000000;
   text-align: center;
   font-weight: bold;
   justify-content: center;
@@ -122,6 +137,8 @@
   padding: 1rem;
   word-wrap: break-word;
 }
+
+.repair-content-table table td:empty ::before{content: "Data not Available"}
 
 
 .repair-content-table td img{
@@ -137,7 +154,7 @@
 }
 
 .repair-content-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+  background-color: #f9fafc;
 }
 
 .repair-content-table tbody tr:nth-of-type(odd) {
@@ -145,7 +162,7 @@
 }
 
 .repair-content-table tbody tr:last-of-type {
-  border-bottom: 2px solid #435585;
+  
 }
 
 .repair-content-table tbody td {
@@ -155,8 +172,9 @@
 
 .repair-paging {
   display: flex;
-  position: absolute;
+  justify-content: center;
   align-self: center;
+  
 }
 
 .repair-paging-backward {
@@ -165,7 +183,9 @@
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   color: #000000;
-  background-color: transparent;
+  border-radius: 5px 5px 5px 5px;
+  background-color: #ffffff;
+ 
 }
 
 .repair-current-page {
@@ -182,6 +202,8 @@
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   color: #000000;
+  border-radius: 5px 5px 5px 5px;
+  background-color: #ffffff;
 }
 
 .repair-update-button{

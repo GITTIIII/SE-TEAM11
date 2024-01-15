@@ -78,8 +78,12 @@ export default function Repair() {
       <repairIDContext.Provider value={selectedRepairID}>
         {/* <div className="login-bg" style={{ backgroundImage: `url(${background})` }}> */}
         {contextHolder}
+
         <div className="repair-table-show">
           <h1 className="repair-text-home">แจ้งซ่อม</h1>
+          <hr/>
+
+
           <div>
             <Link to="create">
               <div className="repair-request-button">Repair Request</div>
