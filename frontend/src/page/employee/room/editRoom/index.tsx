@@ -66,6 +66,7 @@ function EditRoom() {
         setRoomZones(res);
         }
     };
+
   const getRoomById = async () => {
     let res = await GetRoomById(Number(id));
     if (res) {
@@ -101,37 +102,75 @@ function EditRoom() {
           onFinish={onFinish}
           autoComplete="off"
         >
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Number of room</label>
-            <Form.Item
-              name="Room_number"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกเลขห้อง !",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </div>
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Room Type</label>
-            <Form.Item
-              name="RoomTypeID"
-              rules={[{ required: true, message: "กรุณาระบุประเภท !" }]}
-            >
-              <Select allowClear>
-                {roomTypes.map((item) => (
-                  <Option value={item.ID} key={item.RoomType_name}>
-                    {item.RoomType_name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </div>
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Room Zone</label>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              {/* <Form.Item
+                label="ชื่อจริง"
+                name="FirstName"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกชื่อ !",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item> */}
+              <Form.Item
+                label="เลขห้อง"
+                name="Room_number"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกเลขห้อง !",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="ราคา"
+                name="Room_price"
+                // type="number" step="0.001"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกราคา !",
+                  },
+                ]}
+              >
+                <InputNumber />
+              </Form.Item>
+              {/* <div className='create-room-form-control'>
+          <label className='create-room-text'>Price of Room</label>
+          <br></br>
+          <input 
+            className='create-room-input' 
+            type="number" step="0.001" 
+            placeholder = 'Enter price of room' 
+            name="Room_price"
+            // required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
+          />
+        </div> */}
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                name="RoomTypeID"
+                label="ประเภท"
+                rules={[{ required: true, message: "กรุณาระบุประเภท !" }]}
+              >
+                <Select allowClear>
+                  {roomTypes.map((item) => (
+                    <Option value={item.ID} key={item.RoomType_name}>
+                      {item.RoomType_name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             <Form.Item
               name="RoomZoneID"
               rules={[{ required: true, message: "กรุณาระบุโซนที่ตั้ง !" }]}
