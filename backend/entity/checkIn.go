@@ -10,6 +10,6 @@ type CheckIn struct {
 
 	CheckIn_date  time.Time
 
-	BookPlanID *uint
+	BookPlanID uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID"`
 }

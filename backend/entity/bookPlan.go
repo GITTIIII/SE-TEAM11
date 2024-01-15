@@ -7,16 +7,16 @@ import (
 type BookPlan struct {
 	gorm.Model
 
-	PlannerID *uint
+	PlannerID uint
 	Planner Planner `gorm:"foreignKey:PlannerID"`
 
-	TouristID *uint
+	TouristID uint
 	Tourist Tourist `gorm:"foreignKey:TouristID"`
 
-	RoomID *uint
+	RoomID uint
 	Room Room `gorm:"foreignKey:RoomID"`
 
-	FoodSetID *uint
+	FoodSetID uint
 	FoodSet FoodSet `gorm:"foreignKey:FoodSetID"`
 
 	Payments []Payment `gorm:"foreignKey:BookPlanID"`
