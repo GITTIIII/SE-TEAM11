@@ -1,7 +1,6 @@
 import { BookPlanInterface } from "../../../interface/IBookPlan";
 
 const apiUrl = "http://localhost:8080";
-
 async function GetAllBookPlan() {
   const requestOptions = {
     method: "GET",

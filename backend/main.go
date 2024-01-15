@@ -43,6 +43,9 @@ func main() {
 			r.POST("/BookActivity", controller.CreateBookActivity)
 			r.PATCH("/BookActivity", controller.UpdateBookActivity)
 			r.DELETE("/BookActivity/:id", controller.DeleteBookActivity)
+
+			//BookPlan Route
+			r.GET("/BookPlan/byId/:id", controller.GetBookPlanById)
 	
 			//CheckIn Route
 			r.GET("/CheckIn", controller.GetAllCheckIn)

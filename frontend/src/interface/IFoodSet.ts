@@ -4,6 +4,7 @@ import { SavoryInterface } from "./ISavory";
 
 export interface FoodSetInterface {
     ID?: number;
+    Name?: string;
     Count?: number;
 
     SavoryID?: number;

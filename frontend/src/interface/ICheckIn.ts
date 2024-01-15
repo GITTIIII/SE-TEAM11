@@ -2,8 +2,7 @@ import { BookPlanInterface } from "./IBookPlan";
 
 export interface CheckInInterface {
     ID?: number;
-    CheckIn_time?: string;
-    CheckIn_date?: string;
+    CheckIn_date?: Date;
 
     BookPlanID?: number;
     BookPlan?: BookPlanInterface;
