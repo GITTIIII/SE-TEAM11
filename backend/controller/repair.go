@@ -2,22 +2,17 @@ package controller
 
 import (
 	"net/http"
-	"time"
 
+	"github.com/GITTIIII/SE-TEAM11/entity"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"github.com/GITTIIII/SE-TEAM11/entity"
 )
 
 type RepairUpdate struct {
-	
-	Comment    string  `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
-	Repair_img	string `valid:"required~Image is required"`
-	Repair_date time.Time `valid:"required~Date is required`
-	Repair_status string
+	ID           uint64
+	Comment      string `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
+	Repair_img   string `valid:"required~Image is required"`
 	RepairTypeID uint
-	EmployeeID uint
-	RoomID uint
 }
 
 // POST /repair
@@ -41,19 +36,19 @@ func CreateRepair(c *gin.Context) {
 
 	// สร้าง repair
 	a := entity.Repair{
-		Comment: repair.Comment,
-		Repair_img: repair.Repair_img,
-		Repair_date: repair.Repair_date,
+		Comment:       repair.Comment,
+		Repair_img:    repair.Repair_img,
+		Repair_date:   repair.Repair_date,
 		Repair_status: repair.Repair_status,
-		
+
 		RepairTypeID: repair.RepairTypeID,
-		RepairType: repairType,
+		RepairType:   repairType,
 
 		EmployeeID: repair.EmployeeID,
-		Employee: employee,
+		Employee:   employee,
 
 		RoomID: repair.RoomID,
-		Room: room,
+		Room:   room,
 	}
 
 	// บันทึก
@@ -101,7 +96,6 @@ func UpdateRepair(c *gin.Context) {
 	// create variable for store data as type of horse
 	var repair RepairUpdate
 	//get id from url
-	id := c.Param("id")
 
 	// get data from body and check error
 	if err := c.ShouldBindJSON(&repair); err != nil {
@@ -114,9 +108,8 @@ func UpdateRepair(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	// update data in database and check error
-	if err := entity.DB().Table("repairs").Where("id = ?", id).Updates(repair).Error; err != nil {
+	if err := entity.DB().Table("repairs").Where("id = ?", repair.ID).Updates(repair).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -125,7 +118,6 @@ func UpdateRepair(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": "updated your repairs successfully"})
 
 }
-
 
 // PATCH /checkIn
 func UpdateRepair1(c *gin.Context) {
