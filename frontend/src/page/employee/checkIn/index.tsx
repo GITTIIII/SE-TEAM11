@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import cruise from "../../../asset/cruise.png";
 import "./checkIn.css"
+import { Form } from 'react-router-dom'; 
 
 export default function CheckIn() {
   return (
@@ -9,15 +10,17 @@ export default function CheckIn() {
       <div className="checkIn-headline" />
       <div className='checkIn-form'>
       <div className='checkIn-text'>Book Plan ID</div>
+      <Form>
         <div className='checkIn-form-control'>
           <input 
             className='checkIn-input' 
             type="text" placeholder = 'Enter book plan ID'
           />
           <div className='checkIn-buttom-area'>
-          <button type='submit'>search</button>
+            <button type='submit'>search</button>
+          </div>
         </div>
-        </div>
+      </Form>
       </div>
     </div>
     
