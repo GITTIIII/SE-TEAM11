@@ -1,11 +1,33 @@
 .repair-edit{
+
+    
     position: fixed;
+    
     bottom: 15%;
     right:30%;
     width: 500px;
     height: 500px;
-    background-color: aquamarine;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
     z-index: 30;
     padding: 20px;
     
 }
+
+.repair-edit-header{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px
+}
+
+.repair-edit-form{
+
+    
+}
+
+.repair-edit-form-info{
+   
+}
+
+

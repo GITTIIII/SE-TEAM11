@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState,useRef } from "react";
+import React, { ChangeEvent, useEffect, useState, useRef } from "react";
 import "./repairEdit.css";
 import { Button, Form, message } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
@@ -63,13 +63,7 @@ function RepairEdit() {
 
   console.log(repairID);
   console.log(repair?.Comment);
-  console.log((Object(repair).repairType?.Repair_name));
-  
-  
-
-
-
-  
+  console.log(Object(repair).repairType?.Repair_name);
 
   const handleSubmit = async () => {
     let updatedValues: RepairInterface = {
@@ -102,48 +96,64 @@ function RepairEdit() {
     }
   };
 
-
   return (
     <>
       <div className="repair-edit">
         {contextHolder}
-        <h1>Repair Edit</h1>
-        <h3>RoomNumber : {(repair?.Room as RoomInterface)?.Room_number}</h3>
-        <Form onFinish={handleSubmit}>
-          <select   
-            className="repair-edit-form"
-            name="RepairTypeID"
-            onChange={handleInput}
-           
-          >
-            <option value="none" hidden defaultValue={Number(Object(repair).RepairTypeID)}>
-            {(Object(repair).RepairType?.Repair_name)}
-            </option> 
-            {type.map((item) => (
-              <option value={item.ID} key={item.Repair_name}>
-                {item.Repair_name}
-              </option>
-            ))}
-          </select>
-          <input
-            type="textarea"
-            className="repair-textarea"
-            placeholder="Enter your detail"
-            name="Comment"
-            defaultValue={Object(repair).Comment}
-            onChange={handleInput}
-          />
-          <input
-            id="Repair_img"
-            type="file"
-            accept="image/*"
-            name="Repair_img"
-            onChange={handleImageChange}
-          />
-          <div className="buttom-area">
-            <button type="submit">ยืนยัน</button>
-          </div>
-        </Form>
+        <div className="repair-edit-header">
+          <h1>แก้ไขคำขอการแจ้งซ่อม</h1>
+        </div>
+
+        <h3>หมายเลขห้องพัก : {(repair?.Room as RoomInterface)?.Room_number}</h3>
+        <div className="repair-edit-form">
+          <Form onFinish={handleSubmit}>
+            <div className="repair-edit-form-info">
+              <label>ประเภทการแจ้งซ่อม</label>
+              <br></br>
+              <select
+                className="repair-select-custom"
+                name="RepairTypeID"
+                onChange={handleInput}
+              >
+                <option
+                  value="none"
+                  hidden
+                  defaultValue={Number(Object(repair).RepairTypeID)}
+                >
+                  {Object(repair).RepairType?.Repair_name}
+                </option>
+                {type.map((item) => (
+                  <option value={item.ID} key={item.Repair_name}>
+                    {item.Repair_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <label>รายละเอียด</label>
+            <br></br>
+            <input
+              type="textarea"
+              className="repair-textarea"
+              placeholder="Enter your detail"
+              name="Comment"
+              defaultValue={Object(repair).Comment}
+              onChange={handleInput}
+            />
+            <label>รูปภาพ</label>
+            <br></br>
+            <input
+              className="repair-edit-form-info"
+              id="Repair_img"
+              type="file"
+              accept="image/*"
+              name="Repair_img"
+              onChange={handleImageChange}
+            />
+            <div className="buttom-area">
+              <button type="submit">ยืนยัน</button>
+            </div>
+          </Form>
+        </div>
       </div>
     </>
   );

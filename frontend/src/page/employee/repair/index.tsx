@@ -2,9 +2,9 @@ import React, { useEffect, useState, createContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./repair.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, message, ConfigProvider } from "antd";
+import { Button, message, ConfigProvider, Popconfirm } from "antd";
 
-import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward, IoMdClose,IoMdAdd } from "react-icons/io";
 
 import { GetAllRepair, DeleteRepairByID } from "../../../services/https/repair";
 import { RepairInterface } from "../../../interface/IRepair";
@@ -70,6 +70,13 @@ export default function Repair() {
   const endIndex = startIndex + rowsPerPage;
   const visibleRows = filteredRepairRequest.slice(startIndex, endIndex);
 
+
+  const cancel = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.error('Click on No');
+  };
+  
+
   console.log(showEdit);
   console.log(selectedRepairID);
 
@@ -80,12 +87,12 @@ export default function Repair() {
         {contextHolder}
 
         <div className="repair-table-show">
-          <h1 className="repair-text-home">แจ้งซ่อม</h1>
-          <hr/>
-
+          <h1 className="repair-text-home">แจ้งซ่อมห้องพัก</h1>
+          <hr />
 
           <div>
             <Link to="create">
+              
               <div className="repair-request-button">Repair Request</div>
             </Link>
 
@@ -118,10 +125,20 @@ export default function Repair() {
                       <td>{new Date(item.Repair_date!).toLocaleString()}</td>
                       <td>{item.Repair_status}</td>
                       <td>
-                        <Button
-                          icon={<DeleteOutlined />}
-                          onClick={() => handleDelete(item.ID)}
-                        ></Button>
+                        <Popconfirm
+                          title="Delete the task"
+                          description="Are you sure to delete this task?"
+                          onConfirm={() => handleDelete(item.ID)}
+                          onCancel={() => cancel}
+
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <Button
+                            icon={<DeleteOutlined />}
+                            
+                          ></Button>
+                        </Popconfirm>
                         <Button
                           icon={<EditOutlined />}
                           onClick={() => {
