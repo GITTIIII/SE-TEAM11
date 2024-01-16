@@ -39,7 +39,7 @@ export default function BookActivity() {
   return (
     <>
       <idBookActivity.Provider value={BookActivityID}>
-      <div className="login-bg" style={{ background: `#4a5aff` }}>
+      <div className="login-bg" style={{ background: `black` }}>
         {contextHolder}
         <div className="book-activity-list-box">
             <h1>จองกิจกรรม</h1>

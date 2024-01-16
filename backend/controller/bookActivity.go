@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 )
 
 type BookActivityUpdate struct {
+	ID	uint64
 	TimeStart time.Time
 	TimeEnd time.Time
 	NumberOfPeople int `valid:"required~NumberOfPeople is required,range(3|10)~NumberOfPeople must be between 3 and 10"`
@@ -111,7 +113,6 @@ func UpdateBookActivity(c *gin.Context) {
 	// create variable for store data as type of horse
 	var bookActivitiy BookActivityUpdate
 	//get id from url
-	id := c.Param("id")
 
 	// get data from body and check error
 	if err := c.ShouldBindJSON(&bookActivitiy); err != nil {
@@ -124,9 +125,9 @@ func UpdateBookActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	fmt.Println(bookActivitiy)
 	// update data in database and check error
-	if err := entity.DB().Table("book_activities").Where("id = ?", id).Updates(bookActivitiy).Error; err != nil {
+	if err := entity.DB().Table("book_activities").Where("id = ?", bookActivitiy.ID).Updates(bookActivitiy).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

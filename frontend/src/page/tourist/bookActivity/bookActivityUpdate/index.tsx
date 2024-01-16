@@ -86,7 +86,7 @@ export default function BookActivityUpdate() {
             Phone_number: input.Phone_number,
             BookPlanID: 1,
             TouristID: Number(localStorage.getItem("TouristID")),
-            ActivityID: input.ActivityID
+            ActivityID: Number(input.ActivityID)
         }
         
         console.log(updatedValues);
@@ -121,7 +121,7 @@ export default function BookActivityUpdate() {
                         <Form onFinish={handleSubmit}>
                             <label>เลือกกิจกรรม</label>
                             <div className="book-activity-input">
-                                <select name="Activity" onChange={handleInput} required>
+                                <select name="ActivityID" onChange={handleInput} required>
                                     <option value="none" hidden defaultValue={Number(Object(BookActivity).ActivityID)}>{(Object(BookActivity).Activity?.Activity_name)}</option>
                                     {Activity.map((item, index) => (
                                     <option key={index} value={item.ID}>{item.Activity_name}</option>
