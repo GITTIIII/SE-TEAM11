@@ -27,10 +27,6 @@ func CreateCheckIn(c *gin.Context) {
 		BookPlan: bookPlan,
 	}
 
-	if err := entity.DB().Create(&a).Error; err != nil {
-		
-	}
-
 	// บันทึก
 	if err := entity.DB().Create(&a).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
