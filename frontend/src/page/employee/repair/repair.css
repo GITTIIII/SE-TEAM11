@@ -36,6 +36,21 @@
   box-shadow: 0 0 5px rgb(142, 135, 135);
 }
 
+.green{
+  
+  
+  border-radius: 2rem;
+  background-color: #86e49d;
+  color: #006b21;
+
+}
+
+.red{
+  border-radius: 2rem;
+  background-color: #d893a3;
+  color: #b30021;
+}
+
 
 .repair-textarea {
   width: 100%;
