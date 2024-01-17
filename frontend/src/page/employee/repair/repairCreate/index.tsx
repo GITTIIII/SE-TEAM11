@@ -12,7 +12,7 @@ import {
   DatePicker,
   DatePickerProps,
 } from "antd";
-import ship from "../../../../asset/ship.jpg";
+import repair from "../../../../asset/repair.jpg";
 import { CreateRepair } from "../../../../services/https/repair";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { GetAllRepairType } from "../../../../services/https/repairType";
@@ -122,7 +122,7 @@ export default function RepairCreate() {
 
   return (
     <>
-      <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}>
+      <div className="login-bg" style={{ backgroundImage: `url(${repair})` }}>
         {contextHolder}
 
         <h1 className="repair-text">สร้างคำขอการแจ้งซ่อม</h1>
