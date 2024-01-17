@@ -106,7 +106,6 @@ function RepairEdit() {
 
   return (
     <>
-    
       <div className="repair-edit">
         {contextHolder}
         <div className="repair-edit-header">
@@ -168,19 +167,25 @@ function RepairEdit() {
             />
             <br />
             <hr />
-            <label >เปลี่ยนสถานะการแจ้งซ่อม</label>
-            <br />
-            <select
-              className="repair-select-custom"
-              name="Repair_status"
-              onChange={handleInput}
-            >
-              <option value="none" hidden defaultValue={Number(Object(repair))}>
-                {Object(repair).Repair_status}
-              </option>
+            <div className="repair-edit-show-changeStatus">
+              <label>เปลี่ยนสถานะการแจ้งซ่อม</label>
+              <br />
+              <select
+                className="repair-select-custom"
+                name="Repair_status"
+                onChange={handleInput}
+              >
+                <option
+                  value="none"
+                  hidden
+                  defaultValue={Number(Object(repair))}
+                >
+                  {Object(repair).Repair_status}
+                </option>
 
-              <option >เสร็จสิ้น</option>
-            </select>
+                <option>เสร็จสิ้น</option>
+              </select>
+            </div>
 
             <div className="repair-edit-button-area">
               <button type="submit">ยืนยัน</button>

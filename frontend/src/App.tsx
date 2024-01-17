@@ -29,7 +29,7 @@ import EmployeeProfile from "./page/employee/employeeProfile";
 import FoodSetDashbord from "./page/employee/food/foodSet/foodSetDeshbord";
 import FoodSetCreate from "./page/employee/food/foodSet/foodSetCreate";
 import FoodSetUpdate from "./page/employee/food/foodSet/foodSetUpdate";
-import DessertDashbord from "./page/employee/food/dessert/dessertDashbord";
+import DessertDashbord from "./page/employee/food/dessert/dessertDeshbord";
 import DessertCreate from "./page/employee/food/dessert/dessertCreate";
 import DessertUpdate from "./page/employee/food/dessert/dessertUpdate";
 import DrinkDashbord from "./page/employee/food/drink/drinkDashbord";
@@ -45,6 +45,7 @@ import ShowRoom from "./page/tourist/room";
 import TouristProfile from "./page/tourist/touristProfile";
 import BookActivity from "./page/tourist/bookActivity";
 import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -62,17 +63,17 @@ const router = createBrowserRouter(
         <Route path="destination/create" element={<CreateDestination />} />
         <Route path="destination/edit/:id" element={<EditDestination />} />
         <Route path="food" element={<FoodSetDashbord />} />
-        <Route path="foodSet/Create" element={<FoodSetCreate/>} />
-        <Route path="foodSet/Update" element={<FoodSetUpdate />} />
-        <Route path="dessert" element={<DessertDashbord />} />
-        <Route path="dessert/Create" element={<DessertCreate/>} />
-        <Route path="dessert/Update" element={<DessertUpdate />} />
-        <Route path="drink" element={<DrinkDashbord />} />
-        <Route path="drink/Create" element={<DrinkCreate/>} />
-        <Route path="drink/Update" element={<DrinkUpdate />} />
-        <Route path="savory" element={<SavoryDashbord />} />
-        <Route path="savory/Create" element={<SavoryCreate/>} />
-        <Route path="savory/Update" element={<SavoryUpdate />} />
+        <Route path="food/create" element={<FoodSetCreate />} />
+        <Route path="food/edit/:id" element={<FoodSetUpdate />} />
+        <Route path="food/Savory" element={<SavoryDashbord />} />
+        <Route path="food/Savory/create" element={<SavoryCreate />} />
+        <Route path="food/Savory/edit/:id" element={<SavoryUpdate />} />
+        <Route path="food/Drink" element={<DrinkDashbord />} />
+        <Route path="food/Drink/create" element={<DrinkCreate />} />
+        <Route path="food/Drink/edit/:id" element={<DrinkUpdate />} />
+        <Route path="food/Dessert" element={<DessertDashbord />} />
+        <Route path="food/Dessert/create" element={<DessertCreate />} />
+        <Route path="food/Dessert/edit/:id" element={<DessertUpdate />} />
         <Route path="planner" element={<Planner />} />
         <Route path="planner/create" element={<CreatePlanner />} />
         <Route path="planner/edit/:id" element={<EditPlanner />} />

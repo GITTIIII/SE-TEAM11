@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import  "./foodSetUpdate.css"
 import {  Form, message,  Input, InputNumber, Select, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png";
 import { FoodSetInterface } from '../../../../../interface/IFoodSet';
 import { DessertInterface } from '../../../../../interface/IDessert';
 import { SavoryInterface } from '../../../../../interface/ISavory';
@@ -15,7 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const { Option } = Select;
 
 function FoodSetUpdate() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [desserts, setDessert] = useState<DessertInterface[]>([]);
   const [savorys, setSavory] = useState<SavoryInterface[]>([]);
   const [drinks, setDrink] = useState<DrinkInterface[]>([]);
@@ -41,13 +41,13 @@ function FoodSetUpdate() {
        } else {
          messageApi.open({
            type: "error",
-           content: "แก้ไขข้อมูลไม่สำเร็จ",
+           content: res.message,
          });
        }
      };
    
      const getFoodSetById = async () => {
-       let res = await GetFoodSetById(Number(2));
+       let res = await GetFoodSetById(Number(id));
        if (res) {
         setFoodSet(res);
          // set form ข้อมูลเริ่มที่เราแก้ไข
@@ -99,14 +99,13 @@ useEffect(() => {
   return (
     <>
       {contextHolder}
-      <div className='foodSetUpdate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='foodSetUpdate-header'>foodSet</h1>
+      <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='foodSetUpdate-header'>Update FoodSet</h1>
+      <div className="foodSetUpdate-headline" />
         <div className='foodSetUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='foodSetUpdate-form-control'>
-              <label className='foodSetUpdate-text'>Name</label>
-              <br></br>
-              <Form.Item name="Name">
+              <Form.Item name="Name" label="Name">
                 <Input placeholder='Name' ></Input>
               </Form.Item>
             </div>
@@ -132,9 +131,7 @@ useEffect(() => {
                   ))}
                 </Select>
               </Form.Item>
-              <label className='foodSetUpdate-text'>Count</label>
-              <br></br>
-              <Form.Item name="Count">
+              <Form.Item name="Count" label="Count">
                 <InputNumber placeholder='Count' type='number'></InputNumber>
               </Form.Item>
             </div>

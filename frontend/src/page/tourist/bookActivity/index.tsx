@@ -3,10 +3,11 @@ import { message } from "antd"
 import { useEffect, useState, createContext } from "react"
 import { DeleteBookActivityByID, GetAllBookActivityByTouristId } from "../../../services/https/bookActivity"
 import { BookActivityInterface } from "../../../interface/IBookActivity"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faPenToSquare, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BookActivityUpdate from "./bookActivityUpdate"
 import "./bookActivity.css"
+import ship1 from "../../../asset/ship1.jpg"
 export const idBookActivity = createContext(0);
 
 export default function BookActivity() {
@@ -39,15 +40,18 @@ export default function BookActivity() {
   return (
     <>
       <idBookActivity.Provider value={BookActivityID}>
-      <div className="login-bg" style={{ background: `black` }}>
+      <div className="login-bg" style={{ backgroundImage: `url(${ship1})` }}>
         {contextHolder}
         <div className="book-activity-list-box">
-            <h1>จองกิจกรรม</h1>
-            <Link to="bookActivityCreate">
-              <div className="activity-button">
-                เพิ่มการจองกิจกรรม
-              </div>
-            </Link>
+            <div className="book-activity-list-box-top">
+              <h1>จองกิจกรรม</h1>
+              <Link to="bookActivityCreate">
+                <button className="activity-button">
+                  <FontAwesomeIcon icon={faPlus} className="icon"/>
+                  <label>เพิ่มการจองกิจกรรม</label>
+                </button>
+              </Link>
+            </div>
             <div className="card">
               {BookActivity.map((item, index) => (
                   <div key={index} className="information">
@@ -71,7 +75,8 @@ export default function BookActivity() {
                         setupdateClick(!updateClick);
                         setBookActivityID(item.ID);
                       }}}>
-                      เเก้ไข
+                      <FontAwesomeIcon icon={faPenToSquare} className="icon"/>
+                      <label>เเก้ไข</label>
                     </button>
                     {updateClick && 
                       <div className="updatePopup">
@@ -80,7 +85,10 @@ export default function BookActivity() {
                         </div>
                         <BookActivityUpdate/>
                       </div>}
-                    <button className="delete-button" onClick={() => DeleteBookActivity(item.ID)}>ลบ</button>
+                    <button className="delete-button" onClick={() => DeleteBookActivity(item.ID)}>
+                      <FontAwesomeIcon icon={faTrashCan} className="icon" />
+                      <label>ลบ</label>
+                    </button>
                     </div>
                   </div>
               ))}

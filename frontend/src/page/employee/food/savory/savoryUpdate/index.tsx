@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import  "./savoryUpdate.css"
 import { Form, message,  Input, InputNumber, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png"
 import { SavoryInterface } from '../../../../../interface/ISavory';
 import { GetSavoryById, UpdateSavory } from '../../../../../services/https/food/savory';
 import { useParams } from 'react-router-dom';
@@ -29,13 +29,13 @@ export default function SavoryUpdate() {
      } else {
        messageApi.open({
          type: "error",
-         content: "แก้ไขข้อมูลไม่สำเร็จ",
+         content: res.message,
        });
      }
    };
  
    const getSavoryById = async () => {
-     let res = await GetSavoryById(Number(2));
+     let res = await GetSavoryById(Number(id));
      if (res) {
       setSavory(res);
        // set form ข้อมูลเริ่มที่เราแก้ไข
@@ -52,8 +52,9 @@ export default function SavoryUpdate() {
   return (
     <>
       {contextHolder}
-      <div className='savoryUpdate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='savoryUpdate-header'>savory</h1>
+      <div className='savoryUpdate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='savoryUpdate-header'>Update Savory</h1>
+      <div className='savoryDashbord-headline'/>
         <div className='savoryUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='savoryUpdate-form-control'>

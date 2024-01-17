@@ -7,6 +7,7 @@ import { BookActivityInterface } from "../../../../interface/IBookActivity";
 import { CreateBookActivity } from "../../../../services/https/bookActivity";
 import { GetAllActivity } from '../../../../services/https/activity';
 import { ActivityInterface } from '../../../../interface/IActivity';
+import ship1 from "../../../../asset/ship1.jpg"
 import "../bookActivity.css"
 
 export default function BookActivityCreate() {
@@ -108,82 +109,78 @@ export default function BookActivityCreate() {
 
     return (
         <>
-            <div className="login-bg" style={{ backgroundColor: `wheat` }}>
+            <div className="login-bg" style={{ backgroundImage: `url(${ship1})` }}>
                 {contextHolder}
-                <div className="form-box">
-                    <h1>จองกิจกรรม</h1>
-                    <div className="book-activity-input-box">
-                        <Form onFinish={handleSubmit}>
-                            <label>เลือกกิจกรรม</label>
-                            <div className="book-activity-input">
-                                <select name="Activity" onChange={handleInput} required>
-                                    <option value="none" hidden>เลือกกิจกรรม</option>
-                                    {Activity.map((item, index) => (
-                                    <option key={index} value={item.ID}>{item.Activity_name}</option>
-                                    ))}
-                                </select>
-                            </div>
+                        <h1>จองกิจกรรม</h1>
+                        <div className="book-activity-form-box">
+                            <Form onFinish={handleSubmit}>
+                                <label>เลือกกิจกรรม</label>
+                                <div className="book-activity-input">
+                                    <select name="Activity" onChange={handleInput} required>
+                                        <option value="none" hidden>เลือกกิจกรรม</option>
+                                        {Activity.map((item, index) => (
+                                        <option key={index} value={item.ID}>{item.Activity_name}</option>
+                                        ))}
+                                    </select>
+                                </div>
 
-                            <label>เลือกวัน</label>
-                            <div className="book-activity-input">
-                            <RangePicker
-                                onCalendarChange={(val) => {
-                                    setDates(val);
-                                }}
-                                onOpenChange={onOpenChange}
-                                disabledDate={disabledDate}
-                                disabledTime={disabledDateTime}
-                                minuteStep={30 as const}
-                                showTime={{ format: 'HH:mm:00' }}
-                                format="YYYY-MM-DD HH:mm"
-                                onChange={handdleDateChange}
-                            />
-                            </div>
-
-                            <label>ระบุจำนวนคน</label>
-                            <div className="book-activity-input">
-                                <input 
-                                type="number" 
-                                name="NumberOfPeople"
-                                onChange={handleInput}
+                                <label>เลือกวัน</label>
+                                <div className="book-activity-input">
+                                <RangePicker
+                                    onCalendarChange={(val) => {
+                                        setDates(val);
+                                    }}
+                                    onOpenChange={onOpenChange}
+                                    disabledDate={disabledDate}
+                                    disabledTime={disabledDateTime}
+                                    minuteStep={30 as const}
+                                    showTime={{ format: 'HH:mm:00' }}
+                                    format="YYYY-MM-DD HH:mm"
+                                    onChange={handdleDateChange}
                                 />
-                            </div>
+                                </div>
 
-                            <label>กรอกเบอร์โทร</label>
-                            <div className="book-activity-input">
-                                <input 
-                                type="text" 
-                                name="Phone_number"
-                                onChange={handleInput}
-                                />
-                            </div>
+                                <label>ระบุจำนวนคน</label>
+                                <div className="book-activity-input">
+                                    <input 
+                                    type="number" 
+                                    name="NumberOfPeople"
+                                    onChange={handleInput}
+                                    />
+                                </div>
 
-                            <label>ระบุความเห็น</label>
-                            <div className="book-activity-input">
-                                <input 
-                                type="textarea" 
-                                name="Comment"
-                                onChange={handleInput}
-                                />
-                            </div>
-                            
-                            <div className="button">
-                                <Link to="/tourist/bookActivity">
-                                    <div className="activity-button">
-                                        ย้อนกลับ
-                                    </div>
-                                </Link>
+                                <label>กรอกเบอร์โทร</label>
+                                <div className="book-activity-input">
+                                    <input 
+                                    type="text" 
+                                    name="Phone_number"
+                                    onChange={handleInput}
+                                    />
+                                </div>
 
-                                <button type="submit">
-                                    <div className="activity-button">
-                                        ยืนยัน
-                                    </div>
-                                </button>
-                            </div>
-                        </Form>
+                                <label>ระบุความเห็น</label>
+                                <div className="book-activity-input">
+                                    <input 
+                                    type="textarea" 
+                                    name="Comment"
+                                    onChange={handleInput}
+                                    />
+                                </div>
+                                
+                                <div className="book-activity-button">
+                                    <Link to="/tourist/bookActivity">
+                                        <button className="activity-button">
+                                            <label>ย้อนกลับ</label>
+                                        </button>
+                                    </Link>
+
+                                    <button className="activity-button" type="submit">
+                                            <label>ยืนยัน</label>
+                                    </button>
+                                </div>
+                            </Form>
+                        </div>
                     </div>
-                </div>
-            </div>
         </>
     )
 }

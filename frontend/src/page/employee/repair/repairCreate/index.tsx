@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState  } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./repairCreate.css";
 import { UploadOutlined } from "@ant-design/icons";
@@ -10,9 +10,9 @@ import {
   Form,
   Select,
   DatePicker,
-  DatePickerProps, 
+  DatePickerProps,
 } from "antd";
-import ship from "../../../../asset/ship.jpg";
+import repair from "../../../../asset/repair.jpg";
 import { CreateRepair } from "../../../../services/https/repair";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { GetAllRepairType } from "../../../../services/https/repairType";
@@ -110,8 +110,7 @@ export default function RepairCreate() {
     }
   };
 
-
-  const onChange  = (date: dayjs.Dayjs | null, dateString: string) => {
+  const onChange = (date: dayjs.Dayjs | null, dateString: string) => {
     console.log(date);
     setRDate(date);
   };
@@ -121,18 +120,17 @@ export default function RepairCreate() {
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-
   return (
     <>
-      <div className="login-bg" style={{ backgroundImage: `url(${ship})` }}>
+      <div className="login-bg" style={{ backgroundImage: `url(${repair})` }}>
         {contextHolder}
 
-        <h1 className="repair-text">Repair</h1>
+        <h1 className="repair-text">สร้างคำขอการแจ้งซ่อม</h1>
 
         <div className="repair-form">
           <Form onFinish={handleSubmit}>
             <div className="repair-form-control">
-              <label className="repair-text">Number of room</label>
+              <label className="repair-text">หมายเลขห้องพัก</label>
               <br />
               <Select
                 showSearch
@@ -153,7 +151,7 @@ export default function RepairCreate() {
             </div>
 
             <div className="repair-form-control">
-              <label className="repair-text">Repair Type</label>
+              <label className="repair-text">ประเภทการแจ้งซ่อมที่ต้องการได้รับบริการ</label>
               <br></br>
               <div className="repair-select">
                 <select
@@ -175,7 +173,7 @@ export default function RepairCreate() {
             </div>
 
             <div className="repair-form-control">
-              <label className="repair-text">Repair Detail</label>
+              <label className="repair-text">รายละเอียด</label>
               <br></br>
               <textarea
                 className="repair-textarea"
@@ -186,7 +184,7 @@ export default function RepairCreate() {
             </div>
 
             <div className="repair-form-control">
-              <label className="repair-text">Date</label>
+              <label className="repair-text">วันที่ต้องการรับบริการ</label>
               <br></br>
               <DatePicker
                 value={rDate}
@@ -195,16 +193,17 @@ export default function RepairCreate() {
               />
             </div>
 
-
             <div className="repair-form-control">
-              <label className="repair-text">Upload your image</label>
+              <label className="repair-text">อัพโหลดรูปภาพ</label>
               <br></br>
               <input
+              className="repair-input-file"
                 id="repair_img"
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
               />
+             
             </div>
 
             {/* <div className="repair-form-control">

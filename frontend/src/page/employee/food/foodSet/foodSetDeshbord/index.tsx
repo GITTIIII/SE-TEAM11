@@ -1,15 +1,19 @@
 import  { useEffect, useState } from 'react'
 import  "./foodSetDashbord.css"
-import { Button, Form, message,  Input, InputNumber, Modal, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import { Button, Form, message,  Input, InputNumber, Modal, ConfigProvider, } from 'antd';
+
+import cruise from "../../../../../asset/cruise.png";
+
 import { SavoryInterface } from '../../../../../interface/ISavory';
 import Table, { ColumnsType } from 'antd/es/table';
 import { FoodSetInterface } from '../../../../../interface/IFoodSet';
 import { DeleteFoodSetByID, GetAllFoodSet } from '../../../../../services/https/food/foodSet';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { NavLink, useNavigate} from 'react-router-dom';
 
 
 export default function FoodSetDashbord() {
+  const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
     const [IdFoodSets,setIdFoodSets] =  useState<number[]>([]);
   const [FoodSets, setFoodSets] = useState<FoodSetInterface[]>([]);
@@ -84,7 +88,7 @@ export default function FoodSetDashbord() {
             render: (text, record, index) => (
               <>
               <Button  
-              // onClick={() =>  navigate(`/customer/edit/${record.ID}`)} 
+              onClick={() => navigate(`/employee/food/edit/${record.ID}`)}
               shape="circle" 
               icon={<EditOutlined />} 
               size={"large"} />
@@ -139,13 +143,12 @@ export default function FoodSetDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='foodSetDashbord-bg' style={{ backgroundImage: `url(${ship})` }}>
-          <div className='foodSetDashbord-header'>
-            <h1>FoodSet</h1>
-          </div>
-          <div className="foodSet-headline" />
-          
-      {/* <NavLink to="/employee/room/create">
+        <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
+        <div className='header' style={{display:"flex",alignItems:"center"}}>
+          <h1 className='foodSetDashbord-header'>FoodSet</h1>
+
+      <div className='foodSetDasdbord-add-button'>
+          <NavLink to="/employee/food/Savory">
         <ConfigProvider
           theme={{
             token: {
@@ -156,19 +159,75 @@ export default function FoodSetDashbord() {
             },
           }}
         >
-          <Button className="room-add-button" type="primary">
-            add a room
+          <Button  type="primary">
+            Savory
           </Button>
         </ConfigProvider>
-      </NavLink> */}
-          {/* <div className='foodSetDashbord-form'> */}
-            <Form  autoComplete="off">
+      </NavLink>
+      </div>
+      <div className='foodSetDasdbord-add-button'>
+          <NavLink to="/employee/food/Dessert">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#CDF5FD",
+              colorTextLightSolid: "#000000",
+              colorPrimaryHover: "#89CFF3",
+              colorPrimaryActive: "#818FB4",
+            },
+          }}
+        >
+          <Button  type="primary">
+            dessert
+          </Button>
+        </ConfigProvider>
+      </NavLink>
+      </div>
+      <div className='foodSetDasdbord-drink-button'>
+          <NavLink to="/employee/food/Drink">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#CDF5FD",
+              colorTextLightSolid: "#000000",
+              colorPrimaryHover: "#89CFF3",
+              colorPrimaryActive: "#818FB4",
+            },
+          }}
+        >
+          <Button  type="primary">
+             drink 
+          </Button>
+        </ConfigProvider>
+      </NavLink>
+      </div>
+      </div>
+
+
+          <div className="foodSetDashbord-headline" />
+          <NavLink to="/employee/food/create">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#CDF5FD",
+              colorTextLightSolid: "#000000",
+              colorPrimaryHover: "#89CFF3",
+              colorPrimaryActive: "#818FB4",
+            },
+          }}
+        >
+          <Button className="foodSetDasdbord-add-button" type="primary">
+            add a foodSet
+          </Button>
+        </ConfigProvider>
+      </NavLink>
+
               <div style={{ marginTop: 20 }}>
-                  <Table rowKey="ID" columns={columns} dataSource={FoodSets} />
+                  <Table rowKey="ID" columns={columns} dataSource={FoodSets} style={{ padding: "20px", boxShadow: "" }}/>
               </div>
-            </Form>
           </div>     
-        {/* </div> */}
+
+          
         <Modal
         title="ลบข้อมูล ?"
         open={open}

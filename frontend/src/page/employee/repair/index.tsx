@@ -123,7 +123,9 @@ export default function Repair() {
                       </td>
                       <td>{item.Comment}</td>
                       <td>{new Date(item.Repair_date!).toLocaleDateString()}</td>
-                      <td>{item.Repair_status}</td>
+                      <td >
+                        <p className={Object(item.Repair_status) == "เสร็จสิ้น" ? `green` : `red`}>{item.Repair_status}</p>
+                      </td>
                       <td>
                         <Popconfirm
                           title="ลบรายการของการแจ้งซ่อม"

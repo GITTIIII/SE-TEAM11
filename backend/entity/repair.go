@@ -2,8 +2,10 @@ package entity
 
 import (
 	"time"
+
 	
 	"gorm.io/gorm"
+	"github.com/asaskevich/govalidator"
 )
 
 
@@ -11,7 +13,7 @@ type Repair struct {
 	gorm.Model
 	Comment       string    `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
 	Repair_img    string    `valid:"required~Image is required"`
-	Repair_date   time.Time `valid:"required~Date is required"`
+	Repair_date   time.Time `valid:"required~Date is required,after_yesterday~Date must be from today to future"`
 	Repair_status string
 
 	RepairTypeID *uint
@@ -22,6 +24,20 @@ type Repair struct {
 
 	RoomID *uint
 	Room   Room `gorm:"foreignKey:RoomID" valid:"-"`
+}
+
+func init() {
+	govalidator.CustomTypeTagMap.Set("after_yesterday", func(i interface{}, c interface{}) bool {
+		return truncateToDay(i.(time.Time).Local()).After(today().AddDate(0, 0, -1))
+	})
+}
+
+func truncateToDay(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
+func today() time.Time {
+	return truncateToDay(time.Now())
 }
 
 

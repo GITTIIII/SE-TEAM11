@@ -8,6 +8,11 @@ import { CreateCheckIn } from '../../../services/https/checkIn';
 import { GetBookPlanById } from '../../../services/https/bookPlan';
 import { BookPlanInterface } from '../../../interface/IBookPlan';
 
+const gridStyle: React.CSSProperties = {
+  width: '50%',
+  textAlign: 'left',
+};
+
 export default function CheckIn() {
   let navigate = useNavigate();
 
@@ -36,7 +41,8 @@ export default function CheckIn() {
         content: 'บันทึกข้อมูลสำเร็จ',
       });
       setTimeout(function () {
-        navigate('/employee/check-in');
+        // navigate('/employee/check-in');
+        window.location.reload()
       }, 2000);
     } else {
       messageApi.open({
@@ -49,61 +55,73 @@ export default function CheckIn() {
   return (
     <div className="checkIn-cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
       {contextHolder}
-      <h1 className="checkIn-header">Check-In</h1>
-      <div className="checkIn-headline" />
-      <div className="checkIn-form">
-        <div className="checkIn-text">Book Plan ID</div>
-        <div className="checkIn-form-control">
-          <input
-            className="checkIn-input"
-            type="text"
-            placeholder="Enter book plan ID"
-            value={bookPlanID}
-            onChange={(e) => setbookPlanID(e.target.value)}
-            required
-          />
-          <div className="checkIn-buttom-area">
-            <button type="button" onClick={getData}>
-              Search
-            </button>
+        <h1 className="checkIn-header">Check-In</h1>
+        <div className="checkIn-headline" />
+      <div className='checkIn-display'>
+        <div className="checkIn-form">
+          <div className="checkIn-text">Book Plan ID</div>
+          <div className="checkIn-form-control">
+            <input
+              className="checkIn-input"
+              type="text"
+              placeholder="Enter book plan ID"
+              value={bookPlanID}
+              onChange={(e) => setbookPlanID(e.target.value)}
+              required
+            />
+            <div className="checkIn-search-buttom-area">
+              <button type="button" onClick={getData}>
+                Search
+              </button>
+            </div>
           </div>
         </div>
+
+        {bookPlan && (
+          <Card className='checkIn-card' title={bookPlan?.Tourist?.Tourist_name}>
+            <Card.Grid hoverable={false} style={gridStyle}>
+              <img
+                src={bookPlan?.Room?.Room_img}
+                alt={`Room Image - ${bookPlan?.Room?.Room_number}`}
+                style={{ maxWidth: '100%', maxHeight: "100%" }}
+              />
+            </Card.Grid>
+            <Card.Grid hoverable={false} style={gridStyle}>
+              <p>
+                <b>Phone Number:</b>
+                {bookPlan?.Tourist?.Phone}
+              </p>
+              <p>
+                <b>Plan Name:</b>
+                {bookPlan?.Planner?.Plan_name}
+              </p>
+              <p>
+                <b>Port Destinaton:</b>
+                {bookPlan?.Planner?.Destination?.PortDestinaton?.PortDestination_name}
+              </p>
+              <p>
+                <b>Port Origin:</b>
+                {bookPlan?.Planner?.Destination?.PortOrigin?.PortOrigin_name}
+              </p>
+              <p>
+                <b>Room Number:</b>
+                {bookPlan?.Room?.Room_number}
+              </p>
+              <p>
+                <b>Food Set Name:</b>
+                {bookPlan?.FoodSet?.Name}
+              </p>
+            </Card.Grid>
+          </Card>
+        )}
+        {bookPlan && (
+          <Form onFinish={handleSubmit}>
+            <div className="checkIn-buttom-area">
+              <button type="submit">Check In</button>
+            </div>
+          </Form>
+        )}
       </div>
-
-      {bookPlan && (
-        <Card title={bookPlan?.Tourist?.Tourist_name} bordered={false} style={{ width: 300 }}>
-          <p>
-            <b>Phone Number: </b>
-            {bookPlan?.Tourist?.Phone}
-          </p>
-          <p>
-            <b>Plan Name: </b>
-            {bookPlan?.Planner?.Plan_name}
-          </p>
-          <p>
-            <b>Port Destinaton: </b>
-            {bookPlan?.Planner?.Destination?.PortDestinaton?.PortDestination_name}
-          </p>
-          <p>
-            <b>Port Origin: </b>
-            {bookPlan?.Planner?.Destination?.PortOrigin?.PortOrigin_name}
-          </p>
-          <p>
-            <b>Room Number: </b>
-            {bookPlan?.Room?.Room_number}
-          </p>
-          <p>
-            <b>Food Set Name: </b>
-            {bookPlan?.FoodSet?.Name}
-          </p>
-        </Card>
-      )}
-
-      <Form onFinish={handleSubmit}>
-        <div className="checkIn-buttom-area">
-          <button type="submit">Check In</button>
-        </div>
-      </Form>
     </div>
   );
 }

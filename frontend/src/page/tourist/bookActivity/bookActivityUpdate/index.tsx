@@ -116,8 +116,7 @@ export default function BookActivityUpdate() {
     return (
         <>
                 {contextHolder}
-                <div className="form-box">
-                    <div className="book-activity-input-box">
+                    <div className="book-activity-form-box">
                         <Form onFinish={handleSubmit}>
                             <label>เลือกกิจกรรม</label>
                             <div className="book-activity-input">
@@ -177,14 +176,14 @@ export default function BookActivityUpdate() {
                                 />
                             </div>
                     
-                            <button type="submit">
-                                <div className="activity-button">
-                                    เเก้ไขข้อมูล
-                                </div>
+                            
+                            <button className="activity-button" type='submit'>
+                                เเก้ไขข้อมูล
                             </button>
+                            
                         </Form>
                     </div>
-                </div>
+                
         </>
     )
 }

@@ -14,7 +14,7 @@ type RepairUpdate struct {
 	Comment      string `valid:"stringlength(2|100)~Detail must be between 2 and 256 characters"`
 	Repair_img   string 
 	RepairTypeID uint
-	Repair_date   time.Time 
+	Repair_date   time.Time `valid:"after_yesterday~Date must be from today to future"`
 	Repair_status string
 }
 
