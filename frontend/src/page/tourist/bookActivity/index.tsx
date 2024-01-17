@@ -7,6 +7,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BookActivityUpdate from "./bookActivityUpdate"
 import "./bookActivity.css"
+import ship1 from "../../../asset/ship1.jpg"
 export const idBookActivity = createContext(0);
 
 export default function BookActivity() {
@@ -39,7 +40,7 @@ export default function BookActivity() {
   return (
     <>
       <idBookActivity.Provider value={BookActivityID}>
-      <div className="login-bg" style={{ background: `black` }}>
+      <div className="login-bg" style={{ backgroundImage: `url(${ship1})` }}>
         {contextHolder}
         <div className="book-activity-list-box">
             <h1>จองกิจกรรม</h1>
