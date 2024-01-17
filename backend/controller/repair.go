@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/GITTIIII/SE-TEAM11/entity"
 	"github.com/asaskevich/govalidator"
@@ -10,9 +11,11 @@ import (
 
 type RepairUpdate struct {
 	ID           uint64
-	Comment      string `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
-	Repair_img   string `valid:"required~Image is required"`
+	Comment      string `valid:"stringlength(2|100)~Detail must be between 2 and 256 characters"`
+	Repair_img   string 
 	RepairTypeID uint
+	Repair_date   time.Time 
+	Repair_status string
 }
 
 // POST /repair
@@ -119,23 +122,3 @@ func UpdateRepair(c *gin.Context) {
 
 }
 
-// PATCH /checkIn
-func UpdateRepair1(c *gin.Context) {
-	var repair entity.Repair
-	var result entity.Repair
-	if err := c.ShouldBindJSON(&repair); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	// ค้นหา checkIn ด้วย id
-	if tx := entity.DB().Where("id = ?", repair.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "CheckIn not found"})
-		return
-	}
-
-	if err := entity.DB().Save(&repair).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"data": repair})
-}

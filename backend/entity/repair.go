@@ -2,9 +2,10 @@ package entity
 
 import (
 	"time"
-
+	
 	"gorm.io/gorm"
 )
+
 
 type Repair struct {
 	gorm.Model
@@ -22,3 +23,5 @@ type Repair struct {
 	RoomID *uint
 	Room   Room `gorm:"foreignKey:RoomID" valid:"-"`
 }
+
+

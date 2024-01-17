@@ -93,7 +93,7 @@ export default function Repair() {
           <div>
             <Link to="create">
               
-              <div className="repair-request-button">Repair Request</div>
+              <div className="repair-request-button">สร้างคำขอการแจ้งซ่อม</div>
             </Link>
 
             <div className="repair-table">
@@ -113,7 +113,7 @@ export default function Repair() {
                 <tbody>
                   {visibleRows.map((item, index) => (
                     <tr key={index}>
-                      <td>{index + 1}</td>
+                      <td>{item.ID}</td>
                       <td>{(item.Room as RoomInterface)?.Room_number}</td>
                       <td>
                         <img src={`${item.Repair_img}`}></img>
@@ -122,12 +122,12 @@ export default function Repair() {
                         {(item.RepairType as RepairTypeInterface)?.Repair_name}
                       </td>
                       <td>{item.Comment}</td>
-                      <td>{new Date(item.Repair_date!).toLocaleString()}</td>
+                      <td>{new Date(item.Repair_date!).toLocaleDateString()}</td>
                       <td>{item.Repair_status}</td>
                       <td>
                         <Popconfirm
-                          title="Delete the task"
-                          description="Are you sure to delete this task?"
+                          title="ลบรายการของการแจ้งซ่อม"
+                          description="คุณต้องการที่จะลบรายการนี้ใช่มั้ย?"
                           onConfirm={() => handleDelete(item.ID)}
                           onCancel={() => cancel}
 

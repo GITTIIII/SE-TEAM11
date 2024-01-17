@@ -27,7 +27,7 @@ export default function RepairCreate() {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [roomNumber, setRoomNumber] = useState<RoomInterface[]>([]);
-  const [rDate, setRDate] = useState<any>(new Date());
+  const [rDate, setRDate] = useState<any>(dayjs());
   const [repair_img, setRepair_Img] = useState("");
   const [comment, setComment] = useState("");
   const [type, setType] = useState<RepairTypeInterface[]>([]);
@@ -111,8 +111,8 @@ export default function RepairCreate() {
   };
 
 
-  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date, dateString);
+  const onChange  = (date: dayjs.Dayjs | null, dateString: string) => {
+    console.log(date);
     setRDate(date);
   };
 
@@ -189,7 +189,7 @@ export default function RepairCreate() {
               <label className="repair-text">Date</label>
               <br></br>
               <DatePicker
-                value={dayjs(rDate)}
+                value={rDate}
                 onChange={onChange}
                 format="YYYY-MM-DD"
               />

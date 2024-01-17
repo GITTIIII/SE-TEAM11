@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState, useRef } from "react";
 import "./repairEdit.css";
-import { Button, Form, message } from "antd";
+import { Button, Form, message, DatePicker, DatePickerProps } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { useContext } from "react";
 import { repairIDContext } from "..";
@@ -10,12 +10,14 @@ import { GetAllRepairType } from "../../../../services/https/repairType";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { RepairTypeInterface } from "../../../../interface/IRepairType";
 import { RoomInterface } from "../../../../interface/IRoom";
+import dayjs from "dayjs";
 
 function RepairEdit() {
   const [type, setType] = useState<RepairTypeInterface[]>([]);
   const [repair, setRepair] = useState<RepairInterface>();
   const [input, setInput] = useState({} as RepairInterface);
   const [repair_img, setRepair_Img] = useState("");
+  const [rDate, setRDate] = useState<any>(dayjs());
   const [messageApi, contextHolder] = message.useMessage();
 
   const repairID = useContext(repairIDContext);
@@ -61,6 +63,11 @@ function RepairEdit() {
     }
   };
 
+  const onChange = (date: dayjs.Dayjs | null, dateString: string) => {
+    console.log(date);
+    setRDate(date);
+  };
+
   console.log(repairID);
   console.log(repair?.Comment);
   console.log(Object(repair).repairType?.Repair_name);
@@ -70,10 +77,11 @@ function RepairEdit() {
       ID: Number(repairID),
       Comment: input.Comment,
       Repair_img: repair_img,
-      Repair_status: "เสร็จสิ้น",
+      Repair_status: input.Repair_status,
       RepairTypeID: Number(input.RepairTypeID),
       EmployeeID: Number(localStorage.getItem("EmployeeID")),
       RoomID: input.RoomID,
+      Repair_date: rDate,
     };
 
     console.log(updatedValues);
@@ -98,6 +106,7 @@ function RepairEdit() {
 
   return (
     <>
+    
       <div className="repair-edit">
         {contextHolder}
         <div className="repair-edit-header">
@@ -131,14 +140,22 @@ function RepairEdit() {
             </div>
             <label>รายละเอียด</label>
             <br></br>
-            <input
-              type="textarea"
-              className="repair-textarea"
+            <textarea
+              className="repair-edit-textarea"
               placeholder="Enter your detail"
               name="Comment"
               defaultValue={Object(repair).Comment}
               onChange={handleInput}
             />
+            <label>วันที่ต้องการรับบริการ</label>
+            <br></br>
+            <DatePicker
+              className="repair-edit-form-info"
+              value={rDate}
+              onChange={onChange}
+              format="YYYY-MM-DD"
+            />
+            <br></br>
             <label>รูปภาพ</label>
             <br></br>
             <input
@@ -149,7 +166,23 @@ function RepairEdit() {
               name="Repair_img"
               onChange={handleImageChange}
             />
-            <div className="buttom-area">
+            <br />
+            <hr />
+            <label >เปลี่ยนสถานะการแจ้งซ่อม</label>
+            <br />
+            <select
+              className="repair-select-custom"
+              name="Repair_status"
+              onChange={handleInput}
+            >
+              <option value="none" hidden defaultValue={Number(Object(repair))}>
+                {Object(repair).Repair_status}
+              </option>
+
+              <option >เสร็จสิ้น</option>
+            </select>
+
+            <div className="repair-edit-button-area">
               <button type="submit">ยืนยัน</button>
             </div>
           </Form>
