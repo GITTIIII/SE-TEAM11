@@ -1,6 +1,8 @@
 import  "./dessertCreate.css"
 import {  Form, message,  Input, InputNumber, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+
+import cruise from "../../../../../asset/cruise.png";
+
 import { DessertInterface } from '../../../../../interface/IDessert';
 import { CreateDessert } from '../../../../../services/https/food/dessert';
 
@@ -14,14 +16,18 @@ export default function dessertCreate() {
           content: "บันทึกข้อมูลสำเร็จ",
         });
       } else {
-      console.log(res);
+        messageApi.open({
+          type: "error",
+          content: res.message,
+        });
       }
     };
   return (
     <>
       {contextHolder}
-      <div className='dessertCreate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='dessertCreate-header'>dessert</h1>
+      <div className='dessertCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='dessertCreate-header'>Add a Dessert</h1>
+      <div className='dessertCreate-headline'/>
         <div className='dessertCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='dessertCreate-form-control'>

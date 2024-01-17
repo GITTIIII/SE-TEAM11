@@ -1,18 +1,19 @@
 import  { useEffect, useState } from 'react'
 import  "./drinkDashbord.css"
-import { Button, Form, message,  Modal, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import { Button, ConfigProvider, Form, message,  Modal, } from 'antd';
+import cruise from "../../../../../asset/cruise.png"
 import { DrinkInterface } from '../../../../../interface/IDrink';
 import { DeleteDrinkByID, GetAllDrink } from '../../../../../services/https/food/drink';
 import Table, { ColumnsType } from 'antd/es/table';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
 export default function DrinkDashbord() {
   const [messageApi, contextHolder] = message.useMessage();
   const [drinks, setDrinks] = useState<DrinkInterface[]>([]);
-
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<String>();
@@ -60,7 +61,7 @@ export default function DrinkDashbord() {
           render: (text, record, index) => (
             <>
             <Button  
-            // onClick={() =>  navigate(`/customer/edit/${record.ID}`)} 
+             onClick={() => navigate(`/employee/food/drink/edit/${record.ID}`)}
             shape="circle" 
             icon={<EditOutlined />} 
             size={"large"} />
@@ -99,7 +100,7 @@ export default function DrinkDashbord() {
         setOpen(false);
         messageApi.open({
           type: "error",
-          content: "เกิดข้อผิดพลาด !",
+          content: res.message,
         });
       }
       setConfirmLoading(false);
@@ -115,16 +116,33 @@ export default function DrinkDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='drinkDashbord-bg' style={{ backgroundImage: `url(${ship})` }}>
-        <h1 className='drinkDashbord-header'>drink</h1>
-          <div className='drinkDashbord-form'>
+        <div className='drinkDashbord-bg' style={{ backgroundImage: `url(${cruise})` }}>
+        <h1 className='drinkDashbord-header'>Drink</h1>
+      <div className='drinkDashbord-headline'/>
+      <NavLink to="/employee/food/drink/create">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#CDF5FD",
+              colorTextLightSolid: "#000000",
+              colorPrimaryHover: "#89CFF3",
+              colorPrimaryActive: "#818FB4",
+            },
+          }}
+        >
+          <Button className="foodSetDasdbord-add-button" type="primary">
+            add a drink
+          </Button>
+        </ConfigProvider>
+      </NavLink>
+          
             <Form  autoComplete="off">
               <div style={{ marginTop: 20 }}>
-                  <Table rowKey="ID" columns={columns} dataSource={drinks} />
+                  <Table rowKey="ID" columns={columns} dataSource={drinks} style={{ padding: "20px", boxShadow: "" }}/>
               </div>
             </Form>
           </div>     
-        </div>
+       
         <Modal
         title="ลบข้อมูล ?"
         open={open}

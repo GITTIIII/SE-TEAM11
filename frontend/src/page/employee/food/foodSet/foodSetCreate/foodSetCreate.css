@@ -10,6 +10,20 @@
     
 }
 
+.foodSetCreate-header{
+    margin-left: 1%;
+    color: white;
+    font-size: bolder;
+    font-style: italic;
+}
+
+.foodSetCreate-headline{
+    width: 100%;
+    height: 7px;
+    background-color: white;
+}
+
+
 .foodSetCreate-form-control{
     margin-top: 10px;
 }
@@ -57,14 +71,14 @@
 
   .foodSetCreate-bg{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: flex-start; */
     width: 100%;
     height: 100vh;
+    background-color: #363062;
     background-repeat: no-repeat; 
     background-position: center;
     background-size: cover;
-    color: white;
     display: flex;
     flex-direction: column;
     overflow: auto;

@@ -1,7 +1,7 @@
 import  { useEffect, useState } from 'react'
 import  "./dessertUpdate.css"
 import {  Form, message,  Input, InputNumber, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png"
 import { DessertInterface } from '../../../../../interface/IDessert';
 import { GetDessertById, UpdateDessert } from '../../../../../services/https/food/dessert';
 import { useParams } from 'react-router-dom';
@@ -29,13 +29,13 @@ export default function DessertUpdate() {
      } else {
        messageApi.open({
          type: "error",
-         content: "แก้ไขข้อมูลไม่สำเร็จ",
+         content: res.message,
        });
      }
    };
  
    const getDessertById = async () => {
-     let res = await GetDessertById(Number(2));
+     let res = await GetDessertById(Number(id));
      if (res) {
       setDessert(res);
        // set form ข้อมูลเริ่มที่เราแก้ไข
@@ -52,8 +52,11 @@ export default function DessertUpdate() {
   return (
     <>
       {contextHolder}
-      <div className='dessertUpdate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='dessertUpdate-header'>dessert</h1>
+      <div className='dessertUpdate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='dessertUpdate-header'>Update Dessert</h1>
+      <div className='dessertUpdate-headline'/>
+      
+
         <div className='dessertUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='dessertUpdate-form-control'>

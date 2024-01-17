@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
 import  "./savoryDashbord.css"
-import { Button, Form, message,Modal, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import { Button, ConfigProvider, Form, message,Modal, } from 'antd';
+import cruise from "../../../../../asset/cruise.png"
 import { SavoryInterface } from '../../../../../interface/ISavory';
 import {  DeleteSavoryByID, GetAllSavory } from '../../../../../services/https/food/savory';
 import Table, { ColumnsType } from 'antd/es/table';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
 export default function SavoryDashbord() {
   const [messageApi, contextHolder] = message.useMessage();
   const [savorys, setSavorys] = useState<SavoryInterface[]>([]);
-
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<String>();
@@ -60,7 +61,7 @@ export default function SavoryDashbord() {
           render: (text, record, index) => (
             <>
             <Button  
-            // onClick={() =>  navigate(`/customer/edit/${record.ID}`)} 
+            onClick={() => navigate(`/employee/food/savory/edit/${record.ID}`)}
             shape="circle" 
             icon={<EditOutlined />} 
             size={"large"} />
@@ -115,16 +116,33 @@ export default function SavoryDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='savoryDashbord-bg' style={{ backgroundImage: `url(${ship})` }}>
-        <h1 className='savoryDashbord-header'>savory</h1>
-          <div className='savoryDashbord-form'>
+        <div className='savoryDashbord-bg' style={{ backgroundImage: `url(${cruise})` }}>
+        <h1 className='savoryDashbord-header'>Savory</h1>
+        <div className='savoryDashbord-headline'/>
+        <NavLink to="/employee/food/savory/create">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#CDF5FD",
+              colorTextLightSolid: "#000000",
+              colorPrimaryHover: "#89CFF3",
+              colorPrimaryActive: "#818FB4",
+            },
+          }}
+        >
+          <Button className="foodSetDasdbord-add-button" type="primary">
+            add a savory
+          </Button>
+        </ConfigProvider>
+      </NavLink>
+
             <Form  autoComplete="off">
               <div style={{ marginTop: 20 }}>
-                  <Table rowKey="ID" columns={columns} dataSource={savorys} />
+                  <Table rowKey="ID" columns={columns} dataSource={savorys} style={{ padding: "20px", boxShadow: "" }}/>
               </div>
             </Form>
           </div>     
-        </div>
+
         <Modal
         title="ลบข้อมูล ?"
         open={open}
