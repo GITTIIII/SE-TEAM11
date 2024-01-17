@@ -12,6 +12,10 @@
   margin: auto;
 }
 
+input[type="file"]{
+  display: none;
+}
+
 .repair-form-control {
   margin-top: 10px;
 }

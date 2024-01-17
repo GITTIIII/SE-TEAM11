@@ -205,6 +205,7 @@ export default function RepairCreate() {
                 accept="image/*"
                 onChange={handleImageChange}
               />
+              
             </div>
 
             {/* <div className="repair-form-control">
