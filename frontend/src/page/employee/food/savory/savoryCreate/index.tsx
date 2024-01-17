@@ -1,6 +1,6 @@
 import  "./savoryCreate.css"
 import { Form, message,  Input, InputNumber, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png"
 import { SavoryInterface } from '../../../../../interface/ISavory';
 import { CreateSavory } from '../../../../../services/https/food/savory';
 
@@ -14,14 +14,19 @@ export default function savoryCreate() {
           content: "บันทึกข้อมูลสำเร็จ",
         });
       } else {
-      console.log(res);
+        messageApi.open({
+          type: "error",
+          content: res.message,
+        });
       }
     };
   return (
     <>
       {contextHolder}
-      <div className='savoryCreate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='savoryCreate-header'>savory</h1>
+      <div className='savoryCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='savoryCreate-header'>Add a Savory</h1>
+      <div className='savoryCreate-headline'/>
+
         <div className='savoryCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='savoryCreate-form-control'>

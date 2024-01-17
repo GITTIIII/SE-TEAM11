@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import  "./foodSetCreate.css"
 import {  Form, message,  Input, InputNumber, Select, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png";
+
 import { FoodSetInterface } from '../../../../../interface/IFoodSet';
 import { DessertInterface } from '../../../../../interface/IDessert';
 import { SavoryInterface } from '../../../../../interface/ISavory';
@@ -57,7 +58,10 @@ useEffect(() => {
           content: "บันทึกข้อมูลสำเร็จ",
         });
       } else {
-      console.log(res);
+            messageApi.open({
+          type: "error",
+          content: res.message,
+      })
       }
     };
 
@@ -66,14 +70,13 @@ useEffect(() => {
   return (
     <>
       {contextHolder}
-      <div className='foodSetCreate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='foodSetCreate-header'>foodSet</h1>
+      <div className='foodSetCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='foodSetCreate-header'>Add a foodSet</h1>
+      <div className="foodSetCreate-headline" />
         <div className='foodSetCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='foodSetCreate-form-control'>
-              <label className='foodSetCreate-text'>Name</label>
-              <br></br>
-              <Form.Item name="Name">
+              <Form.Item name="Name" label="Name">
                 <Input placeholder='Name' ></Input>
               </Form.Item>
             </div>
@@ -99,9 +102,7 @@ useEffect(() => {
                   ))}
                 </Select>
               </Form.Item>
-              <label className='foodSetCreate-text'>Count</label>
-              <br></br>
-              <Form.Item name="Count">
+              <Form.Item name="Count" label="Count   ">
                 <InputNumber placeholder='Count' type='number'></InputNumber>
               </Form.Item>
             </div>

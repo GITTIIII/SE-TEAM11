@@ -1,15 +1,17 @@
 import  { useEffect, useState } from 'react'
 import  "./dessertDashbord.css"
-import { Button,  Form, message,  Modal, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import { Button,  ConfigProvider,  Form, message,  Modal, } from 'antd';
+import cruise from "../../../../../asset/cruise.png";
 import Table, { ColumnsType } from 'antd/es/table';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { DeleteDessertByID, GetAllDessert } from '../../../../../services/https/food/dessert';
 import { DessertInterface } from '../../../../../interface/IDessert';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
 export default function DessertDashbord() {
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [desserts, setDesserts] = useState<DessertInterface[]>([]);
 
@@ -60,7 +62,7 @@ export default function DessertDashbord() {
           render: (text, record, index) => (
             <>
             <Button  
-            // onClick={() =>  navigate(`/customer/edit/${record.ID}`)} 
+             onClick={() => navigate(`/employee/food/dessert/edit/${record.ID}`)}
             shape="circle" 
             icon={<EditOutlined />} 
             size={"large"} />
@@ -115,16 +117,33 @@ export default function DessertDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='dessertDashbord-bg' style={{ backgroundImage: `url(${ship})` }}>
-        <h1 className='dessertDashbord-header'>dessert</h1>
-          <div className='dessertDashbord-form'>
+        <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
+        <h1 className='dessertDashbord-header'>Dessert</h1>
+        <div className='dessertDashbord-headline'/>
+        <NavLink to="/employee/food/dessert/create">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: "#CDF5FD",
+              colorTextLightSolid: "#000000",
+              colorPrimaryHover: "#89CFF3",
+              colorPrimaryActive: "#818FB4",
+            },
+          }}
+        >
+          <Button className="foodSetDasdbord-add-button" type="primary">
+            add a dessert
+          </Button>
+        </ConfigProvider>
+      </NavLink>
+
             <Form  autoComplete="off">
               <div style={{ marginTop: 20 }}>
-                  <Table rowKey="ID" columns={columns} dataSource={desserts} />
+                  <Table rowKey="ID" columns={columns} dataSource={desserts} style={{ padding: "20px", boxShadow: "" }}/>
               </div>
             </Form>
           </div>     
-        </div>
+
         <Modal
         title="ลบข้อมูล ?"
         open={open}

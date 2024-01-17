@@ -1,7 +1,7 @@
 import  { useEffect, useState } from 'react'
 import  "./drinkUpdate.css"
 import {  Form, message,  Input, InputNumber, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png"
 import { DrinkInterface } from '../../../../../interface/IDrink';
 import { GetDrinkById, UpdateDrink } from '../../../../../services/https/food/drink';
 import { useParams } from 'react-router-dom';
@@ -29,13 +29,13 @@ export default function DrinkUpdate() {
      } else {
        messageApi.open({
          type: "error",
-         content: "แก้ไขข้อมูลไม่สำเร็จ",
+         content: res.message,
        });
      }
    };
  
    const getDrinkById = async () => {
-     let res = await GetDrinkById(Number(2));
+     let res = await GetDrinkById(Number(id));
      if (res) {
       setDrink(res);
        // set form ข้อมูลเริ่มที่เราแก้ไข
@@ -52,8 +52,9 @@ export default function DrinkUpdate() {
   return (
     <>
       {contextHolder}
-      <div className='drinkUpdate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='drinkUpdate-header'>drink</h1>
+      <div className='drinkUpdate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='drinkUpdate-header'>Update Drink</h1>
+      <div  className='drinkUpdate-headline'/>
         <div className='drinkUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='drinkUpdate-form-control'>

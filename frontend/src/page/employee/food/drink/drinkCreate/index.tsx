@@ -1,6 +1,6 @@
 import  "./drinkCreate.css"
 import {  Form, message,  Input, InputNumber, } from 'antd';
-import ship from "../../../../../asset/ship.jpg"
+import cruise from "../../../../../asset/cruise.png"
 import { DrinkInterface } from '../../../../../interface/IDrink';
 import { CreateDrink } from '../../../../../services/https/food/drink';
 
@@ -16,15 +16,17 @@ export default function drinkCreate() {
       } else {
         messageApi.open({
           type: "error",
-          content: "บันทึกข้อมูลไม่สำเร็จ",
+          content: res.message,
         });
       }
     };
   return (
     <>
       {contextHolder}
-      <div className='drinkCreate-bg' style={{ backgroundImage: `url(${ship})` }}>
-      <h1 className='drinkCreate-header'>drink</h1>
+      <div className='drinkCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
+      <h1 className='drinkCreate-header'>Add a Drink</h1>
+      <div className='dessertUpdate-headline'/>
+
         <div className='drinkCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='drinkCreate-form-control'>
