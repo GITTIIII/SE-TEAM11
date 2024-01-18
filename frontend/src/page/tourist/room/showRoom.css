@@ -1,0 +1,8 @@
+.showRoom-bg {
+    /* background-image: url('https://img.freepik.com/free-photo/mesmerizing-picture-horses-with-chariots-golden-sand-against-beautiful-ocean_181624-31818.jpg?w=996&t=st=1705505912~exp=1705506512~hmac=a8017dfbde85d9e71745c042329995cd4a1f63d0cf14002c351d9adb74eb4a07'); */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 40vw;
+}
