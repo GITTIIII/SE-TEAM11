@@ -4,8 +4,9 @@ import { DistanceInterface } from "./IDistance";
 
 export interface DestinationInterface {
   ID?: number;
-  Destination_Img?: string;
-
+  Destination_img?: string;
+  Destination_name?: string;
+  Destination_price?: number;
   PortOriginID?: number;
   PortOrigin?: PortOriginInterface;
 

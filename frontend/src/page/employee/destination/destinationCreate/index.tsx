@@ -69,12 +69,17 @@ export default function DestinationCreates() {
   // const [Destination_Img, setDestination_Img] = useState("");
 
   const [messageApi, contextHolder] = message.useMessage();
+  const [destinationName, setDestination_name] = useState("");
+  const [destinationPrice, setPrice] = useState("");
+  const [destination_img, setDestination_Img] = useState("");
 
   const handleSubmit = async (values: DestinationInterface) => {
-    // values.Destination_Img = Destination_Img;
     values.PortOriginID = input.portOriginID;
     values.PortDestinationID = input.portDestinationID;
     values.DistanceID = input.DistanceID;
+    values.Destination_img = destination_img;
+    values.Destination_price = Number(destinationPrice);
+    values.Destination_name = destinationName;
 
     console.log(values);
 
@@ -94,25 +99,25 @@ export default function DestinationCreates() {
       });
     }
   };
-  // const props: UploadProps = {
-  //   beforeUpload: (file) => {
-  //     const reader = new FileReader();
+  const props: UploadProps = {
+    beforeUpload: (file) => {
+      const reader = new FileReader();
 
-  //     reader.onload = (e) => {
-  //       if (e.target) {
-  //         const base64Image = e.target.result as string; // Ensure it's a string
-  //         // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
-  //         setDestination_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
-  //       }
-  //     };
+      reader.onload = (e) => {
+        if (e.target) {
+          const base64Image = e.target.result as string; // Ensure it's a string
+          // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
+          setDestination_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
+        }
+      };
 
-  //     reader.readAsDataURL(file);
-  //     return false; // Prevent automatic upload
-  //   },
-  //   onChange: (info) => {
-  //     console.log(info.fileList);
-  //   },
-  // };
+      reader.readAsDataURL(file);
+      return false; // Prevent automatic upload
+    },
+    onChange: (info) => {
+      console.log(info.fileList);
+    },
+  };
 
   return (
     <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
@@ -164,6 +169,17 @@ export default function DestinationCreates() {
               </select>
             </div>
           </div>
+          <div className="create-destination-form-control">
+            <label className="create-destination-text">Name of trip</label>
+            <br></br>
+            <input
+              className="create-planner-input"
+              type="text"
+              placeholder="Enter name of trip"
+              value={destinationName}
+              onChange={(e) => setDestination_name(e.target.value)}
+            />
+          </div>
 
           <div className="create-destination-form-control">
             <label className="create-destination-text">Distance</label>
@@ -184,6 +200,30 @@ export default function DestinationCreates() {
                 ))}
               </select>
             </div>
+          </div>
+          <div className="create-destination-form-control">
+            <label className="create-destination-text">Price of trip</label>
+            <br></br>
+            <input
+              className="create-destination-input"
+              type="number"
+              step="0.001"
+              placeholder="Enter price of trip"
+              value={destinationPrice}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </div>
+          <div className="create-destination-form-control">
+            <label className="create-destination-text">Image of Planner</label>
+            <br></br>
+            <Upload
+              {...props}
+              accept="image/png, image/jpeg"
+              action="/Destination"
+              id="Destination_img"
+            >
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
           </div>
           <div className="buttom-area">
             <button type="submit">ยืนยัน</button>

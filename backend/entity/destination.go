@@ -9,7 +9,9 @@ import (
 type Destination struct {
 	gorm.Model
 
-	// Destination_Img		string 
+	Destination_name   string 	`gorm:"uniqueIndex"`
+	Destination_img    string	`valid:"required~Destination image is required"`
+	Destination_price 		float64	`valid:"required~Destination price is required, range(10000|100000)~Room price between 10000-100000"`
 
 	PortOriginID *uint	`valid:"required~PortOrigin is required"`
 	PortOrigin PortOrigin `gorm:"foreignKey:PortOriginID"`
