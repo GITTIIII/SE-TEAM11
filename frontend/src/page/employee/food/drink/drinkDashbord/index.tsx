@@ -100,7 +100,7 @@ export default function DrinkDashbord() {
         setOpen(false);
         messageApi.open({
           type: "error",
-          content: res.message,
+          content: "มีข้อมูลอยู่ในFoodSet",
         });
       }
       setConfirmLoading(false);
