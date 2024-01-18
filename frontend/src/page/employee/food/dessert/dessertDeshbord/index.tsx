@@ -101,7 +101,7 @@ export default function DessertDashbord() {
         setOpen(false);
         messageApi.open({
           type: "error",
-          content: "เกิดข้อผิดพลาด !",
+          content: "มีข้อมูลอยู่ในFoodSet",
         });
       }
       setConfirmLoading(false);

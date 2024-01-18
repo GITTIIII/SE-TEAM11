@@ -149,8 +149,5 @@ func SetupDatabase() {
 	}
 	db.Model(&BookPlan{}).Create(&book_plan)
 
-	food1 := FoodSet{
-		Name: "food1",
-	}
-	db.Model(&FoodSet{}).Create(&food1)
+	
 }
