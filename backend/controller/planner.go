@@ -20,11 +20,8 @@ func CreatePlanner(c *gin.Context) {
 
 	// สร้าง planner
 	a := entity.Planner{
-		Plan_img:    planner.Plan_img,
-		Plan_name: planner.Plan_name,
-		Price: planner.Price,
-		// TimeStart: planner.TimeStart,
-		// TimeEnd: planner.TimeEnd,
+		TimeStart: planner.TimeStart,
+		TimeEnd: planner.TimeEnd,
 		DestinationID: planner.DestinationID,
 		Destination: destination,
 	}

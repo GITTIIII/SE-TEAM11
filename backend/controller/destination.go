@@ -27,7 +27,9 @@ func CreateDestination(c *gin.Context) {
 	}
 	// สร้าง destination
 	a := entity.Destination{
-		// Destination_Img: destination.Destination_Img,
+		Destination_img:    destination.Destination_img,
+		Destination_name: destination.Destination_name,
+		Destination_price: destination.Destination_price,
 		PortOriginID: destination.PortOriginID,
 		PortOrigin: portOrigin,
 

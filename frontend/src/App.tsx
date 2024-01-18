@@ -16,7 +16,7 @@ import CreateDestination from "./page/employee/destination/destinationCreate";
 import EditDestination from "./page/employee/destination/destinationEdit";
 import Planner from "./page/employee/planner";
 import CreatePlanner from "./page/employee/planner/plannerCreate";
-import EditPlanner from "./page/employee/planner/plannerEdit";
+// import EditPlanner from "./page/employee/planner/plannerEdit";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
@@ -45,7 +45,6 @@ import ShowRoom from "./page/tourist/room";
 import TouristProfile from "./page/tourist/touristProfile";
 import BookActivity from "./page/tourist/bookActivity";
 import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
-
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -76,7 +75,7 @@ const router = createBrowserRouter(
         <Route path="food/Dessert/edit/:id" element={<DessertUpdate />} />
         <Route path="planner" element={<Planner />} />
         <Route path="planner/create" element={<CreatePlanner />} />
-        <Route path="planner/edit/:id" element={<EditPlanner />} />
+        {/* <Route path="planner/edit/:id" element={<EditPlanner />} /> */}
         <Route path="repair" element={<Repair />} />
         <Route path="repair/create" element={<RepairCreate />} />
         <Route path="room" element={<Room />} />
@@ -92,7 +91,10 @@ const router = createBrowserRouter(
         <Route path="room" element={<Room />} />
         <Route path="showroom" element={<ShowRoom />} />
         <Route path="bookActivity" element={<BookActivity />} />
-        <Route path="bookActivity/bookActivityCreate"element={<BookActivityCreate />}/>
+        <Route
+          path="bookActivity/bookActivityCreate"
+          element={<BookActivityCreate />}
+        />
         <Route path="payment" element={<Payment />} />
         <Route path="touristProfile" element={<TouristProfile />} />
         <Route path="destination" element={<Destination />} />

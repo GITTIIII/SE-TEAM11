@@ -1,18 +1,15 @@
 package entity
 
 import (
-	// "time"
+	"time"
 
 	"gorm.io/gorm"
 )
 
 type Planner struct {
 	gorm.Model
-	Plan_name   string 	`gorm:"uniqueIndex"`
-	Plan_img    string	`gorm:"type:longtext"`
-	Price 		float64	`valid:"required~Plan price is required"`
-	// TimeStart 	time.Time
-	// TimeEnd 	time.Time
+	TimeStart 	time.Time
+	TimeEnd 	time.Time
 
 
 	DestinationID *uint

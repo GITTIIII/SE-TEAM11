@@ -21,6 +21,23 @@ export default function Destination() {
       key: "id",
     },
     {
+      title: "ทริป",
+      dataIndex: "Destination_img",
+      key: "destination_img",
+      render: (text, record, index) => (
+        <img
+          src={`${record.Destination_img}`}
+          style={{ maxWidth: "100px", maxHeight: "100px" }}
+          alt={`Trip ${index + 1}`}
+        />
+      ),
+    },
+    {
+      title: "ชื่อทริป",
+      dataIndex: "Destination_name",
+      key: "destination_name",
+    },
+    {
       title: "ต้นทาง",
       dataIndex: "PortOrigin",
       key: "port_origin",
@@ -37,6 +54,11 @@ export default function Destination() {
       dataIndex: "Distance",
       key: "distance",
       render: (item) => item.Distance,
+    },
+    {
+      title: "ราคา",
+      dataIndex: "Destination_price",
+      key: "desntination_price",
     },
     {
       title: "จัดการ",

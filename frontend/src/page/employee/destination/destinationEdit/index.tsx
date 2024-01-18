@@ -11,6 +11,7 @@ import {
   message,
   Upload,
   Select,
+  InputNumber,
 } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { DestinationInterface } from "../../../../interface/IDestination";
@@ -34,6 +35,10 @@ function DestinationEdit() {
 
   //   const [user, setUser] = useState<UsersInterface>();
   const [destination, setDestination] = useState<DestinationInterface>();
+  const [destinationPrice, setDestination_price] = useState("");
+  const [destinationImage, setDestinationImage] = useState<string | null>(null);
+  const [destinationNames, setDestinationNames] = useState("");
+  // const [destination, setDestination] = useState<DestinationInterface>();
   //   const [genders, setGenders] = useState<GendersInterface[]>([]);
   const [portOrigins, setPortOrigins] = useState<PortOriginInterface[]>([]);
   const [portDestinations, setPortDestinations] = useState<
@@ -116,6 +121,9 @@ function DestinationEdit() {
         PortOriginID: res.PortOriginID,
         PortDestinationID: res.PortDestinationID,
         DistanceID: res.DistanceID,
+        Destination_img: res.Destination_img,
+        Destination_price: res.Destination_price,
+        Destination_name: res.Destination_name,
         // GenderID: res.GenderID,
         // Email: res.Email,
         // Phone: res.Phone,
@@ -145,6 +153,64 @@ function DestinationEdit() {
           autoComplete="off"
         >
           <Row gutter={[16, 16]}>
+            {/* {
+              <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                <Form.Item
+                  label="รูปทริป"
+                  name="Destination_img"
+                  getValueFromEvent={(e) => e.file.originFileObj}
+                >
+                  <Upload
+                    name="Destination_img"
+                    listType="picture"
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setDestinationImage(reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                      return false; // Prevent default upload behavior
+                    }}
+                  >
+                    <Button icon={<UploadOutlined />}>อัปโหลดรูป</Button>
+                  </Upload>
+                  {destinationImage && (
+                    <img
+                      src={destinationImage}
+                      alt="Destination"
+                      style={{ maxWidth: "100%", marginTop: "10px" }}
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+            } */}
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="ชื่อทริป"
+                name="Destination_name"
+                // type="number" step="0.001"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกชื่อทรืป !",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              {/* <div className='create-room-form-control'>
+          <label className='create-room-text'>Price of Room</label>
+          <br></br>
+          <input 
+            className='create-room-input' 
+            type="number" step="0.001" 
+            placeholder = 'Enter price of room' 
+            name="Room_price"
+            // required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
+          />
+        </div> */}
+            </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 name="PortOriginID"
@@ -190,6 +256,37 @@ function DestinationEdit() {
                 </Select>
               </Form.Item>
             </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="ราคา"
+                name="Destination_price"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกราคา!",
+                  },
+                ]}
+              >
+                <InputNumber
+                // type="number" // This prop might not be necessary, you can try removing it
+                // step={0.001}
+                // style={{ width: "100%" }} // Adjust the width as needed
+                />
+              </Form.Item>
+            </Col>
+            <Form.Item
+              name="Destination_img"
+              getValueFromEvent={(e) => e.file.originFileObj}
+            >
+              {destinationImage && (
+                <img
+                  src={destinationImage}
+                  alt="Destination"
+                  style={{ maxWidth: "100%", marginTop: "10px" }}
+                />
+              )}
+            </Form.Item>
+
             {/* <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="เบอร์โทรศัพท์"
