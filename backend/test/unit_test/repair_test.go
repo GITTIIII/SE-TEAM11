@@ -53,11 +53,11 @@ func TestRepairrequest(t *testing.T) {
 
 	})
 
-	t.Run(`Image is required`, func(t *testing.T) {
+	t.Run(`รูปภาพไม่ถูกต้อง`, func(t *testing.T) {
 
 		repairrequest := entity.Repair{
 			Comment:       "พัง",
-			Repair_img:    "",
+			Repair_img:    "abacedefaga",
 			Repair_date:   time.Now(),
 			Repair_status: "เสร็จสิ้น",
 			RepairTypeID:  &RepairTypeID,
@@ -69,7 +69,7 @@ func TestRepairrequest(t *testing.T) {
 		g.Expect(ok).NotTo(BeTrue())
 		g.Expect(err).NotTo(BeNil())
 
-		g.Expect(err.Error()).To(Equal("Image is required"))
+		g.Expect(err.Error()).To(Equal("รูปภาพไม่ถูกต้อง"))
 	})
 
 	t.Run(`test Date must be from today to future`, func(t *testing.T) {
