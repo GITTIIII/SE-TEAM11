@@ -29,7 +29,7 @@
 }
 
 .room-add-button{
-    top: 10px;
+    top: 25px;
     left: 85%;
     width: 150px;
     height: 35px;
@@ -92,16 +92,6 @@
     transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
   }
 
-
-
-.room-option{
-    
-}
-
-.room-input-file{
-   
-
-}
 .room-text{
     color: rgb(0, 0, 0);
 }

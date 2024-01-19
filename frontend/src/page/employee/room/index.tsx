@@ -137,42 +137,43 @@ export default function Room() {
       {contextHolder}
       <h1 className="room-header">Room</h1>
 
-      <div className="room-headline" />
+      <div className="room-headline">
 
-      <NavLink to="/employee/room/create">
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
-              colorPrimaryHover: "#89CFF3",
-              colorPrimaryActive: "#818FB4",
-            },
-          }}
+        <NavLink to="/employee/room/create">
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: "#CDF5FD",
+                colorTextLightSolid: "#000000",
+                colorPrimaryHover: "#89CFF3",
+                colorPrimaryActive: "#818FB4",
+              },
+            }}
+          >
+            <Button className="room-add-button" type="primary">
+              add a room
+            </Button>
+          </ConfigProvider>
+        </NavLink>
+
+        <div style={{ marginTop: 20 }}>
+          <Table
+            rowKey="ID"
+            columns={columns}
+            dataSource={listRoom}
+            style={{ padding: "20px", boxShadow: "" }}
+          />
+        </div>
+        <Modal
+          title="ลบข้อมูล ?"
+          open={open}
+          onOk={handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={handleCancel}
         >
-          <Button className="room-add-button" type="primary">
-            add a room
-          </Button>
-        </ConfigProvider>
-      </NavLink>
-
-      <div style={{ marginTop: 20 }}>
-        <Table
-          rowKey="ID"
-          columns={columns}
-          dataSource={listRoom}
-          style={{ padding: "20px", boxShadow: "" }}
-        />
+          <p>{modalText}</p>
+        </Modal>
       </div>
-      <Modal
-        title="ลบข้อมูล ?"
-        open={open}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <p>{modalText}</p>
-      </Modal>
     </div>
   );
 }
