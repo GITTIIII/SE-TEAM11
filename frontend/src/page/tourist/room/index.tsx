@@ -35,6 +35,7 @@ export default function ShowRoom(){
   return(
       
     <div className='showRoom-bg'>
+      <div className='showRoom-blur'>
       <div style={{justifyItems: 'center', alignItems: 'center'}}>
           <div style={{display:'flex',flexDirection:'row',flexWrap: 'wrap', position:'relative', justifyContent: 'center', alignItems: 'center'}}>
             {rooms.map((room, index) => (
@@ -48,6 +49,7 @@ export default function ShowRoom(){
               </Card>                  
             ))}
         </div>
+      </div>
       </div>
     </div>  
   )
