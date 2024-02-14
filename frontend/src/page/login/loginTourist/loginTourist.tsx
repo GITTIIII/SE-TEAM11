@@ -36,13 +36,13 @@ const LoginTourist = () => {
             localStorage.setItem('TouristID', res.message.id);
 
             setTimeout(function () {
-                navigate("/tourist/touristProfile")  
+                navigate("/tourist/main")  
             }, 500);
 
         } else {
             messageApi.open({
                 type: "error",
-                content: "ล็อกอินไม่สำเร็จ",
+                content: res.message,
             });
         }
     } 
@@ -66,8 +66,8 @@ const LoginTourist = () => {
                                 name="Email"
                                 onChange={handleInput}
                                 />
-                                <label>Email Address</label>
                                 <FontAwesomeIcon icon={faUser} className="icon"/>
+                                <label>Email Address</label>
                             </div>
 
                             <div className="input-box">
@@ -81,13 +81,6 @@ const LoginTourist = () => {
                                 <FontAwesomeIcon icon={faLock} className="icon"/>
                             </div>
                             
-                            <div className="remember-forgot">
-                                <label>
-                                    <input type="checkbox"/>
-                                    Stay signed in
-                                </label>
-                                <Link to="/">Forgot Password?</Link>
-                            </div>
                             <div className="buttom-area">
 
                                 <button type="submit">Sign in</button> 

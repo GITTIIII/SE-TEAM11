@@ -1,6 +1,6 @@
 import { PlannerInterface } from "../../../interface/IPlanner";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllPlanner() {
   const requestOptions = {

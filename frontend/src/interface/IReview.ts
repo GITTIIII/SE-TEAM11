@@ -3,7 +3,7 @@ import { PlannerInterface } from "./IPlanner";
 
 export interface ReviewInterface {
     ID?: number;
-    Comment?: string;
+    Comment?: String;
 
     TouristID?: number;
     Tourist?: TouristInterface;

@@ -10,7 +10,6 @@ import (
 // POST /Distance
 func CreateDistance(c *gin.Context) {
 	var Distance entity.Distance
-	
 
 	// bind เข้าตัวแปร Distance
 	if err := c.ShouldBindJSON(&Distance); err != nil {

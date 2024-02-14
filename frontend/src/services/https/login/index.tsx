@@ -1,17 +1,15 @@
 import { LoginPayloadInterface } from "../../../interface/ILogin";
 
-const apiUrl = "http://localhost:8080";
-
+const apiUrl = "https://api.cruise-ship.online";
 
 async function LoginT(data: LoginPayloadInterface) {
   const requestOptions = {
     method: "POST",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   };
-  
 
   let res = await fetch(`${apiUrl}/LoginT`, requestOptions)
     .then((response) => response.json())
@@ -29,12 +27,11 @@ async function LoginT(data: LoginPayloadInterface) {
 async function LoginE(data: LoginPayloadInterface) {
   const requestOptions = {
     method: "POST",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   };
-  
 
   let res = await fetch(`${apiUrl}/LoginE`, requestOptions)
     .then((response) => response.json())
@@ -49,7 +46,4 @@ async function LoginE(data: LoginPayloadInterface) {
   return res;
 }
 
-  export {
-    LoginT,
-    LoginE
-  };
+export { LoginT, LoginE };

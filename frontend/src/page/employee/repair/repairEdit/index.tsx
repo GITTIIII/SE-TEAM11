@@ -12,7 +12,7 @@ import { RepairTypeInterface } from "../../../../interface/IRepairType";
 import { RoomInterface } from "../../../../interface/IRoom";
 import dayjs from "dayjs";
 
-function RepairEdit() {
+function RepairEdit({ onCancel }: { onCancel: () => void }) {
   const [type, setType] = useState<RepairTypeInterface[]>([]);
   const [repair, setRepair] = useState<RepairInterface>();
   const [input, setInput] = useState({} as RepairInterface);
@@ -21,8 +21,6 @@ function RepairEdit() {
   const [messageApi, contextHolder] = message.useMessage();
 
   const repairID = useContext(repairIDContext);
-
-  const inputRef = useRef(null);
 
   const getRepairType = async () => {
     let res = await GetAllRepairType();
@@ -68,6 +66,8 @@ function RepairEdit() {
     setRDate(date);
   };
 
+  console.log(repair?.Repair_date)
+
   console.log(repairID);
   console.log(repair?.Comment);
   console.log(Object(repair).repairType?.Repair_name);
@@ -108,6 +108,10 @@ function RepairEdit() {
     <>
       <div className="repair-edit">
         {contextHolder}
+        <div className="repair-edit-close-button">
+          <Button type="text" icon={<CloseOutlined />} onClick={onCancel} />
+        </div>
+
         <div className="repair-edit-header">
           <h1>แก้ไขคำขอการแจ้งซ่อม</h1>
         </div>
@@ -150,9 +154,10 @@ function RepairEdit() {
             <br></br>
             <DatePicker
               className="repair-edit-form-info"
-              value={rDate}
+              value={rDate} 
               onChange={onChange}
               format="YYYY-MM-DD"
+             
             />
             <br></br>
             <label>รูปภาพ</label>
@@ -164,6 +169,7 @@ function RepairEdit() {
               accept="image/*"
               name="Repair_img"
               onChange={handleImageChange}
+              
             />
             <br />
             <hr />

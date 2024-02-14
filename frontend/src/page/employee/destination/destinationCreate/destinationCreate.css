@@ -1,4 +1,4 @@
-.create-destination-form {
+/* .create-destination-form {
   width: 40%;
   background: rgba(255, 255, 255, 0.1);
 
@@ -59,4 +59,129 @@
 }
 
 .create-destination-option {
+} */
+
+.create-destination-header {
+  color: #4f5c6e;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 0 20px;
+}
+
+.create-destination-table-show {
+  width: 100%;
+  padding: 0 70px;
+  background-color: #f2f3f5;
+  box-sizing: border-box;
+}
+
+.create-destination-form {
+  width: 40%;
+  background-color: #fff;
+  border-radius: 1%;
+  border: 3px solid #f4f5f7;
+  padding: 20px;
+}
+
+.create-destination-form-control {
+  margin-top: 10px;
+}
+
+.create-destination-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+.create-destination-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.create-destination-text {
+  color: #535b66;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.create-destination-select {
+  position: relative;
+}
+
+.create-destination-select-custom {
+  width: 100%;
+  font-size: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+
+  padding: 12px 20px;
+  padding-right: 38px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: color 0.3s ease, background-color 0.3s ease,
+    border-bottom-color 0.3s ease;
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #142c74;
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: #0d45a5;
+}
+
+.create-destination-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 533px;
+  margin-top: 4rem;
+}
+
+.create-destination-imgBG {
+  margin: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.create-destination-imgBG img {
+  margin: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #0d45a5;
+  border-radius: 1%;
+}
+.destination-textarea {
+  width: 100%;
+  height: 50px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fcfcfc;
+  resize: none;
 }

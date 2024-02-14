@@ -3,14 +3,14 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /employeeRole
 func CreateEmployeeRole(c *gin.Context) {
 	var employeeRole entity.EmployeeRole
-	
+
 	// bind เข้าตัวแปร employeeRole
 	if err := c.ShouldBindJSON(&employeeRole); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -19,7 +19,7 @@ func CreateEmployeeRole(c *gin.Context) {
 
 	// สร้าง employeeRole
 	a := entity.EmployeeRole{
-		Name:employeeRole.Name,
+		Name: employeeRole.Name,
 	}
 
 	// บันทึก

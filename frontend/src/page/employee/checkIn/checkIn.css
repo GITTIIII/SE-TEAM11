@@ -1,26 +1,17 @@
-
-
 .checkIn-header{
-    margin-left: 1%;
-    color: white;
-    font-size: bolder;
-    font-style: italic;
+    color: #4f5c6e;
+    font-weight: bold;
+    margin-top:  10px;
+    padding: 0 20px;
 }
 
 .checkIn-cruise-bg{
     width: 100%;
     height: 100vh;
-    background-color: #363062;
     background-repeat: no-repeat; 
     background-position: center;
     background-size: cover;
     overflow: auto;
-}
-
-.checkIn-headline{
-    width: 100%;
-    height: 7px;
-    background-color: white;
 }
 
 .checkIn-search-button{
@@ -30,101 +21,9 @@
     height: 35px;
 }
 
-.checkIn-form{
-    width: 60%;
-    background:rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    top: 0%;
-    border-radius: 5px;
-    padding: 20px;
-    margin-top: 4%;
-}
-
-.checkIn-form-control{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.checkIn-textarea{
-    width: 100%;
-    height: 150px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    resize: none;
-}
-
-.checkIn-input{
-    width: 80%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.checkIn-select{
-    position: relative;
-
-}
-
-.checkIn-select-custom {
-    width: 100%;
-    font-size: 100%;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    padding: 12px 20px;
-    padding-right: 38px;
-    transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
-  }
-
-.checkIn-text{
-    color: rgb(255, 255, 255);
-}
-
-.checkIn-search-buttom-area button {
-    width: 100%;
-    background: #142C74;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    color: white;
-    font-weight: 600;
-}
-
-.checkIn-buttom-area button {
-    width: 55vw;    
-    background: #818FB4;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    color: white;
-    font-weight: 600;
-    margin-top: 3%;
-}
-
 .checkIn-card {
     width: 60%;
-    margin-top: 4%;
+    margin-top: 1%;
 }
 
 .checkIn-display {
@@ -132,4 +31,74 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.checkIn-check-in-button {
+    width: 70%;
+    height: 30%;
+    margin: 5% 15%;
+    justify-content: center;
+    background-color: #142C74;
+    border-color: #789abc;
+    color: white;
+    border-radius: 4px;
+}
+
+.checkIn-check-in-button:hover {
+    background-color:#4f95e9;
+    border-color: #4f95e9;
+    color: white;
+    cursor: pointer;
+}
+
+.superblue{
+    border-radius: 2rem;
+    background-color: #b4e3fb;
+    color: #142C74;
+}
+
+.superred{
+    border-radius: 2rem;
+    background-color: #feacac;
+    color: rgb(147, 9, 9);
+}
+
+.checkIn-date{
+    justify-content: flex-start;
+    margin: 20px;
+    display: flex;
+}
+
+.checkIn-date-text{
+    color: #4f5c6e;
+
+}
+
+.checkIn-search-button{
+    width: 70px;
+    height: 40px;
+    border-radius: 4px;
+    background-color:#000000;
+    border-color: #4f5c6e;
+    color: white;
+}
+
+.checkIn-search-button:hover{
+    background-color:#ccc;
+    border-color: lightgray;
+    color: black;
+    cursor: pointer;
+}
+
+.checkIn-search-input{
+    display: flex;
+    cursor: pointer;
+    padding: 10px 20px;
+    background: white;
+    align-items: center;
+    margin-left: 10%;
+    width: 260px;
+    height: 40px;
+    border-radius: 4px;
+    border-color: white;
 }

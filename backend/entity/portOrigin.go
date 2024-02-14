@@ -7,7 +7,6 @@ import (
 type PortOrigin struct {
 	gorm.Model
 
-	PortOrigin_name string `gorm:"uniqueIndex"`
-
+	PortOrigin_name string `gorm:"uniqueIndex" `
 	Destinations []Destination `gorm:"foreignKey:PortOriginID"`
 }

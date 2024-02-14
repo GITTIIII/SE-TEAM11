@@ -4,9 +4,10 @@ import {  Form, message,  Input, InputNumber, } from 'antd';
 import cruise from "../../../../../asset/cruise.png"
 import { DessertInterface } from '../../../../../interface/IDessert';
 import { GetDessertById, UpdateDessert } from '../../../../../services/https/food/dessert';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function DessertUpdate() {
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [dessert, setDessert] = useState<DessertInterface>();
 
@@ -24,7 +25,7 @@ export default function DessertUpdate() {
          content: "แก้ไขข้อมูลสำเร็จ",
        });
        setTimeout(function () {
-        //  navigate("/customer");
+        navigate("/employee/food/dessert");
        }, 2000);
      } else {
        messageApi.open({
@@ -52,32 +53,32 @@ export default function DessertUpdate() {
   return (
     <>
       {contextHolder}
-      <div className='dessertUpdate-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='dessertUpdate-header'>Update Dessert</h1>
+      <div className='dessertUpdate-bg' style={{ background : "#eceef2"}}>
+      <h1 className='dessertUpdate-header'>แก้ไข ของหวาน</h1>
       <div className='dessertUpdate-headline'/>
       
 
         <div className='dessertUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='dessertUpdate-form-control'>
-              <label className='dessertUpdate-text'>dessert</label>
+              <label className='dessertUpdate-text'>ชื่อ</label>
               <br></br>
               <Form.Item name="Name">
-                <Input placeholder='Name'></Input>
+                <Input ></Input>
               </Form.Item>
             </div>
 
             <div className='dessertUpdate-form-control'>
-              <label className='dessertUpdate-text'>Count</label>
+              <label className='dessertUpdate-text'>ราคา</label>
               <br></br>
               <Form.Item name="Count">
-                <InputNumber type='number' placeholder='Count'></InputNumber>
+                <InputNumber type='number' ></InputNumber>
               </Form.Item>
             </div>
 
             <br></br>
             <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

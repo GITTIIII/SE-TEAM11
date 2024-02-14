@@ -1,6 +1,6 @@
 import { DessertInterface } from "../../../../interface/IDessert";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllDessert() {
   const requestOptions = {
@@ -22,7 +22,6 @@ async function GetAllDessert() {
 
   return res;
 }
-
 
 async function CreateDessert(data: DessertInterface) {
   const requestOptions = {

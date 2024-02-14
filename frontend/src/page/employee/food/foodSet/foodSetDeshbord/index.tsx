@@ -2,8 +2,6 @@ import  { useEffect, useState } from 'react'
 import  "./foodSetDashbord.css"
 import { Button, Form, message,  Input, InputNumber, Modal, ConfigProvider, } from 'antd';
 
-import cruise from "../../../../../asset/cruise.png";
-
 import { SavoryInterface } from '../../../../../interface/ISavory';
 import Table, { ColumnsType } from 'antd/es/table';
 import { FoodSetInterface } from '../../../../../interface/IFoodSet';
@@ -53,7 +51,7 @@ export default function FoodSetDashbord() {
           key: "ID",
         },
         {
-          title: "ชื่อ",
+          title: "ชื่อชุดอาหาร",
           dataIndex: "Name",
           key: "Name",
         },
@@ -143,24 +141,25 @@ export default function FoodSetDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
+        <div className='cruise-bg' style={{ background : "#eceef2"}}>
         <div className='header' style={{display:"flex",alignItems:"center"}}>
-          <h1 className='foodSetDashbord-header'>FoodSet</h1>
+          <h1 className='foodSetDashbord-header'>อาหาร</h1>
 
       <div className='foodSetDasdbord-add-button'>
           <NavLink to="/employee/food/Savory">
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextBase: "#ffffff",
+              colorTextLightSolid: "#ffffff",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button  type="primary">
-            Savory
+            ของคาว
           </Button>
         </ConfigProvider>
       </NavLink>
@@ -170,33 +169,33 @@ export default function FoodSetDashbord() {
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextLightSolid: "#ffffff",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button  type="primary">
-            dessert
+            ของหวาน
           </Button>
         </ConfigProvider>
       </NavLink>
       </div>
-      <div className='foodSetDasdbord-drink-button'>
+      <div className='foodSetDasdbord-add-button'>
           <NavLink to="/employee/food/Drink">
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextLightSolid: "#ffffff",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button  type="primary">
-             drink 
+             เครื่องดื่ม 
           </Button>
         </ConfigProvider>
       </NavLink>
@@ -209,15 +208,16 @@ export default function FoodSetDashbord() {
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextLightSolid: "#ffffff",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button className="foodSetDasdbord-add-button" type="primary">
-            add a foodSet
+            เพิ่มชุดอาหาร
           </Button>
         </ConfigProvider>
       </NavLink>

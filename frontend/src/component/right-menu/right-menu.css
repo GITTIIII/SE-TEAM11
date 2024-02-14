@@ -1,6 +1,7 @@
 .right-menu a.active li{
-    background-color: #F0A500;
+    background-color: #435585;
     color: white;
+    border-radius: 10px;
 }
 
 .right-menu ul {
@@ -15,6 +16,7 @@
 .right-menu li:hover {
     background-color: rgba(0, 0, 0, 0.14);
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .right-menu{
@@ -26,5 +28,45 @@
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
     background-color: white;
     display: flex;
+    flex-direction: column;
     text-align: center;
+    border-radius: 10px;
+    z-index: 9999;
+}
+
+.right-menu .profile{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.right-menu .tourist-name{
+    height: 100%;
+}
+
+@media (max-width: 850px){
+    .right-menu{
+        align-items: center;
+        bottom: 25%;
+        right: 5%;
+        width: 40%;
+        z-index: 999;
+    }
+    .right-menu ul{
+        width: 100%;
+    }
+    .right-menu .tourist-info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 0;
+    }
+}
+
+@media (max-width: 500px){
+    .right-menu{
+        width: 90%;
+        right: 10;
+    }
 }

@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /repairType
@@ -20,7 +20,6 @@ func CreateRepairType(c *gin.Context) {
 	// สร้าง repairType
 	a := entity.RepairType{
 		Repair_name: repairType.Repair_name,
-		
 	}
 
 	// บันทึก

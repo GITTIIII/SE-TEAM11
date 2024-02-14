@@ -7,13 +7,14 @@ import (
 	"github.com/GITTIIII/SE-TEAM11/entity"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/clause"
 )
 
 type RepairUpdate struct {
-	ID           uint64
-	Comment      string `valid:"stringlength(2|100)~Detail must be between 2 and 256 characters"`
-	Repair_img   string 
-	RepairTypeID uint
+	ID            uint64
+	Comment       string `valid:"stringlength(2|100)~Detail must be between 2 and 256 characters"`
+	Repair_img    string
+	RepairTypeID  uint
 	Repair_date   time.Time `valid:"after_yesterday~Date must be from today to future"`
 	Repair_status string
 }
@@ -77,7 +78,7 @@ func GetRepairById(c *gin.Context) {
 // GET /repair
 func GetAllRepair(c *gin.Context) {
 	var repair []entity.Repair
-	if err := entity.DB().Preload("RepairType").Preload("Employee").Preload("Room").Raw("SELECT * FROM repairs").Find(&repair).Error; err != nil {
+	if err := entity.DB().Preload("RepairType").Preload("Employee").Preload("Room").Raw("SELECT * FROM repairs WHERE deleted_at IS NULL").Find(&repair).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -86,12 +87,16 @@ func GetAllRepair(c *gin.Context) {
 
 // DELETE /repair/:id
 func DeleteRepair(c *gin.Context) {
+	var repair entity.Repair
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM repairs WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Repair not found"})
+
+	if rows := entity.DB().Clauses(clause.Returning{}).Delete(&repair, id).RowsAffected; rows == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "team not found"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": id})
+
+	// response deleted data
+	c.JSON(http.StatusOK, gin.H{"data": "cancel your team successfully"})
 }
 
 // PATCH /Updaterepair
@@ -121,4 +126,3 @@ func UpdateRepair(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": "updated your repairs successfully"})
 
 }
-

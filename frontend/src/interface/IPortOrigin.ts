@@ -1,7 +1,7 @@
 export interface PortOriginInterface {
-    ID?: number;
+  ID?: number;
 
-    PortOrigin_name?: string;
-    Place?: string;
-    Country?: string;
+  PortOrigin_name?: string;
+  Place?: string;
+  Country?: string;
 }

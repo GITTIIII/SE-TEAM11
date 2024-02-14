@@ -9,18 +9,18 @@ import (
 type BookActivity struct {
 	gorm.Model
 
-	TimeStart time.Time `valid:"required~Date is required,after_yesterday~Date must be from today to future"`
-	TimeEnd time.Time `valid:"required~Date is required,after_yesterday~Date must be from today to future"`
-	NumberOfPeople int `valid:"required~NumberOfPeople is required,range(3|10)~NumberOfPeople must be between 3 and 10"`
+	Date time.Time `valid:"required~กรุณาเลือกวัน,after_yesterday~วันจะต้องเป็นตั้งแต่ปัจจุบัน"`
+	Time string		`valid:"required~กรุณาเลือกเวลา"`
+	NumberOfPeople int `valid:"required~กรุณาระบุจำนวนคน,range(1|10)~จำนวนคนต้องอยู่ระหว่าง 1 ถึง 10 คน"`
 	Comment string
-	Phone_number string `valid:"required~PhoneNumber is required, matches(^[0]\\d{9}$)~PhoneNumber must start with 0 and have length 10 digits"`
+	Phone_number string `valid:"required~กรุณาใส่เบอร์โทรศัพท์, matches(^[0]\\d{9}$)~เบอร์โทรศัพท์ ต้องเริ่มต้นด้วยเลข 0 และให้มีความยาวทั้งหมด 10 หลัก"`
 
 	BookPlanID uint
 	BookPlan BookPlan `gorm:"foreignKey:BookPlanID" valid:"-"`
 
 	TouristID uint
-	Tourist Tourist `gorm:"foreignKey:TouristID"`
+	Tourist Tourist `gorm:"foreignKey:TouristID" valid:"-"`
 
-	ActivityID uint
+	ActivityID uint	`valid:"required~กรุณาเลือกกิจกรรม"`
 	Activity Activity `gorm:"foreignKey:ActivityID" valid:"-"`
 }

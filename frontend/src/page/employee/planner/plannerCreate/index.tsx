@@ -1,47 +1,79 @@
-import {
-  useState,
-  useEffect,
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactNode,
-} from "react";
-import type { Dayjs } from "dayjs";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { UploadOutlined } from "@ant-design/icons";
-import { message, Upload, Form, Button, DatePicker } from "antd";
+import { message, Form, Button, Upload, Select, DatePicker } from "antd";
 import type { UploadProps } from "antd/es/upload/interface";
-import { DestinationInterface } from "../../../../interface/IDestination";
-import { CreatePlanner } from "../../../../services/https/planner";
-import { GetAllDestination } from "./../../../../services/https/destination";
-import type { DatePickerProps, RangePickerProps } from "antd/es/date-picker";
 import "./../plannerCreate/plannerCreate.css";
 import "./plannerCreate.css";
-import cruise from "../../../../asset/cruise.png";
+import {
+  CreatePlanner,
+  GetAllPlanner,
+} from "../../../../services/https/planner";
+import { GetAllDestination } from "../../../../services/https/destination";
+import { UploadOutlined } from "@ant-design/icons";
+import { DestinationInterface } from "../../../../interface/IDestination";
 import { PlannerInterface } from "../../../../interface/IPlanner";
-import { GetAllPortOrigin } from "../../../../services/https/portOrigin";
-
-export default function PlannerCreate() {
-  type RangeValue = [Dayjs | null, Dayjs | null] | null;
-  const [portOrigin, setPortOrigin] = useState<DestinationInterface[]>([]);
-  const { RangePicker } = DatePicker;
-  const [dates, setDates] = useState<RangeValue>(null);
-  const [StartDate, setStartDate] = useState("");
-  const [EndDate, setEndDate] = useState("");
-  const getDestination = async () => {
-    let res = await GetAllPortOrigin();
+import { QuayInterface } from "../../../../interface/IQuay";
+import { GetAllQuay } from "../../../../services/https/quay";
+import dayjs from "dayjs";
+export default function DestinationCreates() {
+  const [quay, setQuay] = useState<QuayInterface[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [planName, setPlanner_name] = useState("");
+  const [pDate, setPDate] = useState<any>(dayjs());
+  const [planPrice, setPlanner_price] = useState("");
+  const [planner_img, setPlanner_Img] = useState("");
+  const [destinationName, setDestinationName] = useState<
+    DestinationInterface[]
+  >([]);
+  const [Destination, setDestination] = useState<DestinationInterface[]>([]);
+  const [PlannerID, setPlannerID] = useState(0);
+  const [Planner, setPlanner] = useState<PlannerInterface[]>([]);
+  const [listPlanner, setAllPlanner] = useState<PlannerInterface[]>([]);
+  const [listDestination, setAllDestination] = useState<DestinationInterface[]>(
+    []
+  );
+  const EmployeeID = localStorage.getItem("EmployeeID");
+  const getQuay = async () => {
+    let res = await GetAllQuay();
     if (res) {
-      setPortOrigin(res);
+      setQuay(res);
+    }
+  };
+  const getAllPlanner = async () => {
+    let res = await GetAllPlanner();
+    if (res) {
+      setAllPlanner(res);
+    }
+  };
+  const getAllDestination = async () => {
+    let res = await GetAllDestination();
+    if (res) {
+      setAllDestination(res);
+    }
+  };
+  const getDestination = async () => {
+    let res = await GetAllDestination();
+
+    if (res) {
+      setDestinationName(res);
     }
   };
   useEffect(() => {
+    getAllPlanner();
+    getAllDestination();
     getDestination();
+    getQuay();
+    console.log();
   }, []);
+  const onChange = (date: dayjs.Dayjs | null, dateString: string) => {
+    console.log(date);
+    setPDate(date);
+  };
 
   const [input, setInput] = useState({
     DestinationID: 0,
+    QuayID: 0,
   });
-
   const handleInput = (e: any) => {
     const { name, value } = e.target;
     setInput({
@@ -49,56 +81,15 @@ export default function PlannerCreate() {
       [name]: parseInt(value, 10),
     });
   };
-
   let navigate = useNavigate();
-  const handdleDateChange = (
-    value: DatePickerProps["value"] | RangePickerProps["value"],
-    dateString: [string, string] | string
-  ) => {
-    setStartDate(dateString[0]);
-    setEndDate(dateString[1]);
-  };
-  const disabledDate = (current: Dayjs) => {
-    if (!dates) {
-      return false;
-    }
-    const tooLate = dates[0] && current.diff(dates[0], "days") >= 1;
-    const tooEarly = dates[1] && dates[1].diff(current, "days") >= 0;
-    return !!tooEarly || !!tooLate;
-  };
-  function range(start: any, end: any) {
-    const result = [];
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-    return result;
-  }
-  function disabledDateTime() {
-    return {
-      disabledHours: () => range(0, 24).splice(0, 8),
-    };
-  }
-
-  const onOpenChange = (open: boolean) => {
-    if (open) {
-      setDates([null, null]);
-    } else {
-      setDates(null);
-    }
-  };
-  const [messageApi, contextHolder] = message.useMessage();
-  const [planName, setPlan_name] = useState("");
-  const [price, setPrice] = useState("");
-  const [plan_img, setPlan_Img] = useState("");
-
   const handleSubmit = async (values: PlannerInterface) => {
-    values.TimeStart = new Date(StartDate);
-    values.TimeEnd = new Date(EndDate);
     values.DestinationID = input.DestinationID;
+    values.Plan_img = planner_img;
+    values.EmployeeID = Number(EmployeeID);
+    values.Plan_price = Number(planPrice);
     values.Plan_name = planName;
-    values.Price = Number(price);
-    values.Plan_img = plan_img;
-
+    values.TimeStart = pDate;
+    values.QuayID = input.QuayID;
     console.log(values);
 
     let res = await CreatePlanner(values);
@@ -117,139 +108,158 @@ export default function PlannerCreate() {
       });
     }
   };
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-  const props: UploadProps = {
-    beforeUpload: (file) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
       const reader = new FileReader();
-
-      reader.onload = (e) => {
-        if (e.target) {
-          const base64Image = e.target.result as string; // Ensure it's a string
-          // นำ base64Image ไปใช้ในการบันทึกรูปภาพลงใน entity
-          setPlan_Img(base64Image); // ตั้งค่า state สำหรับเก็บรูปภาพ
-        }
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Type assertion to string
+        // เปลี่ยน setImage เพื่อทำการใช้ base64String
+        setPlanner_Img(base64String);
       };
-
       reader.readAsDataURL(file);
-      return false; // Prevent automatic upload
-    },
-    onChange: (info) => {
-      console.log(info.fileList);
-    },
+    }
   };
-
+  console.log(quay);
   return (
-    <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
+    <div className="create-planner-table-show">
       {contextHolder}
+      <h1 className="planner-planner-header">เพิ่มทริป</h1>
 
-      <h1 className="planner-header">Add a trip</h1>
-
-      <div className="planner-headline"></div>
-
-      <div className="create-planner-form">
-        <Form onFinish={handleSubmit}>
-          <div className="create-planner-form-control">
-            <label className="create-planner-text">Name of trip</label>
-            <br></br>
-            <input
-              className="create-planner-input"
-              type="text"
-              placeholder="Enter name of trip"
-              required
-              value={planName}
-              onChange={(e) => setPlan_name(e.target.value)}
-            />
-          </div>
-          <div className="create-planner-form-control">
-            <label className="create-planner-text">destination</label>
-            <br></br>
-            <div className="create-planner-select">
-              <select
-                className="create-planner-select-custom"
-                name="DestinationID"
-                onChange={handleInput}
+      <hr />
+      <div className="create-planner-container">
+        <div className="create-planner-imgBG">
+          <img src="https://images3.alphacoders.com/863/863668.jpg" alt="" />
+        </div>
+        <div className="create-planner-form">
+          <Form onFinish={handleSubmit}>
+            <div className="create-planner-form-control">
+              <label
+                className="create-planner-text"
+                style={{ color: "#535b66" }}
+              >
+                ต้นทาง - จุดหมาย
+              </label>
+              <br></br>
+              <div className="create-planner-select">
+                <Select
+                  showSearch
+                  placeholder="กรุณาเลือกต้นทาง - ปลายทาง"
+                  className="planner-select-antd"
+                  optionFilterProp="children"
+                  onChange={(value) =>
+                    handleInput({ target: { name: "DestinationID", value } })
+                  }
+                  filterOption={filterOption}
+                  options={destinationName.map((item) => {
+                    return {
+                      label: `${item.Destination_name}`,
+                      value: `${item.ID}`,
+                    };
+                  })}
+                />
+              </div>
+            </div>
+            <div className="create-planner-form-control">
+              <label
+                className="create-planner-text"
+                style={{ color: "#535b66" }}
+              >
+                ชื่อทริป
+              </label>
+              <br></br>
+              <input
+                className="create-planner-input"
+                type="text"
+                placeholder="ระบุชื่อทริป"
+                value={planName}
+                onChange={(e) => setPlanner_name(e.target.value)}
+              />
+            </div>
+            <div className="create-planner-form-control">
+              <label
+                className="create-planner-text"
+                style={{ color: "#535b66" }}
+              >
+                ชานชาลา
+              </label>
+              <br></br>
+              <div className="create-planner-select">
+                <select
+                  className="create-planner-select-custom"
+                  name="QuayID"
+                  onChange={handleInput}
+                  // required
+                >
+                  <option value="" disabled selected>
+                    เลือกชานชาลา
+                  </option>
+                  {quay.map((item) => (
+                    <option value={item.ID} key={item.Quay_number}>
+                      {item.Quay_number}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="create-planner-form-control">
+              <label
+                className="create-planner-text"
+                style={{ color: "#535b66" }}
+              >
+                ราคาทริป
+              </label>
+              <br></br>
+              <input
+                className="create-planner-input"
+                type="number"
+                step="0.001"
+                placeholder="ระบุราคาทริป"
+                value={planPrice}
+                onChange={(e) => setPlanner_price(e.target.value)}
                 required
-              >
-                <option value="" disabled selected>
-                  select destination
-                </option>
-                {portOrigin.map((item) => (
-                  <option value={item.ID} key={item.PortOriginID}>
-                    {item.PortOriginID}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
-          </div>
-
-          {/* <div className="create-planner-form-control">
-            <label className="create-planner-text">Destination</label>
-            <br></br>
-            <div className="create-planner-select">
-              <select
-                className="create-planner-select-custom"
-                name="DestinationID"
-                onChange={handleInput}
+            <div className="create-planner-form-control">
+              <label
+                className="create-planner-text"
+                style={{ color: "#535b66" }}
               >
-                <option value="" disabled selected>
-                  select port destination
-                </option>
-                {Destination.map((item) => (
-                  <option value={item.ID} key={item.ortOriginID}>
-                    {item.port_origin}
-                  </option>
-                ))}
-              </select>
+                วันเดินเรือ
+              </label>
+              <br></br>
+              <DatePicker
+                value={pDate}
+                onChange={onChange}
+                format="YYYY-MM-DD"
+              />
             </div>
-          </div> */}
-
-          <div className="create-planner-form-control">
-            <label className="create-planner-text">Price of trip</label>
-            <br></br>
-            <input
-              className="create-planner-input"
-              type="number"
-              step="0.001"
-              placeholder="Enter price of trip"
-              required
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-
-          <div className="create-planner-form-control">
-            <label className="create-planner-text">Image of Planner</label>
-            <br></br>
-            <Upload
-              {...props}
-              accept="image/png, image/jpeg"
-              action="/Planner"
-              id="Plan_img"
-            >
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </div>
-          <div className="create-planner-form-control">
-            <label className="create-planner-text">Date and time</label>
-            <br></br>
-            <RangePicker
-              onCalendarChange={(val) => {
-                setDates(val);
-              }}
-              onOpenChange={onOpenChange}
-              // disabledDate={disabledDate}
-              // disabledTime={disabledDateTime}
-              minuteStep={30 as const}
-              showTime={{ format: "h:mm A" }}
-              format="YYYY-MM-DD"
-              onChange={handdleDateChange}
-            />
-          </div>
-
-          <div className="buttom-area">
-            <button type="submit">ยืนยัน</button>
-          </div>
-        </Form>
+            <div className="create-planner-form-control">
+              <label
+                className="create-planner-text"
+                style={{ color: "#535b66" }}
+              >
+                อัปโหลดรูปทริป
+              </label>
+              <br></br>
+              <input
+                className="CreatePlanner-input-file"
+                id="plan_img"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </div>
+            <div className="buttom-area">
+              <button type="submit">ยืนยัน</button>
+            </div>
+          </Form>
+        </div>
       </div>
     </div>
   );

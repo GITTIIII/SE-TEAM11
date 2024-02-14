@@ -1,6 +1,6 @@
 import { EmployeeRoleInterface } from "../../../interface/IEmployeeRole";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllEmployeeRole() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllEmployeeRole() {
 
   return res;
 }
-
-
 
 async function GetEmployeeRoleById(id: Number | undefined) {
   const requestOptions = {

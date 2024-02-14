@@ -81,13 +81,6 @@ const LoginEmployee = () => {
                                 <FontAwesomeIcon icon={faLock} className="icon"/>
                             </div>
                             
-                            <div className="remember-forgot">
-                                <label>
-                                    <input type="checkbox"/>
-                                    Stay signed in
-                                </label>
-                                <Link to="/">Forgot Password?</Link>
-                            </div>
                             <div className="buttom-area">
 
                                 <button type="submit">Sign in</button> 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import  "./foodSetCreate.css"
-import {  Form, message,  Input, InputNumber, Select, } from 'antd';
+import {  Form, message,  Input, InputNumber, Select, ConfigProvider, } from 'antd';
 import cruise from "../../../../../asset/cruise.png";
 
 import { FoodSetInterface } from '../../../../../interface/IFoodSet';
@@ -70,46 +70,46 @@ useEffect(() => {
   return (
     <>
       {contextHolder}
-      <div className='foodSetCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='foodSetCreate-header'>Add a foodSet</h1>
+      <div className='foodSetCreate-bg' style={{ background : "#eceef2"}}>
+      <h1 className='foodSetCreate-header'>เพิ่ม ชุดอาหาร</h1>
       <div className="foodSetCreate-headline" />
         <div className='foodSetCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='foodSetCreate-form-control'>
-              <Form.Item name="Name" label="Name">
-                <Input placeholder='Name' ></Input>
+              <Form.Item name="Name" label="ชื่อ">
+                <Input ></Input>
               </Form.Item>
             </div>
             <div className='foodSetCreate-form-control'>
-              <Form.Item name="savoryID" label="savory" >
+              <Form.Item name="savoryID" label="ของคาว" >
                 <Select allowClear>
                   {savorys.map((item) => (
                     <Option value={item.ID} key={item.Name}>{item.Name} ราคา {item.Count} บาท</Option>
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item name="DrinkID" label="drink" >
+              <Form.Item name="DrinkID" label="เครื่องดื่ม" >
                 <Select allowClear>
                   {drinks.map((item) => (
                     <Option value={item.ID} key={item.Name} >{item.Name} ราคา {item.Count} บาท</Option>
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item name="DessertID" label="dessert" >
+              <Form.Item name="DessertID" label="ของหวาน" >
                 <Select allowClear >
                   {desserts.map((item) => (
                     <Option value={item.ID} key={item.Name} >{item.Name} ราคา {item.Count} บาท</Option>
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item name="Count" label="Count   ">
-                <InputNumber placeholder='Count' type='number'></InputNumber>
+              <Form.Item name="Count" label="ราคา">
+                <InputNumber  type='number'></InputNumber>
               </Form.Item>
             </div>
 
             <br></br>
-            <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+            <div className='buttom-area'>       
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

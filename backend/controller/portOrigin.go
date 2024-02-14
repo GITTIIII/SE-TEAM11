@@ -10,7 +10,6 @@ import (
 // POST /portOrigin
 func CreatePortOrigin(c *gin.Context) {
 	var portOrigin entity.PortOrigin
-	
 
 	// bind เข้าตัวแปร portOrigin
 	if err := c.ShouldBindJSON(&portOrigin); err != nil {

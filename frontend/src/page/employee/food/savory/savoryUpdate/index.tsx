@@ -4,11 +4,12 @@ import { Form, message,  Input, InputNumber, } from 'antd';
 import cruise from "../../../../../asset/cruise.png"
 import { SavoryInterface } from '../../../../../interface/ISavory';
 import { GetSavoryById, UpdateSavory } from '../../../../../services/https/food/savory';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function SavoryUpdate() {
   const [messageApi, contextHolder] = message.useMessage();
   const [savory, setSavory] = useState<SavoryInterface>();
+  const navigate = useNavigate();
 
    // รับข้อมูลจาก params
    let { id } = useParams();
@@ -24,7 +25,7 @@ export default function SavoryUpdate() {
          content: "แก้ไขข้อมูลสำเร็จ",
        });
        setTimeout(function () {
-        //  navigate("/customer");
+        navigate("/employee/food/savory");
        }, 2000);
      } else {
        messageApi.open({
@@ -52,13 +53,13 @@ export default function SavoryUpdate() {
   return (
     <>
       {contextHolder}
-      <div className='savoryUpdate-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='savoryUpdate-header'>Update Savory</h1>
+      <div className='savoryUpdate-bg' style={{ background : "#eceef2"}}>
+      <h1 className='savoryUpdate-header'>เเก้ไข ของคาว</h1>
       <div className='savoryDashbord-headline'/>
         <div className='savoryUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='savoryUpdate-form-control'>
-              <label className='savoryUpdate-text'>savory</label>
+              <label className='savoryUpdate-text'>ชื่อ</label>
               <br></br>
               <Form.Item name="Name">
                 <Input placeholder='Name'></Input>
@@ -66,7 +67,7 @@ export default function SavoryUpdate() {
             </div>
 
             <div className='savoryUpdate-form-control'>
-              <label className='savoryUpdate-text'>Count</label>
+              <label className='savoryUpdate-text'>ราคา</label>
               <br></br>
               <Form.Item name="Count">
                 <InputNumber type='number' placeholder='Count'></InputNumber>
@@ -75,7 +76,7 @@ export default function SavoryUpdate() {
 
             <br></br>
             <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

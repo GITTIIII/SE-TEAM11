@@ -1,5 +1,5 @@
 import {PlannerInterface} from "./IPlanner";
-import { TouristInterface } from "./ITourist";
+import {TouristInterface} from "./ITourist";
 import {RoomInterface} from "./IRoom";
 import {FoodSetInterface} from "./IFoodSet";
 
@@ -17,4 +17,7 @@ export interface BookPlanInterface {
 
     FoodSetID?: number;
     FoodSet?: FoodSetInterface; 
+
+    CheckIn_status?: string;
+    Payment_status?: string;
 }

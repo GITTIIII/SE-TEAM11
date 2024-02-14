@@ -1,23 +1,10 @@
-import React, { useState, useEffect, useId } from "react";
-import {
-  Space,
-  Button,
-  Col,
-  Row,
-  Divider,
-  Form,
-  Input,
-  Card,
-  message,
-  Upload,
-  Select,
-  InputNumber,
-} from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import { DestinationInterface } from "../../../../interface/IDestination";
-import { PortOriginInterface } from "../../../../interface/IPortOrigin";
-import { PortDestinationInterface } from "../../../../interface/IPortDestination";
-import { DistanceInterface } from "../../../../interface/IDistance";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import "./destinationEdit.css";
+import { Button, Form, message } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import { useContext } from "react";
+import { destinationIDContext } from "..";
+
 import {
   GetDestinationById,
   UpdateDestination,
@@ -25,308 +12,226 @@ import {
 import { GetAllPortOrigin } from "../../../../services/https/portOrigin";
 import { GetAllPortDestination } from "../../../../services/https/portDestination";
 import { GetAllDistance } from "../../../../services/https/distance";
-import { useNavigate, useParams } from "react-router-dom";
+import { DestinationInterface } from "../../../../interface/IDestination";
+import { PortOriginInterface } from "../../../../interface/IPortOrigin";
+import { PortDestinationInterface } from "../../../../interface/IPortDestination";
+import { DistanceInterface } from "../../../../interface/IDistance";
 
-const { Option } = Select;
-
-function DestinationEdit() {
-  const navigate = useNavigate();
-  const [messageApi, contextHolder] = message.useMessage();
-
-  //   const [user, setUser] = useState<UsersInterface>();
+function DestinationEdit({ onCancel }: { onCancel: () => void }) {
   const [destination, setDestination] = useState<DestinationInterface>();
-  const [destinationPrice, setDestination_price] = useState("");
-  const [destinationImage, setDestinationImage] = useState<string | null>(null);
-  const [destinationNames, setDestinationNames] = useState("");
-  // const [destination, setDestination] = useState<DestinationInterface>();
-  //   const [genders, setGenders] = useState<GendersInterface[]>([]);
-  const [portOrigins, setPortOrigins] = useState<PortOriginInterface[]>([]);
-  const [portDestinations, setPortDestinations] = useState<
+  const [portOrigin, setPortOrigin] = useState<PortOriginInterface[]>([]);
+  const [portDestination, setPortDestination] = useState<
     PortDestinationInterface[]
   >([]);
-  const [distances, setDistance] = useState<DistanceInterface[]>([]);
+  const [distance, setDistance] = useState<DistanceInterface[]>([]);
+  const [input, setInput] = useState({} as DestinationInterface);
+  const [destination_img, setDestination_Img] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
-  // รับข้อมูลจาก params
-  let { id } = useParams();
-  // อ้างอิง form กรอกข้อมูล
-  const [form] = Form.useForm();
-
-  const onFinish = async (values: DestinationInterface) => {
-    values.ID = destination?.ID;
-    let res = await UpdateDestination(values);
-    if (res.status) {
-      messageApi.open({
-        type: "success",
-        content: "แก้ไขข้อมูลสำเร็จ",
-      });
-      setTimeout(function () {
-        navigate("/employee/destination");
-      }, 2000);
-    } else {
-      messageApi.open({
-        type: "error",
-        content: res.message,
-      });
-    }
-  };
-
-  //   const getGendet = async () => {
-  //     let res = await GetGenders();
-  //     if (res) {
-  //       setGenders(res);
-  //     }
-  //   };
+  const destinationID = useContext(destinationIDContext);
 
   const getPortOrigin = async () => {
     let res = await GetAllPortOrigin();
+
     if (res) {
-      setPortOrigins(res);
+      setPortOrigin(res);
     }
   };
+
   const getPortDestination = async () => {
     let res = await GetAllPortDestination();
+
     if (res) {
-      setPortDestinations(res);
+      setPortDestination(res);
     }
   };
+
   const getDistance = async () => {
     let res = await GetAllDistance();
+
     if (res) {
       setDistance(res);
     }
   };
 
-  //   const getUserById = async () => {
-  //     let res = await GetUserById(Number(id));
-  //     if (res) {
-  //       setUser(res);
-  //       // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
-  //       form.setFieldsValue({
-  //         FirstName: res.FirstName,
-  //         LastName: res.LastName,
-  //         StudentID: res.StudentID,
-  //         GenderID: res.GenderID,
-  //         Email: res.Email,
-  //         Phone: res.Phone,
-  //         LinkedIn: res.LinkedIn
-  //       });
-  //     }
-  //   };
-  const getDestinationById = async () => {
-    let res = await GetDestinationById(Number(id));
-    if (res) {
-      setDestination(res);
-      // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
-      form.setFieldsValue({
-        PortOriginID: res.PortOriginID,
-        PortDestinationID: res.PortDestinationID,
-        DistanceID: res.DistanceID,
-        Destination_img: res.Destination_img,
-        Destination_price: res.Destination_price,
-        Destination_name: res.Destination_name,
-        // GenderID: res.GenderID,
-        // Email: res.Email,
-        // Phone: res.Phone,
-        // LinkedIn: res.LinkedIn
-      });
-    }
+  const getDestinationByID = async () => {
+    let res = await GetDestinationById(Number(destinationID));
+    setDestination(res);
+    setInput(res);
   };
 
   useEffect(() => {
     getPortOrigin();
     getPortDestination();
     getDistance();
-    getDestinationById();
+    getDestinationByID();
   }, []);
 
-  return (
-    <div>
-      {contextHolder}
-      <Card>
-        <h2> แก้ไขข้อมูล จุดหมาย</h2>
-        <Divider />
-        <Form
-          name="basic"
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          autoComplete="off"
-        >
-          <Row gutter={[16, 16]}>
-            {/* {
-              <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                <Form.Item
-                  label="รูปทริป"
-                  name="Destination_img"
-                  getValueFromEvent={(e) => e.file.originFileObj}
-                >
-                  <Upload
-                    name="Destination_img"
-                    listType="picture"
-                    showUploadList={false}
-                    beforeUpload={(file) => {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setDestinationImage(reader.result as string);
-                      };
-                      reader.readAsDataURL(file);
-                      return false; // Prevent default upload behavior
-                    }}
-                  >
-                    <Button icon={<UploadOutlined />}>อัปโหลดรูป</Button>
-                  </Upload>
-                  {destinationImage && (
-                    <img
-                      src={destinationImage}
-                      alt="Destination"
-                      style={{ maxWidth: "100%", marginTop: "10px" }}
-                    />
-                  )}
-                </Form.Item>
-              </Col>
-            } */}
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="ชื่อทริป"
-                name="Destination_name"
-                // type="number" step="0.001"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณากรอกชื่อทรืป !",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              {/* <div className='create-room-form-control'>
-          <label className='create-room-text'>Price of Room</label>
-          <br></br>
-          <input 
-            className='create-room-input' 
-            type="number" step="0.001" 
-            placeholder = 'Enter price of room' 
-            name="Room_price"
-            // required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
-          />
-        </div> */}
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                name="PortOriginID"
-                label="ต้นทาง"
-                rules={[{ required: true, message: "กรุณาระบุต้นทาง !" }]}
-              >
-                <Select allowClear>
-                  {portOrigins.map((item) => (
-                    <Option value={item.ID} key={item.PortOrigin_name}>
-                      {item.PortOrigin_name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                name="PortDestinationID"
-                label="ปลายทาง"
-                rules={[{ required: true, message: "กรุณาระบุปลายทาง !" }]}
-              >
-                <Select allowClear>
-                  {portDestinations.map((item) => (
-                    <Option value={item.ID} key={item.PortDestination_name}>
-                      {item.PortDestination_name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                name="DistanceID"
-                label="ระยะทาง"
-                rules={[{ required: true, message: "กรุณาระบุระยะทาง !" }]}
-              >
-                <Select allowClear>
-                  {distances.map((item) => (
-                    <Option value={item.ID} key={item.Distance_name}>
-                      {item.Distance_name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="ราคา"
-                name="Destination_price"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณากรอกราคา!",
-                  },
-                ]}
-              >
-                <InputNumber
-                // type="number" // This prop might not be necessary, you can try removing it
-                // step={0.001}
-                // style={{ width: "100%" }} // Adjust the width as needed
-                />
-              </Form.Item>
-            </Col>
-            <Form.Item
-              name="Destination_img"
-              getValueFromEvent={(e) => e.file.originFileObj}
-            >
-              {destinationImage && (
-                <img
-                  src={destinationImage}
-                  alt="Destination"
-                  style={{ maxWidth: "100%", marginTop: "10px" }}
-                />
-              )}
-            </Form.Item>
+  const handleInput = (e: any) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-            {/* <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="เบอร์โทรศัพท์"
-                name="Phone"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณากรอกเบอร์โทรศัพท์ !",
-                  },
-                ]}
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Type assertion to string
+        // เปลี่ยน setImage เพื่อทำการใช้ base64String
+        setDestination_Img(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // console.log(roomID);
+  // console.log(repair?.Comment);
+  // console.log(Object(repair).repairType?.Repair_name);
+
+  const handleSubmit = async () => {
+    let updatedValues: DestinationInterface = {
+      ID: Number(destinationID),
+      Destination_name: input.Destination_name,
+      PortOriginID: Number(input.PortOriginID),
+      PortDestinationID: Number(input.PortDestinationID),
+      Comment: input.Comment,
+      DistanceID: Number(input.DistanceID),
+      EmployeeID: Number(localStorage.getItem("EmployeeID")),
+      // RoomID: input.RoomID,
+      // Repair_date: rDate,
+    };
+
+    console.log(updatedValues);
+    console.log(input);
+    let res = await UpdateDestination(updatedValues);
+    if (res.status) {
+      messageApi.open({
+        type: "success",
+        content: "เเก้ไขข้อมูลสำเร็จ",
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
+    } else {
+      messageApi.open({
+        type: "error",
+        content: res.message,
+      });
+      console.log(res.message);
+    }
+  };
+
+  return (
+    <>
+      <div className="update-destination">
+        {contextHolder}
+        <div className="update-destination-close-button">
+          <Button type="text" icon={<CloseOutlined />} onClick={onCancel} />
+        </div>
+
+        <div className="update-destination-header">
+          <h2>
+            แก้ไขข้อมูลท่าเรือต้นทาง - ปลายทาง : {destination?.Destination_name}
+          </h2>
+        </div>
+
+        <div className="update-destination-form">
+          <Form onFinish={handleSubmit}>
+            <div className="update-destination-form-info">
+              <label>ท่าเรือต้นทาง - ปลายทาง</label>
+              <br></br>
+              <textarea
+                className="update-destination-input"
+                placeholder="Enter your detail"
+                name="Destination_name"
+                defaultValue={Object(destination).Destination_name}
+                onChange={handleInput}
+              />
+
+              <label>ท่าเรือต้นทาง</label>
+              <br></br>
+              <select
+                className="update-destination-select-custom"
+                name="PortOriginID"
+                onChange={handleInput}
               >
-                <Input />
-              </Form.Item>
-            </Col> */}
-          </Row>
-          <Row justify="end">
-            <Col style={{ marginTop: "40px" }}>
-              <Form.Item>
-                <Space>
-                  <Button
-                    htmlType="button"
-                    style={{ marginRight: "10px" }}
-                    onClick={() => navigate("/employee/destination")}
-                  >
-                    ยกเลิก
-                  </Button>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    icon={<PlusOutlined />}
-                  >
-                    ยืนยัน
-                  </Button>
-                </Space>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </Card>
-    </div>
+                <option
+                  value="none"
+                  hidden
+                  defaultValue={Number(Object(destination).PortOriginID)}
+                >
+                  {Object(destination).PortOrigin?.PortOrigin_name}
+                </option>
+                {portOrigin.map((item) => (
+                  <option value={item.ID} key={item.PortOrigin_name}>
+                    {item.PortOrigin_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="update-destination-form-info">
+              <label>ท่าเรือจุดหมาย</label>
+              <br></br>
+              <select
+                className="update-destination-select-custom"
+                name="PortDestinationID"
+                onChange={handleInput}
+              >
+                <option
+                  value="none"
+                  hidden
+                  defaultValue={Number(Object(destination).PortDestinationID)}
+                >
+                  {Object(destination).portDestination?.PortDestination_name}
+                </option>
+                {portDestination.map((item) => (
+                  <option value={item.ID} key={item.PortDestination_name}>
+                    {item.PortDestination_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="update-destination-form-info">
+              <label>ระยะทาง</label>
+              <br></br>
+              <select
+                className="update-destination-select-custom"
+                name="DistanceID"
+                onChange={handleInput}
+              >
+                <option
+                  value="none"
+                  hidden
+                  defaultValue={Number(Object(destination).DistanceID)}
+                >
+                  {Object(destination).distance?.Distance}
+                </option>
+                {distance.map((item) => (
+                  <option value={item.ID} key={item.Distance}>
+                    {item.Distance}
+                  </option>
+                ))}
+              </select>
+              <label>หมายเหตุ</label>
+              <br></br>
+              <textarea
+                className="update-destination-input"
+                placeholder="ระบบหมายเหตุ"
+                name="Comment"
+                defaultValue={Object(destination).Comment}
+                onChange={handleInput}
+              />
+            </div>
+            <div className="update-destination-button-area">
+              <button type="submit">ยืนยัน</button>
+            </div>
+          </Form>
+        </div>
+      </div>
+    </>
   );
 }
 

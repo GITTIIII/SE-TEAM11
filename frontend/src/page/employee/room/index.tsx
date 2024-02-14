@@ -1,93 +1,27 @@
-import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { RoomInterface } from "../../../interface/IRoom";
+import React, { useEffect, useState, createContext } from "react";
+import { Link } from "react-router-dom";
 import "./room.css";
-import { Button, ConfigProvider, Table, message, Modal } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import type { ColumnsType } from "antd/es/table";
-import cruise from "../../../asset/cruise.png";
-import { GetAllRoom } from "../../../services/https/room";
-import { DeleteRoomByID } from "../../../services/https/room";
-import { useNavigate, useParams } from "react-router-dom";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, message, Popconfirm, Image, Popover } from "antd";
+
+
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+
+
+import { GetAllRoom, DeleteRoomByID } from "../../../services/https/room";
+import { RoomInterface } from "../../../interface/IRoom";
+import { RoomZoneInterface } from "../../../interface/IRoomZone";
+import { RoomTypeInterface } from "../../../interface/IRoomType";
+import EditRoom from "./editRoom";
+
+export const roomIDContext = createContext(0);
 
 export default function Room() {
-  const navigate = useNavigate();
-  const columns: ColumnsType<RoomInterface> = [
-    {
-      title: "ลำดับ",
-      dataIndex: "ID",
-      key: "id",
-    },
-    {
-      title: "รูปห้องพัก",
-      dataIndex: "Room_img",
-      key: "room_img",
-      render: (text, record, index) => (
-        <img
-          src={record.Room_img}
-          className=""
-          width="100px"
-          height="100px"
-          style={{ objectFit: "cover" }}
-          alt=""
-        />
-      ),
-    },
-    {
-      title: "เลขห้องพัก",
-      dataIndex: "Room_number",
-      key: "room_number",
-    },
-    {
-      title: "ประเภท",
-      dataIndex: "RoomType",
-      key: "room_type",
-      render: (item) => Object.values(item.RoomType_name),
-    },
-    {
-      title: "โซนที่ตั้ง",
-      dataIndex: "RoomZone",
-      key: "room_zone",
-      render: (item) => Object.values(item.RoomZone_name),
-    },
-    {
-      title: "ราคา",
-      dataIndex: "Room_price",
-      key: "room_price",
-    },
-    {
-      title: "จัดการ",
-      dataIndex: "Manage",
-      key: "manage",
-      render: (text, record, index) => (
-        <>
-          <Button
-            onClick={() => navigate(`/employee/room/edit/${record.ID}`)}
-            shape="circle"
-            icon={<EditOutlined />}
-            size={"large"}
-          />
-          <Button
-            onClick={() => showModal(record)}
-            style={{ marginLeft: 10 }}
-            shape="circle"
-            icon={<DeleteOutlined />}
-            size={"large"}
-            danger
-          />
-        </>
-      ),
-    },
-  ];
-
   const [messageApi, contextHolder] = message.useMessage();
   const [listRoom, setAllRoom] = useState<RoomInterface[]>([]);
-
-  // Model
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState<String>();
-  const [deleteId, setDeleteId] = useState<Number>();
+  const [showEdit, setShowEdit] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRoomID, setSelectedRoomID] = useState<number>(0);
 
   const getAllRoom = async () => {
     let res = await GetAllRoom();
@@ -96,84 +30,164 @@ export default function Room() {
     }
   };
 
-  useEffect(() => {
-    getAllRoom();
-  }, []);
-
-  const showModal = (val: RoomInterface) => {
-    setModalText(
-      `คุณต้องการลบข้อมูลห้องพักหมายเลข "${val.Room_number}" หรือไม่ ?`
-    );
-    setDeleteId(val.ID);
-    setOpen(true);
-  };
-
-  const handleOk = async () => {
-    setConfirmLoading(true);
-    let res = await DeleteRoomByID(deleteId);
+  const handleDelete = async (id: Number | undefined) => {
+    let res = await await DeleteRoomByID(id);
     if (res) {
-      setOpen(false);
       messageApi.open({
         type: "success",
         content: "ลบข้อมูลสำเร็จ",
       });
-      getAllRoom();
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
     } else {
-      setOpen(false);
       messageApi.open({
         type: "error",
-        content: "เกิดข้อผิดพลาด !",
+        content: "ลบข้อมูลไม่สำเร็จ",
       });
     }
-    setConfirmLoading(false);
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    setShowEdit(!showEdit);
   };
 
-  return (
-    <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
-      {contextHolder}
-      <h1 className="room-header">Room</h1>
+  const employeeIdFromLocalStorage = localStorage.getItem("EmployeeID");
+  const employeeIdAsNumber = employeeIdFromLocalStorage
+    ? parseInt(employeeIdFromLocalStorage, 10)
+    : undefined;
 
-      <div className="room-headline">
+  // Filter repairRequest based on memberId
+  const filteredRoom = listRoom.filter(
+    (listRoom) => listRoom.EmployeeID === employeeIdAsNumber
+  );
 
-        <NavLink to="/employee/room/create">
-          <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: "#CDF5FD",
-                colorTextLightSolid: "#000000",
-                colorPrimaryHover: "#89CFF3",
-                colorPrimaryActive: "#818FB4",
-              },
-            }}
-          >
-            <Button className="room-add-button" type="primary">
-              add a room
-            </Button>
-          </ConfigProvider>
-        </NavLink>
+  // เลือกหน้า =----------------------------------------------------------------------------------------------------------------------------------------
+  const rowsPerPage = 3;
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const visibleRows = filteredRoom.slice(startIndex, endIndex);
 
-        <div style={{ marginTop: 20 }}>
-          <Table
-            rowKey="ID"
-            columns={columns}
-            dataSource={listRoom}
-            style={{ padding: "20px", boxShadow: "" }}
-          />
-        </div>
-        <Modal
-          title="ลบข้อมูล ?"
-          open={open}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          onCancel={handleCancel}
-        >
-          <p>{modalText}</p>
-        </Modal>
-      </div>
+  const cancel = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.error("Click on No");
+  };
+
+  const DeletePopOver = (
+    <div>
+      <p>ลบข้อมูล</p>
     </div>
+  );
+
+  const EditPopOver = (
+    <div>
+      <p>แก้ไขข้อมูล</p>
+    </div>
+  );
+
+  console.log(showEdit);
+  console.log(selectedRoomID);
+
+  useEffect(() => {
+    getAllRoom();
+  }, []);
+
+  return (
+    <>
+      <roomIDContext.Provider value={selectedRoomID}>
+        {contextHolder}
+        <div className="room-table-show">
+          <h1 className="room-text-home">ห้องพัก</h1>
+          <hr />
+          <div>
+            <Link to="create">
+              <div className="room-request-button">เพิ่มห้องพัก</div>
+            </Link>
+            <div className="room-table">
+              <table className="room-content-table">
+                <thead>
+                  <tr>
+                    <th>ลำดับ</th>
+                    <th>หมายเลขห้องพัก</th>
+                    <th>รูปภาพ</th>
+                    <th>ประเภท</th>
+                    <th>โซนที่ตั้ง</th>
+                    <th>ราคา</th>
+                    <th>จัดการ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleRows.map((item, index) => (
+                    <tr key={index}>
+                      <td>{index + startIndex + 1}</td>
+                      <td>{item.Room_number}</td>
+                      <td>
+                        <Image src={`${item.Room_img}`}></Image>
+                      </td>
+                      <td>
+                        {(item.RoomType as RoomTypeInterface)?.RoomType_name}
+                      </td>
+                      <td>
+                        {(item.RoomZone as RoomZoneInterface)?.RoomZone_name}
+                      </td>
+                      <td>{item.Room_price}</td>
+                      <td>
+                        <Popconfirm
+                          title="ลบห้องพัก"
+                          description="คุณต้องการที่จะลบรายการนี้ใช่มั้ย?"
+                          onConfirm={() => handleDelete(item.ID)}
+                          onCancel={() => cancel}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <Popover content={DeletePopOver}>
+                            <Button icon={<DeleteOutlined />}></Button>
+                          </Popover>
+                        </Popconfirm>
+                        <Popover content={EditPopOver}>
+                          <Button
+                            icon={<EditOutlined />}
+                            onClick={() => {
+                              if (item.ID !== undefined) {
+                                setSelectedRoomID(item.ID);
+                                setShowEdit(!showEdit);
+                              }
+                            }}
+                          ></Button>
+                        </Popover>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="room-paging">
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="room-paging-backward"
+                >
+                  <IoIosArrowBack />
+                </button>
+                <span className="room-current-page">{currentPage}</span>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={endIndex >= listRoom.length}
+                  className="room-paging-forward"
+                >
+                  <IoIosArrowForward />
+                </button>
+              </div>
+              {showEdit && (
+                <div className="updatePopup">
+                  <div className="update-form">
+                    <EditRoom onCancel={handleCancel} />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </roomIDContext.Provider>
+    </>
   );
 }

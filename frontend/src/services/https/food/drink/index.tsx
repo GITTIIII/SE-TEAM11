@@ -1,6 +1,6 @@
 import { DrinkInterface } from "../../../../interface/IDrink";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllDrink() {
   const requestOptions = {
@@ -22,7 +22,6 @@ async function GetAllDrink() {
 
   return res;
 }
-
 
 async function CreateDrink(data: DrinkInterface) {
   const requestOptions = {
@@ -100,10 +99,4 @@ async function GetDrinkById(id: Number | undefined) {
   return res;
 }
 
-export {
-  GetAllDrink,
-  CreateDrink,
-  DeleteDrinkByID,
-  UpdateDrink,
-  GetDrinkById,
-};
+export { GetAllDrink, CreateDrink, DeleteDrinkByID, UpdateDrink, GetDrinkById };

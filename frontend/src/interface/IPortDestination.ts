@@ -1,7 +1,7 @@
 export interface PortDestinationInterface {
-    ID?: number;
+  ID?: number;
 
-    PortDestination_name?: string;
-    Place?: string;
-    Country?: string;
+  PortDestination_name?: string;
+  Place?: string;
+  Country?: string;
 }

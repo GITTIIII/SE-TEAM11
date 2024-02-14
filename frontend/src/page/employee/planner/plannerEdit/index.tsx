@@ -1,328 +1,204 @@
-// import React, { useState, useEffect, useId } from "react";
-// import {
-//   Space,
-//   Button,
-//   Col,
-//   Row,
-//   Divider,
-//   Form,
-//   Input,
-//   Card,
-//   message,
-//   Upload,
-//   Select,
-//   InputNumber,
-// } from "antd";
-// import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-// import { DestinationInterface } from "../../../../interface/IDestination";
-// import { PortOriginInterface } from "../../../../interface/IPortOrigin";
-// import { PortDestinationInterface } from "../../../../interface/IPortDestination";
-// import { DistanceInterface } from "../../../../interface/IDistance";
-// import {
-//   GetDestinationById,
-//   UpdateDestination,
-// } from "../../../../services/https/destination";
-// import { GetAllPortOrigin } from "../../../../services/https/portOrigin";
-// import { GetAllPortDestination } from "../../../../services/https/portDestination";
-// import { GetAllDistance } from "../../../../services/https/distance";
-// import { useNavigate, useParams } from "react-router-dom";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import "./plannerEdit.css";
+import { Button, Form, message, DatePicker } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import { useContext } from "react";
+import { plannerIDContext } from "..";
+import {
+  GetPlannerById,
+  UpdatePlanner,
+} from "../../../../services/https/planner";
 
-// const { Option } = Select;
+import { DestinationInterface } from "../../../../interface/IDestination";
+import { PlannerInterface } from "../../../../interface/IPlanner";
+import { QuayInterface } from "../../../../interface/IQuay";
+import dayjs from "dayjs";
+import { GetAllQuay } from "../../../../services/https/quay";
 
-// function DestinationEdit() {
-//   const navigate = useNavigate();
-//   const [messageApi, contextHolder] = message.useMessage();
+function PlannerEdit({ onCancel }: { onCancel: () => void }) {
+  const [planner, setPlanner] = useState<PlannerInterface>();
+  const [destination, setDestination] = useState<DestinationInterface>();
+  const [input, setInput] = useState({} as PlannerInterface);
+  const [quay, setQuay] = useState<QuayInterface[]>([]);
+  const [plan_img, setPlan_Img] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+  const [pDate, setPDate] = useState<any>(dayjs());
+  const plannerID = useContext(plannerIDContext);
 
-//   //   const [user, setUser] = useState<UsersInterface>();
-//   const [destination, setDestination] = useState<DestinationInterface>();
-//   const [destinationPrice, setDestination_price] = useState<"">();
-//   const [destinationImage, setDestinationImage] = useState<string | null>(null);
-//   const [destinationNames, setDestinationNames] = useState<
-//     DestinationInterface[]
-//   >([]);
-//   // const [destination, setDestination] = useState<DestinationInterface>();
-//   //   const [genders, setGenders] = useState<GendersInterface[]>([]);
-//   const [portOrigins, setPortOrigins] = useState<PortOriginInterface[]>([]);
-//   const [portDestinations, setPortDestinations] = useState<
-//     PortDestinationInterface[]
-//   >([]);
-//   const [distances, setDistance] = useState<DistanceInterface[]>([]);
+  const getPlannerByID = async () => {
+    let res = await GetPlannerById(Number(plannerID));
+    setPlanner(res);
+    setInput(res);
+    setDestination(res);
+  };
 
-//   // รับข้อมูลจาก params
-//   let { id } = useParams();
-//   // อ้างอิง form กรอกข้อมูล
-//   const [form] = Form.useForm();
+  const getQuay = async () => {
+    let res = await GetAllQuay();
+    setQuay(res);
+  };
+  useEffect(() => {
+    getPlannerByID();
+    getQuay();
+  }, []);
 
-//   const onFinish = async (values: DestinationInterface) => {
-//     values.ID = destination?.ID;
-//     let res = await UpdateDestination(values);
-//     if (res.status) {
-//       messageApi.open({
-//         type: "success",
-//         content: "แก้ไขข้อมูลสำเร็จ",
-//       });
-//       setTimeout(function () {
-//         navigate("/employee/destination");
-//       }, 2000);
-//     } else {
-//       messageApi.open({
-//         type: "error",
-//         content: res.message,
-//       });
-//     }
-//   };
+  const handleInput = (e: any) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-//   //   const getGendet = async () => {
-//   //     let res = await GetGenders();
-//   //     if (res) {
-//   //       setGenders(res);
-//   //     }
-//   //   };
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Type assertion to string
+        // เปลี่ยน setImage เพื่อทำการใช้ base64String
+        setPlan_Img(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-//   const getPortOrigin = async () => {
-//     let res = await GetAllPortOrigin();
-//     if (res) {
-//       setPortOrigins(res);
-//     }
-//   };
-//   const getPortDestination = async () => {
-//     let res = await GetAllPortDestination();
-//     if (res) {
-//       setPortDestinations(res);
-//     }
-//   };
-//   const getDistance = async () => {
-//     let res = await GetAllDistance();
-//     if (res) {
-//       setDistance(res);
-//     }
-//   };
+  const handleSubmit = async () => {
+    let updatedValues: PlannerInterface = {
+      ID: Number(plannerID),
+      Plan_name: input.Plan_name,
+      Plan_img: plan_img,
+      Plan_price: Number(input.Plan_price),
+      TimeStart: pDate,
+      Planner_status: input.Planner_status,
+      QuayID: Number(input.QuayID),
+      DestinationID: Number(input.DestinationID),
+      EmployeeID: Number(localStorage.getItem("EmployeeID")),
+    };
+    console.log(updatedValues);
+    console.log(input);
+    let res = await UpdatePlanner(updatedValues);
+    if (res.status) {
+      messageApi.open({
+        type: "success",
+        content: "เเก้ไขข้อมูลสำเร็จ",
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
+    } else {
+      messageApi.open({
+        type: "error",
+        content: res.message,
+      });
+      console.log(destination);
+    }
+  };
+  const onChange = (date: dayjs.Dayjs | null, dateString: string) => {
+    console.log(date);
+    setPDate(date);
+  };
 
-//   //   const getUserById = async () => {
-//   //     let res = await GetUserById(Number(id));
-//   //     if (res) {
-//   //       setUser(res);
-//   //       // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
-//   //       form.setFieldsValue({
-//   //         FirstName: res.FirstName,
-//   //         LastName: res.LastName,
-//   //         StudentID: res.StudentID,
-//   //         GenderID: res.GenderID,
-//   //         Email: res.Email,
-//   //         Phone: res.Phone,
-//   //         LinkedIn: res.LinkedIn
-//   //       });
-//   //     }
-//   //   };
-//   const getDestinationById = async () => {
-//     let res = await GetDestinationById(Number(id));
-//     if (res) {
-//       setDestination(res);
-//       // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
-//       form.setFieldsValue({
-//         PortOriginID: res.PortOriginID,
-//         PortDestinationID: res.PortDestinationID,
-//         DistanceID: res.DistanceID,
-//         Destination_img: res.Destination_img,
-//         Destination_price: res.Destination_price,
-//         Destination_name: res.Destination_name,
-//         // GenderID: res.GenderID,
-//         // Email: res.Email,
-//         // Phone: res.Phone,
-//         // LinkedIn: res.LinkedIn
-//       });
-//     }
-//   };
+  return (
+    <>
+      <div className="update-planner">
+        {contextHolder}
+        <div className="update-planner-close-button">
+          <Button type="text" icon={<CloseOutlined />} onClick={onCancel} />
+        </div>
 
-//   useEffect(() => {
-//     getPortOrigin();
-//     getPortDestination();
-//     getDistance();
-//     getDestinationById();
-//   }, []);
+        <div className="update-planner-header">
+          <h2>แก้ไขทริป : {planner?.Plan_name}</h2>
+        </div>
+        <div className="update-planner-form">
+          <Form onFinish={handleSubmit}>
+            <label>ชื่อทริป</label>
+            <br></br>
+            <input
+              className="update-planner-input"
+              placeholder="Enter your detail"
+              name="Plan_name"
+              defaultValue={Object(planner).Plan_name}
+              onChange={handleInput}
+            />
+            <label>ชานชาลา</label>
+            <br></br>
+            <select
+              className="update-destination-select-custom"
+              name="QuayID"
+              onChange={handleInput}
+            >
+              <option
+                value="none"
+                hidden
+                defaultValue={Number(Object(quay).QuayID)}
+              >
+                {Object(planner).Quay?.Quay_number}
+              </option>
+              {quay.map((item) => (
+                <option value={item.ID} key={item.Quay_number}>
+                  {item.Quay_number}
+                </option>
+              ))}
+            </select>
+            <label>ราคาทริป</label>
+            <br></br>
+            <input
+              className="update-planner-input"
+              type="number"
+              step="0.001"
+              placeholder="ระบุราคาทริป"
+              name="Plan_price"
+              defaultValue={Object(planner).Plan_price}
+              onChange={handleInput}
+              required
+            />
+            <br />
+            <label>วันเดินเรือ</label>
+            <br></br>
+            <DatePicker
+              className="planner-edit-form-info"
+              value={pDate}
+              onChange={onChange}
+              format="YYYY-MM-DD"
+            />
+            <br />
+            <div className="planner-edit-show-changeStatus">
+              <label>เปลี่ยนสถานะออกเรือ</label>
+              <br />
+              <select
+                className="planner-select-custom"
+                name="Planner_status"
+                onChange={handleInput}
+              >
+                <option
+                  value="none"
+                  hidden
+                  defaultValue={Number(Object(planner))}
+                >
+                  {Object(planner).Planner_status}
+                </option>
 
-//   return (
-//     <div>
-//       {contextHolder}
-//       <Card>
-//         <h2> แก้ไขข้อมูล จุดหมาย</h2>
-//         <Divider />
-//         <Form
-//           name="basic"
-//           form={form}
-//           layout="vertical"
-//           onFinish={onFinish}
-//           autoComplete="off"
-//         >
-//           <Row gutter={[16, 16]}>
-//             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 // label="รูปห้อง"
-//                 name="Destination_img"
-//                 getValueFromEvent={(e) => e.file.originFileObj}
-//               >
-//                 {/* <Upload
-//                     name="Room_img"
-//                     listType="picture"
-//                     showUploadList={false}
-//                     beforeUpload={(file) => {
-//                     const reader = new FileReader();
-//                     reader.onloadend = () => {
-//                         setRoomImage(reader.result as string);
-//                     };
-//                     reader.readAsDataURL(file);
-//                     return false; // Prevent default upload behavior
-//                     }}
-//                 >
-//                     <Button icon={<UploadOutlined />}>อัปโหลดรูป</Button>
-//                 </Upload> */}
-//                 {destinationImage && (
-//                   <img
-//                     src={destinationImage}
-//                     alt="Room"
-//                     style={{ maxWidth: "100%", marginTop: "10px" }}
-//                   />
-//                 )}
-//               </Form.Item>
-//             </Col>
-//             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 label="ราคา"
-//                 name="Destination_price"
-//                 // type="number" step="0.001"
-//                 rules={[
-//                   {
-//                     required: true,
-//                     message: "กรุณากรอกชื่อทรืป !",
-//                   },
-//                 ]}
-//               >
-//                 <InputNumber />
-//               </Form.Item>
-//               {/* <div className='create-room-form-control'>
-//           <label className='create-room-text'>Price of Room</label>
-//           <br></br>
-//           <input
-//             className='create-room-input'
-//             type="number" step="0.001"
-//             placeholder = 'Enter price of room'
-//             name="Room_price"
-//             // required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
-//           />
-//         </div> */}
-//             </Col>
-//             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 name="PortOriginID"
-//                 label="ต้นทาง"
-//                 rules={[{ required: true, message: "กรุณาระบุต้นทาง !" }]}
-//               >
-//                 <Select allowClear>
-//                   {portOrigins.map((item) => (
-//                     <Option value={item.ID} key={item.PortOrigin_name}>
-//                       {item.PortOrigin_name}
-//                     </Option>
-//                   ))}
-//                 </Select>
-//               </Form.Item>
-//             </Col>
-//             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 name="PortDestinationID"
-//                 label="ปลายทาง"
-//                 rules={[{ required: true, message: "กรุณาระบุปลายทาง !" }]}
-//               >
-//                 <Select allowClear>
-//                   {portDestinations.map((item) => (
-//                     <Option value={item.ID} key={item.PortDestination_name}>
-//                       {item.PortDestination_name}
-//                     </Option>
-//                   ))}
-//                 </Select>
-//               </Form.Item>
-//             </Col>
-//             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 name="DistanceID"
-//                 label="ระยะทาง"
-//                 rules={[{ required: true, message: "กรุณาระบุระยะทาง !" }]}
-//               >
-//                 <Select allowClear>
-//                   {distances.map((item) => (
-//                     <Option value={item.ID} key={item.Distance_name}>
-//                       {item.Distance_name}
-//                     </Option>
-//                   ))}
-//                 </Select>
-//               </Form.Item>
-//             </Col>
-//             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 label="ราคา"
-//                 name="Destination_price"
-//                 // type="number" step="0.001"
-//                 rules={[
-//                   {
-//                     required: true,
-//                     message: "กรุณากรอกราคา !",
-//                   },
-//                 ]}
-//               >
-//                 <InputNumber />
-//               </Form.Item>
-//               {/* <div className='create-room-form-control'>
-//           <label className='create-room-text'>Price of Room</label>
-//           <br></br>
-//           <input
-//             className='create-room-input'
-//             type="number" step="0.001"
-//             placeholder = 'Enter price of room'
-//             name="Room_price"
-//             // required value={roomPrice} onChange={(e) => setRoom_price(e.target.value)}
-//           />
-//         </div> */}
-//             </Col>
-//             {/* <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-//               <Form.Item
-//                 label="เบอร์โทรศัพท์"
-//                 name="Phone"
-//                 rules={[
-//                   {
-//                     required: true,
-//                     message: "กรุณากรอกเบอร์โทรศัพท์ !",
-//                   },
-//                 ]}
-//               >
-//                 <Input />
-//               </Form.Item>
-//             </Col> */}
-//           </Row>
-//           <Row justify="end">
-//             <Col style={{ marginTop: "40px" }}>
-//               <Form.Item>
-//                 <Space>
-//                   <Button
-//                     htmlType="button"
-//                     style={{ marginRight: "10px" }}
-//                     onClick={() => navigate("/employee/destination")}
-//                   >
-//                     ยกเลิก
-//                   </Button>
-//                   <Button
-//                     type="primary"
-//                     htmlType="submit"
-//                     icon={<PlusOutlined />}
-//                   >
-//                     ยืนยัน
-//                   </Button>
-//                 </Space>
-//               </Form.Item>
-//             </Col>
-//           </Row>
-//         </Form>
-//       </Card>
-//     </div>
-//   );
-// }
+                <option>กำลังออกเรือ</option>
+                <option>เรือยังไม่ออก</option>
+              </select>
+            </div>
+            <label>รูปภาพทริป</label>
+            <br></br>
+            <input
+              className="update-planner-form-info"
+              id="Plan_img"
+              type="file"
+              accept="image/*"
+              name="Plan_img"
+              onChange={handleImageChange}
+            />
+            <div className="update-planner-button-area">
+              <button type="submit">ยืนยัน</button>
+            </div>
+          </Form>
+        </div>
+      </div>
+    </>
+  );
+}
 
-// export default DestinationEdit;
+export default PlannerEdit;

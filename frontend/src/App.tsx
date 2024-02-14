@@ -5,24 +5,25 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
+import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
+import TouristLayout from "./layout/touristLayout/touristLayout";
+
 import LoginTourist from "./page/login/loginTourist/loginTourist";
 import LoginEmployee from "./page/login/loginEmployee/loginEmployee";
 import Register from "./page/register/register";
 
-import EmployeeLayout from "./layout/employeeLayout/employeeLayout";
+import EmployeeManagement from "./page/employee/";
+import RegisterEmployee from "./page/employee/employeeCreate";
 import CheckIn from "./page/employee/checkIn";
 import Destination from "./page/employee/destination";
 import CreateDestination from "./page/employee/destination/destinationCreate";
-import EditDestination from "./page/employee/destination/destinationEdit";
 import Planner from "./page/employee/planner";
 import CreatePlanner from "./page/employee/planner/plannerCreate";
-// import EditPlanner from "./page/employee/planner/plannerEdit";
+import ShowPlanner from "./page/tourist/planner";
 import Repair from "./page/employee/repair";
 import Room from "./page/employee/room";
 import CreateRoom from "./page/employee/room/createRoom";
-import EditRoom from "./page/employee/room/editRoom";
-import Payment from "./page/employee/payment";
-import Employee from "./page/employee/employeeCreate";
+import ShowPayment from "./page/employee/showPayment";
 import Activity from "./page/employee/activity";
 import RepairCreate from "./page/employee/repair/repairCreate";
 import EmployeeProfile from "./page/employee/employeeProfile";
@@ -39,12 +40,21 @@ import SavoryDashbord from "./page/employee/food/savory/savoryDashbord";
 import SavoryCreate from "./page/employee/food/savory/savoryCreate";
 import SavoryUpdate from "./page/employee/food/savory/savoryUpdate";
 
-import TouristLayout from "./layout/touristLayout/touristLayout";
 import BookPlan from "./page/tourist/bookPlan";
+import BookPlanCreate from "./page/tourist/bookPlan/bookPlanCreate"
 import ShowRoom from "./page/tourist/room";
 import TouristProfile from "./page/tourist/touristProfile";
 import BookActivity from "./page/tourist/bookActivity";
 import BookActivityCreate from "./page/tourist/bookActivity/bookActivityCreate";
+import Payment from "./page/tourist/payment";
+import Reciept from "./page/tourist/bookPlan/reciept";
+import EditProfile from "./page/tourist/touristProfile/touristProfileEdit";
+import PaymentCreate from "./page/tourist/payment/paymentCreate";
+import Main from "./page/tourist/main";
+import Food from "./page/tourist/food";
+import Review from "./page/tourist/review";
+
+import { PrivateRoutes } from "./utils/PrivateRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,51 +63,53 @@ const router = createBrowserRouter(
       <Route path="login/employee" element={<LoginEmployee />} />
       <Route path="register" element={<Register />} />
 
-      <Route path="employee" element={<EmployeeLayout />}>
-        <Route path="employeeProfile" element={<EmployeeProfile />} />
-        <Route path="admin" element={<Employee />} />
-        <Route path="payment" element={<Payment />} />
-        <Route path="check-in" element={<CheckIn />} />
-        <Route path="destination" element={<Destination />} />
-        <Route path="destination/create" element={<CreateDestination />} />
-        <Route path="destination/edit/:id" element={<EditDestination />} />
-        <Route path="food" element={<FoodSetDashbord />} />
-        <Route path="food/create" element={<FoodSetCreate />} />
-        <Route path="food/edit/:id" element={<FoodSetUpdate />} />
-        <Route path="food/Savory" element={<SavoryDashbord />} />
-        <Route path="food/Savory/create" element={<SavoryCreate />} />
-        <Route path="food/Savory/edit/:id" element={<SavoryUpdate />} />
-        <Route path="food/Drink" element={<DrinkDashbord />} />
-        <Route path="food/Drink/create" element={<DrinkCreate />} />
-        <Route path="food/Drink/edit/:id" element={<DrinkUpdate />} />
-        <Route path="food/Dessert" element={<DessertDashbord />} />
-        <Route path="food/Dessert/create" element={<DessertCreate />} />
-        <Route path="food/Dessert/edit/:id" element={<DessertUpdate />} />
-        <Route path="planner" element={<Planner />} />
-        <Route path="planner/create" element={<CreatePlanner />} />
-        {/* <Route path="planner/edit/:id" element={<EditPlanner />} /> */}
-        <Route path="repair" element={<Repair />} />
-        <Route path="repair/create" element={<RepairCreate />} />
-        <Route path="room" element={<Room />} />
-        <Route path="room/create" element={<CreateRoom />} />
-        <Route path="room/edit/:id" element={<EditRoom />} />
-        <Route path="activity" element={<Activity />} />
-      </Route>
+      <Route element={<PrivateRoutes />}>
+        <Route path="employee" element={<EmployeeLayout />}>
+          <Route path="employeeProfile" element={<EmployeeProfile />} />
+          <Route path="payment" element={<ShowPayment />} />
+          <Route path="employee" element={<EmployeeManagement />} />
+          <Route path="employeeCreate" element={<RegisterEmployee />} />
+          <Route path="check-in/:date" element={<CheckIn />} />
+          <Route path="destination" element={<Destination />} />
+          <Route path="destination/create" element={<CreateDestination />} />
+          <Route path="food" element={<FoodSetDashbord />} />
+          <Route path="food/create" element={<FoodSetCreate />} />
+          <Route path="food/edit/:id" element={<FoodSetUpdate />} />
+          <Route path="food/Savory" element={<SavoryDashbord />} />
+          <Route path="food/Savory/create" element={<SavoryCreate />} />
+          <Route path="food/Savory/edit/:id" element={<SavoryUpdate />} />
+          <Route path="food/Drink" element={<DrinkDashbord />} />
+          <Route path="food/Drink/create" element={<DrinkCreate />} />
+          <Route path="food/Drink/edit/:id" element={<DrinkUpdate />} />
+          <Route path="food/Dessert" element={<DessertDashbord />} />
+          <Route path="food/Dessert/create" element={<DessertCreate />} />
+          <Route path="food/Dessert/edit/:id" element={<DessertUpdate />} />
+          <Route path="planner" element={<Planner />} />
+          <Route path="planner/create" element={<CreatePlanner />} />
+          <Route path="repair" element={<Repair />} />
+          <Route path="repair/create" element={<RepairCreate />} />
+          <Route path="room" element={<Room />} />
+          <Route path="room/create" element={<CreateRoom />} />
+          <Route path="activity" element={<Activity />} />
+        </Route>
 
-      <Route path="tourist" element={<TouristLayout />}>
-        <Route path="bookPlan" element={<BookPlan />} />
-        <Route path="food" element={<FoodSetDashbord />} />
-        <Route path="planner" element={<Planner />} />
-        <Route path="room" element={<Room />} />
-        <Route path="showroom" element={<ShowRoom />} />
-        <Route path="bookActivity" element={<BookActivity />} />
-        <Route
-          path="bookActivity/bookActivityCreate"
-          element={<BookActivityCreate />}
-        />
-        <Route path="payment" element={<Payment />} />
-        <Route path="touristProfile" element={<TouristProfile />} />
-        <Route path="destination" element={<Destination />} />
+        <Route path="tourist" element={<TouristLayout />}>
+          <Route path="main" element={<Main />} />
+          <Route path="bookPlan" element={<BookPlan />} />
+          <Route path="bookPlan/bookPlanCreate" element={<BookPlanCreate />} />
+          <Route path="reciept" element={<Reciept />} />
+          <Route path="food" element={<Food />} />
+          <Route path="room" element={<Room />} />
+          <Route path="review/:id" element={<Review />} />
+          <Route path="showPlanner" element={<ShowPlanner />} />
+          <Route path="showroom" element={<ShowRoom />} />
+          <Route path="bookActivity" element={<BookActivity />} />
+          <Route path="bookActivity/bookActivityCreate"element={<BookActivityCreate />}/>
+          <Route path="payment/create/:id" element={<PaymentCreate />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="touristProfile" element={<TouristProfile />} />
+          <Route path="editProfile" element={<EditProfile />} />
+        </Route>
       </Route>
     </>
   )

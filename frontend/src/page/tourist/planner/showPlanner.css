@@ -1,0 +1,29 @@
+.showDestination-bg {
+  background-image: url("https://images4.alphacoders.com/729/729105.jpg");
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgb(239, 239, 239); */
+  position: relative;
+  overflow-y: hidden;
+  /* background-repeat: no-repeat; */
+}
+
+.showDestination-blur {
+  width: 95%;
+  background: rgb(255, 255, 255, 0.35);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.box-card {
+  width: 200;
+  height: 300;
+}
+.review-icon{
+  display: inline-block;
+  color: white !important;
+  margin-right: 5%;
+}

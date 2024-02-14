@@ -1,100 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, createContext } from "react";
+import { Link } from "react-router-dom";
 
 import "./destination.css";
-import { Button, ConfigProvider, Modal, Table, message } from "antd";
+import { Button, message, Image, Popconfirm, Popover } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import cruise from "../../../asset/cruise.png";
 import { DestinationInterface } from "../../../interface/IDestination";
 import {
   DeleteDestinationByID,
   GetAllDestination,
 } from "../../../services/https/destination";
-import { ColumnsType } from "antd/es/table";
-
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import DestinationEdit from "./destinationEdit";
+import { PortDestinationInterface } from "../../../interface/IPortDestination";
+import { PortOriginInterface } from "../../../interface/IPortOrigin";
+import { DistanceInterface } from "../../../interface/IDistance";
+import planetBG from "../../../asset/planetBG.png";
+export const destinationIDContext = createContext(0);
 export default function Destination() {
-  const navigate = useNavigate();
-  const columns: ColumnsType<DestinationInterface> = [
-    {
-      title: "ลำดับ",
-      dataIndex: "ID",
-      key: "id",
-    },
-    {
-      title: "ทริป",
-      dataIndex: "Destination_img",
-      key: "destination_img",
-      render: (text, record, index) => (
-        <img
-          src={`${record.Destination_img}`}
-          style={{ maxWidth: "100px", maxHeight: "100px" }}
-          alt={`Trip ${index + 1}`}
-        />
-      ),
-    },
-    {
-      title: "ชื่อทริป",
-      dataIndex: "Destination_name",
-      key: "destination_name",
-    },
-    {
-      title: "ต้นทาง",
-      dataIndex: "PortOrigin",
-      key: "port_origin",
-      render: (item) => item.PortOrigin_name,
-    },
-    {
-      title: "ปลายทาง",
-      dataIndex: "PortDestination",
-      key: "port_destination",
-      render: (item) => item.PortDestination_name,
-    },
-    {
-      title: "ระยะทาง (ไมล์)",
-      dataIndex: "Distance",
-      key: "distance",
-      render: (item) => item.Distance,
-    },
-    {
-      title: "ราคา",
-      dataIndex: "Destination_price",
-      key: "desntination_price",
-    },
-    {
-      title: "จัดการ",
-      dataIndex: "Manage",
-      key: "manage",
-      render: (text, record, index) => (
-        <>
-          <Button
-            onClick={() => navigate(`/employee/destination/edit/${record.ID}`)}
-            shape="circle"
-            icon={<EditOutlined />}
-            size={"large"}
-          />
-          <Button
-            onClick={() => showModal(record)}
-            style={{ marginLeft: 10 }}
-            shape="circle"
-            icon={<DeleteOutlined />}
-            size={"large"}
-            danger
-          />
-        </>
-      ),
-    },
-  ];
-
   const [messageApi, contextHolder] = message.useMessage();
   const [listDestination, setAllDestination] = useState<DestinationInterface[]>(
     []
   );
+  const [showEdit, setShowEdit] = useState(false);
 
-  // Model
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState<String>();
-  const [deleteId, setDeleteId] = useState<Number>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedDestinationID, setSelectedDestinationID] = useState<number>(0);
 
   const getAllDestination = async () => {
     let res = await GetAllDestination();
@@ -106,77 +36,180 @@ export default function Destination() {
   useEffect(() => {
     getAllDestination();
   }, []);
-
-  const showModal = (val: DestinationInterface) => {
-    setModalText(`คุณต้องการลบข้อมูลจุดหมายหรือไม่ ?`);
-    setDeleteId(val.ID);
-    setOpen(true);
-  };
-
-  const handleOk = async () => {
-    setConfirmLoading(true);
-    let res = await DeleteDestinationByID(deleteId);
+  console.log(listDestination);
+  const handleDelete = async (id: Number | undefined) => {
+    let res = await await DeleteDestinationByID(id);
     if (res) {
-      setOpen(false);
       messageApi.open({
         type: "success",
         content: "ลบข้อมูลสำเร็จ",
       });
-      getAllDestination();
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
     } else {
-      setOpen(false);
       messageApi.open({
         type: "error",
-        content: "เกิดข้อผิดพลาด !",
+        content: "ลบข้อมูลไม่สำเร็จ",
       });
     }
-    setConfirmLoading(false);
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    setShowEdit(!showEdit);
   };
 
-  return (
-    <div className="cruise-bg" style={{ backgroundImage: `url(${cruise})` }}>
-      {contextHolder}
-      <h1 className="destination-header">Destination</h1>
+  const employeeIdFromLocalStorage = localStorage.getItem("EmployeeID");
+  const employeeIdAsNumber = employeeIdFromLocalStorage
+    ? parseInt(employeeIdFromLocalStorage, 10)
+    : undefined;
 
-      <div className="destination-headline" />
+  // Filter repairRequest based on memberId
+  const filteredDestination = listDestination.filter(
+    (listDestination) => listDestination.EmployeeID === employeeIdAsNumber
+  );
 
-      <NavLink to="/employee/destination/create">
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
-              colorPrimaryHover: "#89CFF3",
-              colorPrimaryActive: "#818FB4",
-            },
-          }}
-        >
-          <Button className="destination-add-button" type="primary">
-            add a destination
-          </Button>
-        </ConfigProvider>
-      </NavLink>
-      <div style={{ marginTop: 20 }}>
-        <Table
-          rowKey="ID"
-          columns={columns}
-          dataSource={listDestination}
-          style={{ padding: "20px", boxShadow: "" }}
-        />
-      </div>
-      <Modal
-        title="ลบข้อมูล ?"
-        open={open}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <p>{modalText}</p>
-      </Modal>
+  // เลือกหน้า =----------------------------------------------------------------------------------------------------------------------------------------
+  const rowsPerPage = 5;
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const visibleRows = filteredDestination.slice(startIndex, endIndex);
+
+  const cancel = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.error("Click on No");
+  };
+
+  const DeletePopOver = (
+    <div>
+      <p>ลบข้อมูล</p>
     </div>
+  );
+
+  const EditPopOver = (
+    <div>
+      <p>แก้ไขข้อมูล</p>
+    </div>
+  );
+
+  console.log(showEdit);
+  console.log(selectedDestinationID);
+  console.log(visibleRows);
+  console.log(filteredDestination);
+  console.log(listDestination);
+
+  return (
+    <>
+      <destinationIDContext.Provider value={selectedDestinationID}>
+        <div
+          className="destination-cruise-bg"
+          style={{ backgroundImage: `url(${planetBG})` }}
+        >
+          {contextHolder}
+
+          <div className="destination-table-show">
+            <h1 className="destination-text-home">จุดหมาย</h1>
+            <hr />
+
+            <div>
+              <Link to="create">
+                <div className="destination-request-button">เพิ่มจุดหมาย</div>
+              </Link>
+
+              <div className="destination-table">
+                <table className="destination-content-table">
+                  <thead>
+                    <tr>
+                      <th>ลำดับ</th>
+                      <th>ต้นทาง - ปลายทาง</th>
+                      <th>ท่าเรือต้นทาง</th>
+                      <th>ท่าเรือปลายทาง</th>
+                      <th>ระยะทาง (ประมาณและเป็นไมล์)</th>
+                      <th>หมายเหตุ</th>
+                      <th>จัดการ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {visibleRows.map((item, index) => (
+                      <tr key={index}>
+                        <td>{index + startIndex + 1}</td>
+                        <td>{item.Destination_name}</td>
+                        <td>
+                          {
+                            (item.PortOrigin as PortOriginInterface)
+                              ?.PortOrigin_name
+                          }
+                        </td>
+                        <td>
+                          {
+                            (item.PortDestination as PortDestinationInterface)
+                              ?.PortDestination_name
+                          }
+                        </td>
+                        <td>
+                          {(item.Distance as DistanceInterface)?.Distance}
+                        </td>
+                        <td>{item.Comment}</td>
+                        <td>
+                          <Popconfirm
+                            title="ลบจุดหมาย"
+                            description="คุณต้องการที่จะลบรายการนี้ใช่มั้ย?"
+                            onConfirm={() => handleDelete(item.ID)}
+                            onCancel={() => cancel}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <Popover content={DeletePopOver}>
+                              <Button icon={<DeleteOutlined />}></Button>
+                            </Popover>
+                          </Popconfirm>
+                          <Popover content={EditPopOver}>
+                            <Button
+                              icon={<EditOutlined />}
+                              onClick={() => {
+                                if (item.ID !== undefined) {
+                                  setSelectedDestinationID(item.ID);
+                                  setShowEdit(!showEdit);
+                                }
+                              }}
+                            ></Button>
+                          </Popover>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="destination-paging">
+                  <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="destination-paging-backward"
+                  >
+                    <IoIosArrowBack />
+                  </button>
+                  <span className="destination-current-page">
+                    {currentPage}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={endIndex >= listDestination.length}
+                    className="destination-paging-forward"
+                  >
+                    <IoIosArrowForward />
+                  </button>
+                </div>
+                {showEdit && (
+                  <div className="destination-updatePopup">
+                    <div className="destination-update-form">
+                      <DestinationEdit onCancel={handleCancel} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </destinationIDContext.Provider>
+    </>
   );
 }

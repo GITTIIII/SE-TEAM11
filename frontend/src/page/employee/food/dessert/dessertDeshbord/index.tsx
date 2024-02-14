@@ -117,22 +117,23 @@ export default function DessertDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
-        <h1 className='dessertDashbord-header'>Dessert</h1>
+        <div className='cruise-bg' style={{ background : "#eceef2"}}>
+        <h1 className='dessertDashbord-header'>ของหวาน</h1>
         <div className='dessertDashbord-headline'/>
         <NavLink to="/employee/food/dessert/create">
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextBase: "#ffffff",
+              colorTextLightSolid: "#ffffff",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button className="foodSetDasdbord-add-button" type="primary">
-            add a dessert
+            เพิ่มของหวาน
           </Button>
         </ConfigProvider>
       </NavLink>

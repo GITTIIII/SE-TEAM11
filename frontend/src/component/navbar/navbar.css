@@ -9,6 +9,7 @@
 }
 
 .navbar .topleft-navbar{
+    cursor: pointer;
     width: 5%;
     display: flex;
     justify-content: center;
@@ -28,9 +29,50 @@
     width: 5%;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
-.navbar .profile{
+.navbar .topright-navbar img{
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: cover;
+}
+
+.navbar .topright-navbar .profile{
     border-radius: 50%;
     width: 50px;
+}
+
+.navbar .right-tourist-menu{
+    display: none;
+}
+
+.navbar .menu-icon{
+    display: none;
+}
+
+@media (max-width: 850px){
+    .navbar .topleft-navbar{
+        width: 20%;
+    }
+    .navbar .topright-navbar{
+        display: none;
+    }
+    .navbar .right-tourist-menu{
+        display: block;
+    }
+    .navbar .navbar-tourist{
+        display: none;
+    }
+    .navbar .menu-icon{
+        margin-left: auto;
+        margin-right: 5%;
+        display: block;
+    }
+    .navbar .menu-icon .icon{
+        width: auto;
+        height: 30px;
+    }
 }

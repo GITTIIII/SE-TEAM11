@@ -36,7 +36,7 @@ function FoodSetUpdate() {
            content: "แก้ไขข้อมูลสำเร็จ",
          });
          setTimeout(function () {
-          //  navigate("/customer");
+           navigate("/employee/food");
          }, 2000);
        } else {
          messageApi.open({
@@ -99,46 +99,46 @@ useEffect(() => {
   return (
     <>
       {contextHolder}
-      <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='foodSetUpdate-header'>Update FoodSet</h1>
+      <div className='cruise-bg' style={{ background : "#eceef2"}}>
+      <h1 className='foodSetUpdate-header'>แก้ไข ชุดอาหาร</h1>
       <div className="foodSetUpdate-headline" />
         <div className='foodSetUpdate-form'>
         <Form onFinish={onFinish} autoComplete="off" form={form}>
             <div className='foodSetUpdate-form-control'>
-              <Form.Item name="Name" label="Name">
-                <Input placeholder='Name' ></Input>
+              <Form.Item name="Name" label="ชื่อ">
+                <Input></Input>
               </Form.Item>
             </div>
             <div className='foodSetUpdate-form-control'>
-              <Form.Item name="savoryID" label="savory" >
+              <Form.Item name="savoryID" label="ของคาว" >
                 <Select allowClear>
                   {savorys.map((item) => (
                     <Option value={item.ID} key={item.Name}>{item.Name} ราคา {item.Count} บาท</Option>
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item name="DrinkID" label="drink" >
+              <Form.Item name="DrinkID" label="เครื่องดื่ม">
                 <Select allowClear>
                   {drinks.map((item) => (
                     <Option value={item.ID} key={item.Name} >{item.Name} ราคา {item.Count} บาท</Option>
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item name="DessertID" label="dessert" >
+              <Form.Item name="DessertID" label="ของหวาน" >
                 <Select allowClear >
                   {desserts.map((item) => (
                     <Option value={item.ID} key={item.Name} >{item.Name} ราคา {item.Count} บาท</Option>
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item name="Count" label="Count">
-                <InputNumber placeholder='Count' type='number'></InputNumber>
+              <Form.Item name="Count" label="ราคา">
+                <InputNumber type='number'></InputNumber>
               </Form.Item>
             </div>
 
             <br></br>
             <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

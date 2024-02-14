@@ -1,6 +1,27 @@
 import { BookPlanInterface } from "../../../interface/IBookPlan";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
+
+async function CreateBookPlan(data: BookPlanInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/BookPlan`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
+
+  return res;
+}
+
 async function GetAllBookPlan() {
   const requestOptions = {
     method: "GET",
@@ -22,8 +43,6 @@ async function GetAllBookPlan() {
   return res;
 }
 
-
-
 async function GetBookPlanById(id: Number | undefined) {
   const requestOptions = {
     method: "GET",
@@ -42,20 +61,18 @@ async function GetBookPlanById(id: Number | undefined) {
   return res;
 }
 
-async function CreateBookPlan(data: BookPlanInterface) {
+async function GetBookPlanByTouristId(id: Number | undefined) {
   const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    method: "GET",
   };
 
-  let res = await fetch(`${apiUrl}/BookPlan`, requestOptions)
+  let res = await fetch(`${apiUrl}/BookPlan/byTouristId/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return { status: true, message: res.data };
+        return res.data;
       } else {
-        return { status: false, message: res.error };
+        return false;
       }
     });
 
@@ -100,10 +117,51 @@ async function DeleteBookPlanByID(id: Number | undefined) {
   return res;
 }
 
+async function UpdateCheckInStatus(id: Number | undefined) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: id }),
+  };
+
+  let res = await fetch(`${apiUrl}/CheckInStatus/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
+
+  return res;
+}
+
+async function GetBookPlanByDate(date: string | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  let res = await fetch(`${apiUrl}/BookPlan/byDate/${date}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 export {
   GetAllBookPlan,
+  GetBookPlanByTouristId,
   GetBookPlanById,
   CreateBookPlan,
   DeleteBookPlanByID,
   UpdateBookPlan,
+  UpdateCheckInStatus,
+  GetBookPlanByDate,
 };

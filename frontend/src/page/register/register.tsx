@@ -45,7 +45,7 @@ const Register = () => {
             });
             setTimeout(function () {
                 navigate("/");
-            }, 2000);
+            }, 500);
         } else {
             messageApi.open({
                 type: "error",
@@ -113,7 +113,7 @@ const Register = () => {
                         </div>
 
                         <div className="input-box">
-                            <select name="Gender" onChange={handleInput}>
+                            <select name="Gender" onChange={handleInput} className="register-select">
                                 <option value="none" hidden>Sex</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>

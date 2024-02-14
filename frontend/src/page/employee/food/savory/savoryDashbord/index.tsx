@@ -116,29 +116,30 @@ export default function SavoryDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='savoryDashbord-bg' style={{ backgroundImage: `url(${cruise})` }}>
-        <h1 className='savoryDashbord-header'>Savory</h1>
+        <div className='savoryDashbord-bg' style={{ background : "#eceef2"}}>
+        <h1 className='savoryDashbord-header'>ของคาว</h1>
         <div className='savoryDashbord-headline'/>
         <NavLink to="/employee/food/savory/create">
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextLightSolid: "#ffffff",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button className="foodSetDasdbord-add-button" type="primary">
-            add a savory
+            เพิ่มของคาว
           </Button>
         </ConfigProvider>
       </NavLink>
 
             <Form  autoComplete="off">
               <div style={{ marginTop: 20 }}>
-                  <Table rowKey="ID" columns={columns} dataSource={savorys} style={{ padding: "20px", boxShadow: "" }}/>
+                  <Table rowKey="ID" columns={columns} dataSource={savorys} style={{ padding: "20px"}}/>
               </div>
             </Form>
           </div>     

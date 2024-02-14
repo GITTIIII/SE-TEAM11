@@ -1,0 +1,37 @@
+.payment-pop-up{
+    
+  
+  
+  
+    width: 350px;
+    height: 350px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+   
+   
+
+    padding: 15px;
+}
+
+.payment-pop-up-header{
+    display: flex;
+    justify-content: center;
+}
+
+.payment-pop-up-content{
+   
+    
+ 
+}
+
+.payment-pop-up-content-box1{
+    margin-top: 5px;
+}
+
+.payment-pop-up-content-box2{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}

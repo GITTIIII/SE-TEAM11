@@ -116,22 +116,23 @@ export default function DrinkDashbord() {
     return (
       <>
         {contextHolder}
-        <div className='drinkDashbord-bg' style={{ backgroundImage: `url(${cruise})` }}>
-        <h1 className='drinkDashbord-header'>Drink</h1>
+        <div className='drinkDashbord-bg' style={{ background : "#eceef2"}}>
+        <h1 className='drinkDashbord-header'>เครื่องดื่ม</h1>
       <div className='drinkDashbord-headline'/>
       <NavLink to="/employee/food/drink/create">
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "#CDF5FD",
-              colorTextLightSolid: "#000000",
+              colorPrimary: "#4f95e9",
+              colorTextBase: "#ffffff",
+              colorTextLightSolid: "#ffffff",
               colorPrimaryHover: "#89CFF3",
               colorPrimaryActive: "#818FB4",
             },
           }}
         >
           <Button className="foodSetDasdbord-add-button" type="primary">
-            add a drink
+            เพิ่มเครื่องดื่ม
           </Button>
         </ConfigProvider>
       </NavLink>

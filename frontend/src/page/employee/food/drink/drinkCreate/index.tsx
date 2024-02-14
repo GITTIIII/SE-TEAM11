@@ -23,31 +23,30 @@ export default function drinkCreate() {
   return (
     <>
       {contextHolder}
-      <div className='drinkCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='drinkCreate-header'>Add a Drink</h1>
-      <div className='dessertUpdate-headline'/>
+      <div className='drinkCreate-bg' style={{ background : "#eceef2"}}>
+      <h1 className='drinkCreate-header'>เพิ่ม เครื่องดื่ม</h1>
+      <div className='drinkCreate-headline'/>
 
         <div className='drinkCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='drinkCreate-form-control'>
-              <label className='drinkCreate-text'>drink</label>
+              <label className='drinkCreate-text'>ชื่อ</label>
               <br></br>
               <Form.Item name="Name">
-                <Input placeholder='Name'></Input>
+                <Input ></Input>
               </Form.Item>
             </div>
 
             <div className='drinkCreate-form-control'>
-              <label className='drinkCreate-text'>Count</label>
+              <label className='drinkCreate-text'>ราคา</label>
               <br></br>
               <Form.Item name="Count">
-                <InputNumber type='number' placeholder='Count'></InputNumber>
+                <InputNumber type='number'></InputNumber>
               </Form.Item>
             </div>
-
             <br></br>
             <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

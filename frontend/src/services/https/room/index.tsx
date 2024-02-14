@@ -1,6 +1,7 @@
 import { RoomInterface } from "../../../interface/IRoom";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
+//const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllRoom() {
   const requestOptions = {
@@ -23,7 +24,26 @@ async function GetAllRoom() {
   return res;
 }
 
+async function ListRoom() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
+  let res = await fetch(`${apiUrl}/Room/byAva`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 
 async function GetRoomById(id: Number | undefined) {
   const requestOptions = {
@@ -107,4 +127,5 @@ export {
   CreateRoom,
   DeleteRoomByID,
   UpdateRoom,
+  ListRoom,
 };

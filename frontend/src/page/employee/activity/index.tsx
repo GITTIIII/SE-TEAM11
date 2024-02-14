@@ -1,9 +1,9 @@
-import { Form, message } from 'antd';
+import { Form, Popconfirm, message } from 'antd';
 import { ChangeEvent, useEffect, useState } from 'react'
 import { ActivityInterface } from '../../../interface/IActivity';
 import { CreateActivity, DeleteActivityByID } from '../../../services/https/activity';
 import { GetAllActivity } from '../../../services/https/activity';
-import  ship  from "../../../asset/ship.jpg"
+import  planetBG  from "../../../asset/planetBG.png"
 import "./activity.css"
 
 export default function Activity() {
@@ -74,6 +74,10 @@ export default function Activity() {
         }
     }
 
+    const cancel = () => {
+      message.error('Click on No');
+    };
+    
     useEffect(() => {
       const fetchData = async () => {
         setActivity(await GetAllActivity());
@@ -83,10 +87,10 @@ export default function Activity() {
 
     return (
       <>
-          <div className="activity-bg" style={{ backgroundImage: `url(${ship})` }}>
+          <div className="activity-bg" style={{ backgroundImage: `url(${planetBG})` }}>
             <div className="activity-middle-box">
               {contextHolder}
-              <h1>Activity</h1>
+              <h1>กิจกรรม</h1>
               <div className="activity-create-box">
                   <Form onFinish={handleSubmit}>
                     <label>ชื่อกิจกรรม</label>
@@ -116,7 +120,18 @@ export default function Activity() {
                         <div key={data.ID} className="activity-item">
                           <img src={imageSource} alt="activity_image" />
                           <div>{data.Activity_name}</div>
-                          <button onClick={() => handleDelete(data)} className='submit-button'>ลบ</button>
+                          <Popconfirm
+                          title="ลบกิจกรรม"
+                          description="คุณต้องการที่จะลบรายการนี้ใช่มั้ย"
+                          onConfirm={() => handleDelete(data)}
+                          onCancel={() => cancel}
+                          okText="Yes"
+                          cancelText="No"
+                          >
+                            <button className='submit-button'>
+                              ลบ
+                            </button>
+                          </Popconfirm>
                         </div>
                   );
                 })}

@@ -1,60 +1,67 @@
 .repair-edit {
-  position: fixed;
-
-  bottom: 10%;
-  right: 30%;
-  width: 500px;
-  height: 600px;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 5px;
-  z-index: 30;
-  padding: 20px;
-}
-
-.repair-edit-button-area {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-top: 7vh;
-}
-
-.repair-edit-show-changeStatus{
-  margin-top: 15px 
-}
-
-
-.repair-edit-button-area button{
+    position: fixed;
+  
+    bottom: 10%;
+    right: 30%;
+    width: 500px;
+    height: 600px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    z-index: 30;
+    padding: 15px;
+  }
+  
+  .repair-edit-button-area {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 3vh;
+  }
+  
+  .repair-edit-show-changeStatus{
+    margin-top: 15px 
+  }
+  
+  
+  .repair-edit-button-area button{
+      width: 100%;
+      height: 7vh;
+      background: #142C74;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 1em;
+      color: white;
+      font-weight: 600;
+  }
+  
+  .repair-edit-header {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+  
+  .repair-edit-form {
+  }
+  
+  .repair-edit-form-info {
+  }
+  
+  .repair-edit-textarea {
     width: 100%;
-    height: 7vh;
-    background: #142C74;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    color: white;
-    font-weight: 600;
-}
+  
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+  }
 
-.repair-edit-header {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 10px;
-}
+  .repair-edit-close-button{
+    display: flex;
+    justify-content: end;
 
-.repair-edit-form {
-}
-
-.repair-edit-form-info {
-}
-
-.repair-edit-textarea {
-  width: 100%;
-
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none;
-}
+  }
+  

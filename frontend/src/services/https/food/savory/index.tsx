@@ -1,6 +1,6 @@
 import { SavoryInterface } from "../../../../interface/ISavory";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllSavory() {
   const requestOptions = {
@@ -22,7 +22,6 @@ async function GetAllSavory() {
 
   return res;
 }
-
 
 async function CreateSavory(data: SavoryInterface) {
   const requestOptions = {

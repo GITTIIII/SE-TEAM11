@@ -3,18 +3,18 @@
 
 .repair-form {
   width: 40%;
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
 
-  backdrop-filter: blur(15px);
   border-radius: 5px;
+  border: 2px solid #f4f5f7;
 
   padding: 20px;
-  margin: auto;
+  box-shadow: 0 0 2px rgb(142, 135, 135);
 }
-
 
 .repair-form-control {
   margin-top: 10px;
+  color: #ffffff;
 }
 
 .repair-textarea {
@@ -22,9 +22,9 @@
   height: 150px;
   padding: 12px 20px;
   box-sizing: border-box;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #f8f8f8;
+  background-color: #fcfcfc;
   resize: none;
 }
 
@@ -36,10 +36,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-.repair-select {
-  position: relative;
 }
 
 .repair-select-custom {
@@ -61,35 +57,137 @@
 .repair-option {
 }
 
-input[type=file]::file-selector-button {
+input[type="file"]::file-selector-button {
   margin-right: 20px;
   border: none;
-  background: #142C74;
+  background: #142c74;
   padding: 5px 10px;
+  width: fit-content;
   border-radius: 10px;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: background .2s ease-in-out;
+  transition: background 0.2s ease-in-out;
 }
 
-input[type=file]::file-selector-button:hover {
+input[type="file"]::file-selector-button:hover {
   background: #0d45a5;
 }
 
-
-
 .repair-text {
-  margin-top: 10px;
-  color: rgb(0, 0, 0);
+  color: #535b66;
+  font-weight: bold;
+  margin-top: 2px;
 }
 
 .repair-select-antd {
   width: 100%;
   font-size: 100%;
-  
+}
+
+.repair-create-header {
+  display: flex;
+  justify-content: center;
   
 }
+
+.repair-create-content {
+  display: grid;
+  width: 100%;
+}
+
+.repair-create-content-left-right {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.repair-create-content-right {
+  
+  width: 40%;
+  background-repeat: no-repeat !important; 
+  background-position: center !important;
+  background-size: cover !important;
+  border-radius: 5px;
+  /* animation-name: slideright;
+  animation-duration: 2s; */
+  transition: .5s;
+
+
+ 
+  box-shadow: 0 0 2px rgb(142, 135, 135);
+  
+
+  position: relative;
+  overflow: hidden;
+
+}
+
+.repair-create-content-right img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+
+
+  
+
+ 
+}
+
+.repair-create-content-right button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f3f3f3;
+  
+}
+
+.repair-create-content-right button.prev {
+  left: 10px;
+}
+
+.repair-create-content-right button.next {
+  right: 10px;
+}
+
+/* เพิ่มสไตล์นี้ใน CSS ที่มีอยู่ของคุณ */
+
+.repair-create-content-right button.prev,
+.repair-create-content-right button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  background: rgba(0, 0, 0, 0); /* สีพื้นหลังดำทึบครึ่งความโปร่งใส */
+  border: none;
+  cursor: pointer;
+  color: #f3f3f3;
+  padding: 10px; /* ปรับขนาด padding ตามต้องการ */
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.repair-create-content-right button.prev:hover,
+.repair-create-content-right button.next:hover {
+  background: rgba(0, 0, 0, 0.8); /* สีพื้นหลังทึบมากขึ้นเมื่อโฮเวอร์ */
+}
+
+@keyframes slideright {
+  from {
+      transform: translateX(300%);
+  }
+
+}
+
+
+
+
+
 
 
 

@@ -25,30 +25,30 @@ export default function dessertCreate() {
   return (
     <>
       {contextHolder}
-      <div className='dessertCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='dessertCreate-header'>Add a Dessert</h1>
+      <div className='dessertCreate-bg' style={{ background : "#eceef2"}}>
+      <h1 className='dessertCreate-header'>เพิ่ม ของหวาน</h1>
       <div className='dessertCreate-headline'/>
         <div className='dessertCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='dessertCreate-form-control'>
-              <label className='dessertCreate-text'>dessert</label>
+              <label className='dessertCreate-text'>ชื่อ</label>
               <br></br>
               <Form.Item name="Name">
-                <Input placeholder='Name'></Input>
+                <Input ></Input>
               </Form.Item>
             </div>
 
             <div className='dessertCreate-form-control'>
-              <label className='dessertCreate-text'>Count</label>
+              <label className='dessertCreate-text'>ราคา</label>
               <br></br>
               <Form.Item name="Count">
-                <InputNumber type='number' placeholder='Count'></InputNumber>
+                <InputNumber type='number' ></InputNumber>
               </Form.Item>
             </div>
 
             <br></br>
             <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

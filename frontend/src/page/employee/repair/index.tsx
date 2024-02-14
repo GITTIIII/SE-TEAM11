@@ -2,9 +2,22 @@ import React, { useEffect, useState, createContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./repair.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, message, ConfigProvider, Popconfirm } from "antd";
+import {
+  Button,
+  message,
+  ConfigProvider,
+  Popconfirm,
+  Image,
+  Empty,
+  Popover,
+} from "antd";
 
-import { IoIosArrowBack, IoIosArrowForward, IoMdClose,IoMdAdd } from "react-icons/io";
+import {
+  IoIosArrowBack,
+  IoIosArrowForward,
+  IoMdClose,
+  IoMdAdd,
+} from "react-icons/io";
 
 import { GetAllRepair, DeleteRepairByID } from "../../../services/https/repair";
 import { RepairInterface } from "../../../interface/IRepair";
@@ -54,6 +67,10 @@ export default function Repair() {
     }
   };
 
+  const handleCancel = () => {
+    setShowEdit(!showEdit);
+  };
+
   const employeeIdFromLocalStorage = localStorage.getItem("EmployeeID");
   const employeeIdAsNumber = employeeIdFromLocalStorage
     ? parseInt(employeeIdFromLocalStorage, 10)
@@ -70,12 +87,22 @@ export default function Repair() {
   const endIndex = startIndex + rowsPerPage;
   const visibleRows = filteredRepairRequest.slice(startIndex, endIndex);
 
-
   const cancel = (e: React.MouseEvent<HTMLElement>) => {
     console.log(e);
-    message.error('Click on No');
+    message.error("Click on No");
   };
-  
+
+  const DeletePopOver = (
+    <div>
+      <p>ลบข้อมูล</p>
+    </div>
+  );
+
+  const EditPopOver = (
+    <div>
+      <p>แก้ไขข้อมูล</p>
+    </div>
+  );
 
   console.log(showEdit);
   console.log(selectedRepairID);
@@ -90,11 +117,14 @@ export default function Repair() {
           <h1 className="repair-text-home">แจ้งซ่อมห้องพัก</h1>
           <hr />
 
-          <div>
-            <Link to="create">
-              
-              <div className="repair-request-button">สร้างคำขอการแจ้งซ่อม</div>
-            </Link>
+          <div className="repair-content">
+            <div className="repair-request-box">
+              <Link to="create">
+                <div className="repair-request-button">
+                  สร้างคำขอการแจ้งซ่อม
+                </div>
+              </Link>
+            </div>
 
             <div className="repair-table">
               <table className="repair-content-table">
@@ -113,18 +143,32 @@ export default function Repair() {
                 <tbody>
                   {visibleRows.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.ID}</td>
+                      <td>{index + startIndex + 1}</td>
                       <td>{(item.Room as RoomInterface)?.Room_number}</td>
                       <td>
-                        <img src={`${item.Repair_img}`}></img>
+                        <Image
+                          src={`${item.Repair_img}`}
+                          width="100px"
+                          height="100px"
+                        ></Image>
                       </td>
                       <td>
                         {(item.RepairType as RepairTypeInterface)?.Repair_name}
                       </td>
                       <td>{item.Comment}</td>
-                      <td>{new Date(item.Repair_date!).toLocaleDateString()}</td>
-                      <td >
-                        <p className={Object(item.Repair_status) == "เสร็จสิ้น" ? `green` : `red`}>{item.Repair_status}</p>
+                      <td>
+                        {new Date(item.Repair_date!).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <p
+                          className={
+                            Object(item.Repair_status) == "เสร็จสิ้น"
+                              ? `green`
+                              : `red`
+                          }
+                        >
+                          {item.Repair_status}
+                        </p>
                       </td>
                       <td>
                         <Popconfirm
@@ -132,24 +176,24 @@ export default function Repair() {
                           description="คุณต้องการที่จะลบรายการนี้ใช่มั้ย?"
                           onConfirm={() => handleDelete(item.ID)}
                           onCancel={() => cancel}
-
                           okText="Yes"
                           cancelText="No"
                         >
-                          <Button
-                            icon={<DeleteOutlined />}
-                            
-                          ></Button>
+                          <Popover content={DeletePopOver}>
+                            <Button icon={<DeleteOutlined />}></Button>
+                          </Popover>
                         </Popconfirm>
-                        <Button
-                          icon={<EditOutlined />}
-                          onClick={() => {
-                            if (item.ID !== undefined) {
-                              setSelectedRepairID(item.ID);
-                              setShowEdit(!showEdit);
-                            }
-                          }}
-                        ></Button>
+                        <Popover content={EditPopOver}>
+                          <Button
+                            icon={<EditOutlined />}
+                            onClick={() => {
+                              if (item.ID !== undefined) {
+                                setSelectedRepairID(item.ID);
+                                setShowEdit(!showEdit);
+                              }
+                            }}
+                          ></Button>
+                        </Popover>
                       </td>
                     </tr>
                   ))}
@@ -173,14 +217,10 @@ export default function Repair() {
                 </button>
               </div>
               {showEdit && (
-                <div className="repair-update-button">
-                  <div
-                    className="repair-update-button-icon"
-                    onClick={() => setShowEdit(!showEdit)}
-                  >
-                    <FontAwesomeIcon icon={faXmark} size="2xl" />
+                <div className="updatePopup">
+                  <div className="update-form">
+                    <RepairEdit onCancel={handleCancel} />
                   </div>
-                  <RepairEdit />
                 </div>
               )}
             </div>

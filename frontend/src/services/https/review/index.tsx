@@ -1,6 +1,6 @@
 import { ReviewInterface } from "../../../interface/IReview";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllReview() {
   const requestOptions = {

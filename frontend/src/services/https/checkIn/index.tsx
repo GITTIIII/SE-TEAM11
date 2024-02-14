@@ -1,6 +1,6 @@
 import { CheckInInterface } from "../../../interface/ICheckIn";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllCheckIn() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllCheckIn() {
 
   return res;
 }
-
-
 
 async function GetCheckInById(id: Number | undefined) {
   const requestOptions = {
@@ -101,10 +99,29 @@ async function DeleteCheckInByID(id: Number | undefined) {
   return res;
 }
 
+async function GetBookPlanByDate(date: string | undefined) {
+  const requestOptions = {
+    method: "GET",
+  };
+
+  let res = await fetch(`${apiUrl}/BookPlan/byDate/${date}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 export {
   GetAllCheckIn,
   GetCheckInById,
   CreateCheckIn,
   DeleteCheckInByID,
   UpdateCheckIn,
+  GetBookPlanByDate,
 };

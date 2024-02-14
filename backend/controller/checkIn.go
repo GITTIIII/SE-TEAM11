@@ -24,7 +24,7 @@ func CreateCheckIn(c *gin.Context) {
 		CheckIn_date: time.Now().Local(),
 
 		BookPlanID: checkIn.BookPlanID,
-		BookPlan: bookPlan,
+		BookPlan:   bookPlan,
 	}
 
 	// บันทึก
@@ -87,4 +87,26 @@ func UpdateCheckIn(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": checkIn})
+}
+
+func UpdateCheckInStatus(c *gin.Context) {
+	id := c.Param("id")
+	var book_plan entity.BookPlan
+
+	if err := entity.DB().Model(&book_plan).Where("id = ?", id).Update("check_in_status", "ลงทะเบียนเข้าพักสำเร็จ").Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": book_plan})
+}
+
+func GetBookPlanByDate(c *gin.Context) {
+	var bookPlan []entity.BookPlan
+	date := c.Param("date")
+	if err := entity.DB().Preload("Planner").Preload("Tourist").Preload("Room").Preload("FoodSet").Joins("JOIN planners ON planners.ID = book_plans.planner_id").Where("DATE(planners.time_start) = ?", date).Find(&bookPlan).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": bookPlan})
 }

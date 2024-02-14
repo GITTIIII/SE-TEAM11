@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Carousel,Card  } from 'antd';
+import { Card  } from 'antd';
 import './showRoom.css';
 import { RoomInterface } from '../../../interface/IRoom';
 import { GetAllRoom } from '../../../services/https/room';

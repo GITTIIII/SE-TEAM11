@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /review
@@ -24,11 +24,10 @@ func CreateReview(c *gin.Context) {
 		Comment: review.Comment,
 
 		TouristID: review.TouristID,
-		Tourist: tourist,
+		Tourist:   tourist,
 
 		PlannerID: review.PlannerID,
-		Planner: planner,
-
+		Planner:   planner,
 	}
 
 	// บันทึก
@@ -42,9 +41,9 @@ func CreateReview(c *gin.Context) {
 
 // GET /review/:id
 func GetReviewById(c *gin.Context) {
-	var review entity.Review
-	id := c.Param("id")
-	if err := entity.DB().Preload("Tourist").Preload("Planner").Raw("SELECT * FROM reviews WHERE id = ?", id).Find(&review).Error; err != nil {
+	var review []entity.Review
+	planID := c.Param("id")
+	if err := entity.DB().Preload("Tourist").Preload("Planner").Raw("SELECT * FROM reviews WHERE planner_id = ?", planID).Find(&review).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

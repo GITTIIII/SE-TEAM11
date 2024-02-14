@@ -1,91 +1,55 @@
-import type { DatePickerProps, RangePickerProps } from 'antd/es/date-picker';
-import type { Dayjs } from 'dayjs';
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { DatePicker, Form, message } from "antd"
 import { useEffect, useState } from "react";
 import { BookActivityInterface } from "../../../../interface/IBookActivity";
 import { CreateBookActivity } from "../../../../services/https/bookActivity";
-import { GetAllActivity } from '../../../../services/https/activity';
+import { GetActivityById, GetAllActivity } from '../../../../services/https/activity';
 import { ActivityInterface } from '../../../../interface/IActivity';
+
 import ship1 from "../../../../asset/ship1.jpg"
+import dayjs from "dayjs";
 import "../bookActivity.css"
 
 export default function BookActivityCreate() {
     let navigate = useNavigate();
-    type RangeValue = [Dayjs | null, Dayjs | null] | null;
-    const { RangePicker } = DatePicker;
-    const [dates, setDates] = useState<RangeValue>(null);
-    const [StartDate, setStartDate] = useState("");
-    const [EndDate, setEndDate] = useState("");
+    const {state} = useLocation()
+    const [rDate, setRDate] = useState<any>(dayjs());
     const [messageApi, contextHolder] = message.useMessage();
-    const [Activity, setActivity] = useState<ActivityInterface[]>([])
-    const [input, setInput] = useState({
-        NumberOfPeople : 0,
-        Comment : "",
-        Phone_number : "",
-        Activity : 0,
-    });
+    const [Activity, setActivity] = useState<ActivityInterface>()
+    const [AllActivity, setAllActivity] = useState<ActivityInterface[]>([])
+    const [input, setInput] = useState({} as BookActivityInterface);
 
     async function getActivity() {
-        setActivity(await GetAllActivity());
+        setAllActivity(await GetAllActivity());
+        if(state !== null){
+            setActivity(await GetActivityById(state));
+        }
     }
 
-    const handdleDateChange = (
-        value: DatePickerProps['value'] | RangePickerProps['value'],
-        dateString: [string, string] | string,
-    ) => {
-        setStartDate(dateString[0]);
-        setEndDate(dateString[1]);
-    };
-
-    const disabledDate = (current: Dayjs) => {
-        if (!dates) {
-            return false;
-        }
-        const tooLate = dates[0] && current.diff(dates[0], 'days') >= 1;
-        const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 0;
-        return !!tooEarly || !!tooLate;
-    };
-
-    function disabledDateTime() {
-        return {
-            disabledHours: () => range(0, 24).splice(0,8)
-        };
-    }
-
-    function range(start:any, end:any) {
-        const result = [];
-        for (let i = start; i < end; i++) {
-            result.push(i);
-        }
-        return result;
-    }
-
-    const onOpenChange = (open: boolean) => {
-        if (open) {
-            setDates([null, null]);
-        } else {
-            setDates(null);
-        }
+    const handleDateChange = (date: dayjs.Dayjs | null, dateString: string) => {
+        setRDate(date);
     };
 
     const handleInput = (e: any) => {
         setInput({
             ...input, [e.target.name]: e.target.value});
+        console.log(input);
     };
 
-    const handleSubmit = async (values: BookActivityInterface) => {
-        values.TimeStart = new Date(StartDate)
-        values.TimeEnd = new Date(EndDate)
-        values.NumberOfPeople = Number(input.NumberOfPeople)
-        values.Phone_number = input.Phone_number
-        values.Comment = input.Comment
-        values.BookPlanID = 1
-        values.ActivityID = Number(input.Activity)
-        values.TouristID = Number(localStorage.getItem("TouristID"))
-        console.log(values)
-
-        let res = await CreateBookActivity(values);
+    const handleSubmit = async () => {
+        input.Activity = input.Activity === undefined ? state : input.Activity;
+        let createValues: BookActivityInterface =  {
+            Date: new Date(rDate),
+            Time: input.Time,
+            NumberOfPeople: Number(input.NumberOfPeople),
+            Comment: input.Comment,
+            Phone_number: input.Phone_number,
+            BookPlanID: 1,
+            ActivityID: Number(input.Activity),
+            TouristID: Number(localStorage.getItem("TouristID")),
+        }
+        
+        let res = await CreateBookActivity(createValues);
         if (res.status) {
             messageApi.open({
                 type: "success",
@@ -93,7 +57,7 @@ export default function BookActivityCreate() {
             });
             setTimeout(function () {
                 navigate("/tourist/bookActivity");
-            }, 500);
+            }, 1000);
         } else {
             messageApi.open({
                 type: "error",
@@ -105,7 +69,6 @@ export default function BookActivityCreate() {
     useEffect(() => { 
         getActivity()
     },[])
-    
 
     return (
         <>
@@ -113,12 +76,12 @@ export default function BookActivityCreate() {
                 {contextHolder}
                         <h1>จองกิจกรรม</h1>
                         <div className="book-activity-form-box">
-                            <Form onFinish={handleSubmit}>
+                            <Form>
                                 <label>เลือกกิจกรรม</label>
                                 <div className="book-activity-input">
                                     <select name="Activity" onChange={handleInput} required>
-                                        <option value="none" hidden>เลือกกิจกรรม</option>
-                                        {Activity.map((item, index) => (
+                                        <option value="none" hidden>{state !== null ? Activity?.Activity_name : "เลือกกิจกรรม"}</option>
+                                        {AllActivity.map((item, index) => (
                                         <option key={index} value={item.ID}>{item.Activity_name}</option>
                                         ))}
                                     </select>
@@ -126,18 +89,25 @@ export default function BookActivityCreate() {
 
                                 <label>เลือกวัน</label>
                                 <div className="book-activity-input">
-                                <RangePicker
-                                    onCalendarChange={(val) => {
-                                        setDates(val);
-                                    }}
-                                    onOpenChange={onOpenChange}
-                                    disabledDate={disabledDate}
-                                    disabledTime={disabledDateTime}
-                                    minuteStep={30 as const}
-                                    showTime={{ format: 'HH:mm:00' }}
-                                    format="YYYY-MM-DD HH:mm"
-                                    onChange={handdleDateChange}
+                                <DatePicker
+                                    value={rDate}
+                                    onChange={handleDateChange}
+                                    format="YYYY-MM-DD"
                                 />
+                                </div>
+                                
+                                <label>เลือกเวลา</label>
+                                <div className="book-activity-input">
+                                    <select name="Time" onChange={handleInput} required>
+                                        <option value="none" hidden>เลือกเวลา</option>
+                                        <option value="8.00-10.00">{"8.00-10.00"}</option>
+                                        <option value="10.00-12.00">{"10.00-12.00"}</option>
+                                        <option value="12.00-14.00">{"12.00-14.00"}</option>
+                                        <option value="14.00-16.00">{"14.00-16.00"}</option>
+                                        <option value="16.00-18.00">{"16.00-18.00"}</option>
+                                        <option value="18.00-20.00">{"18.00-20.00"}</option>
+                                        <option value="20.00-22.00">{"20.00-22.00"}</option>
+                                    </select>
                                 </div>
 
                                 <label>ระบุจำนวนคน</label>
@@ -169,13 +139,13 @@ export default function BookActivityCreate() {
                                 
                                 <div className="book-activity-button">
                                     <Link to="/tourist/bookActivity">
-                                        <button className="activity-button">
+                                        <button className="cancel-button">
                                             <label>ย้อนกลับ</label>
                                         </button>
                                     </Link>
 
-                                    <button className="activity-button" type="submit">
-                                            <label>ยืนยัน</label>
+                                    <button className="update-button" type="submit" onClick={handleSubmit}>
+                                        <label>ยืนยัน</label>
                                     </button>
                                 </div>
                             </Form>

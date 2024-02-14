@@ -1,6 +1,6 @@
 import { RepairTypeInterface } from "../../../interface/IRepairType";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllRepairType() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllRepairType() {
 
   return res;
 }
-
-
 
 async function GetRepairTypeById(id: Number | undefined) {
   const requestOptions = {

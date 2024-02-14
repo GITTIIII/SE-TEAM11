@@ -1,0 +1,231 @@
+/* Book Activity */
+.food-list-box{
+    color: black;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.815);
+    padding: 20px;
+    width: 95%;
+    height: 90%;
+    overflow: auto;
+}
+
+.food-list-box-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.food-list-box-top h1{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.card {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.information{
+    background-color: #f3f3f3;
+    margin-top: 1%;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    row-gap: 10px;
+    grid-template-columns: auto;
+    border-radius: 20px;
+    transition: .5s;
+}
+
+.information div label{
+    font-weight: bold;
+}
+
+.information:hover{
+    background-color: rgb(255, 255, 255)
+}
+
+.information .button{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.information .submit-button,
+.information .delete-button,
+.activity-button,
+.food-button .update-button,
+.food-button .cancel-button{
+    border: 0;
+    font-size: 2vh;
+    font-weight: bold;
+    background-color: #0015ff;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35%;
+    padding: 10px;
+    transition: .5s;
+}
+
+.delete-button .icon,
+.submit-button .icon,
+.activity-button .icon{
+    display: inline-block;
+    color: white !important;
+    margin-right: 5%;
+}
+
+.activity-button{
+    width: 100%;
+    height: 100%;
+    float: right;
+    padding: 15px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.information .delete-button{
+    margin-left: 5%;
+    background-color: rgb(255, 0, 0);
+}
+
+.food-button .update-button{
+    color: white;
+    margin: 0 ;
+    background-color: rgb(0, 184, 12);
+}
+
+.food-button .update-button:hover{
+    background-color: rgba(0, 184, 12, 0.639);
+    cursor: pointer;
+}
+
+.food-button .cancel-button{
+    color: white;
+    margin: 0;
+    background-color: rgb(255, 0, 0);
+}
+
+.activity-button:hover{
+    cursor: pointer;
+    background-color: rgb(53, 113, 255)
+}
+
+.information .submit-button:hover{
+    cursor: pointer;
+    background-color: #005eff;
+}
+
+.information .delete-button:hover,
+.food-button .cancel-button:hover{
+    cursor: pointer;
+    background-color: rgb(255, 77, 0);
+}
+
+
+
+/* Book Activity Create Form */
+.food-form-box{
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.815);
+    overflow: auto;
+}
+
+.food-form-box h1{
+    color: white;
+}
+
+.food-form-box label{
+    color: black;
+    font-weight: bold;
+}
+
+.food-input{
+    margin-bottom: 10px;
+}
+
+.food-input input,
+.food-input select{
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    font-size: 2vh;
+    padding: 10px;
+}
+
+
+.food-input input:focus{
+    border: 1px solid black;
+}
+
+.food-button{
+    margin-top: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.food-button a{
+    display: flex;
+    justify-content: start;
+    width: 100%;
+}
+
+.food-button .update-button label,
+.food-button .cancel-button label{
+    color: white;
+}
+
+/* Book Activity Update */
+.updatePopup-top{
+    display: flex;
+    padding: 0 10px;
+}
+
+.updatePopup-top label{
+    font-size: 130%;
+}
+
+.update-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: max-content;
+    height: max-content;
+}
+
+.food-form-box .update-button,
+.food-form-box .cancel-button{
+    width: 45%;
+}
+
+
+@media (max-width: 1360px){
+    .card{
+        grid-template-columns: 33% 33% 33%;
+    }
+}
+
+@media (max-width: 1060px){
+    .card{
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media (max-width: 725px){
+    .card{
+        grid-template-columns: 100%;
+    }
+}

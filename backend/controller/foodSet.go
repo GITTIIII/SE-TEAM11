@@ -9,38 +9,36 @@ import (
 )
 
 // POST /foodSet
-func CreateFoodSet(c *gin.Context)  {
+func CreateFoodSet(c *gin.Context) {
 	var foodSet entity.FoodSet
 
 	if err := c.ShouldBindJSON(&foodSet); err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
-	
 
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&foodSet); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	return
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
-	
+
 	if err := entity.DB().Create(&foodSet).Error; err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
-	
+
 	c.JSON(http.StatusOK, gin.H{"data": foodSet})
-	
+
 }
 
-// GET /foodSet 
+// GET /foodSet
 func GetAllFoodSet(c *gin.Context) {
 	var foodSets []entity.FoodSet
 	if err := entity.DB().Preload("Dessert").Preload("Drink").Preload("Savory").Raw("SELECT * FROM food_Sets").Find(&foodSets).Error; err != nil {
@@ -72,8 +70,8 @@ func UpdateFoodSet(c *gin.Context) {
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&foodSet); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
+		return
+	}
 	if fs := entity.DB().Where("id = ?", foodSet.ID).First(&result); fs.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "foodSet not found"})
 		return
@@ -85,7 +83,6 @@ return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": foodSet})
 }
-
 
 // GET /foodSet/:id
 
@@ -106,35 +103,34 @@ func GetFoodSetById(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": foodSet})
 
 }
-//-------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------
 // POST /savory
 func CreateSavory(c *gin.Context) {
 	var savory entity.Savory
-	
+
 	if err := c.ShouldBindJSON(&savory); err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&savory); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
-	
-	
+		return
+	}
+
 	if err := entity.DB().Create(&savory).Error; err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
 	c.JSON(http.StatusOK, gin.H{"data": savory})
-} 
-
+}
 
 // GET /savory
 func GetAllSavory(c *gin.Context) {
@@ -153,7 +149,6 @@ func DeleteSavory(c *gin.Context) {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
-
 		return
 
 	}
@@ -161,7 +156,7 @@ func DeleteSavory(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "savory not found"})
 		return
 	}
-	
+
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
@@ -177,9 +172,9 @@ func UpdateSavory(c *gin.Context) {
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&savory); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
-	
+		return
+	}
+
 	if fs := entity.DB().Where("id = ?", savory.ID).First(&result); fs.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "savory not found"})
 		return
@@ -211,36 +206,36 @@ func GetSavoryById(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": savory})
 
 }
-//-----------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------
 // POST /dessert
 func CreateDessert(c *gin.Context) {
 	var dessert entity.Dessert
-	
+
 	if err := c.ShouldBindJSON(&dessert); err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&dessert); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
-	
+		return
+	}
+
 	if err := entity.DB().Create(&dessert).Error; err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
 	c.JSON(http.StatusOK, gin.H{"data": dessert})
-} 
+}
 
-
-// GET /dessert 
+// GET /dessert
 func GetAllDessert(c *gin.Context) {
 	var desserts []entity.Dessert
 	if err := entity.DB().Raw("SELECT * FROM desserts").Find(&desserts).Error; err != nil {
@@ -256,7 +251,6 @@ func DeleteDessert(c *gin.Context) {
 	if err := entity.DB().Raw("SELECT * FROM food_Sets WHERE dessert_id = ?", id).Scan(&id).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
 
 		return
 
@@ -280,8 +274,8 @@ func UpdateDessert(c *gin.Context) {
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&dessert); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
+		return
+	}
 	if fs := entity.DB().Where("id = ?", dessert.ID).First(&result); fs.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "dessert not found"})
 		return
@@ -313,34 +307,34 @@ func GetDessertById(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": dessert})
 
 }
-//-----------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------
 // POST /drink
 func CreateDrink(c *gin.Context) {
 	var drink entity.Drink
-	
+
 	if err := c.ShouldBindJSON(&drink); err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&drink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
-	
+		return
+	}
+
 	if err := entity.DB().Create(&drink).Error; err != nil {
-	
-	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	
-	return
-	
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+
 	}
 	c.JSON(http.StatusOK, gin.H{"data": drink})
-} 
-
+}
 
 // GET /drink
 func GetAllDrink(c *gin.Context) {
@@ -358,7 +352,6 @@ func DeleteDrink(c *gin.Context) {
 	if err := entity.DB().Raw("SELECT * FROM food_Sets WHERE drink_id = ?", id).Scan(&id).Error; err != nil {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
 
 		return
 
@@ -382,8 +375,8 @@ func UpdateDrink(c *gin.Context) {
 	// validate struct
 	if _, err := govalidator.ValidateStruct(&drink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-return
-}
+		return
+	}
 	if fs := entity.DB().Where("id = ?", drink.ID).First(&result); fs.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "drink not found"})
 		return
@@ -415,5 +408,3 @@ func GetDrinkById(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": drink})
 
 }
-
-

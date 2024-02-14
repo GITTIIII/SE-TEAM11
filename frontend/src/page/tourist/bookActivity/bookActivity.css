@@ -1,12 +1,86 @@
 /* Book Activity */
+.book-activity-bg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    height: max-content;
+    padding: 3%;
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: cover;
+    
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-activity-display{
+    display: flex;
+    padding: 20px 20px 10px 20px;
+    border-radius: 10px;
+    width: 100%;
+    height: max-content;
+    background-color:  rgba(255, 255, 255, 0.815);
+    margin-bottom: 20px;
+}
+
+.book-activity-item-box{
+    border-radius: 10px;
+    display: flex;
+    overflow-x: auto;
+}
+
+.book-activity-item-box .SwiperSlide{
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.book-activity-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+}
+
+.book-activity-item:first-child{
+    margin-left: 0px;
+}
+
+.book-activity-item:last-child{
+    margin-right: 0px;
+}
+
+.book-activity-item img{
+    border-radius: 10px;
+    width: 300px;
+    height: 300px;
+}
+
+.book-activity-item img:hover{
+    cursor: pointer;
+}
+
+.book-activity-item label{
+    font-size: 130%;
+    margin:-35px 0 30px 10px;
+}
+
 .book-activity-list-box{
     color: black;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.815);
     padding: 20px;
-    width: 95%;
-    height: 90%;
-    overflow: auto;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
 }
 
 .book-activity-list-box-top{
@@ -20,11 +94,17 @@
     margin-left: 10px;
 }
 
+.card-box{
+    padding: 20px;
+    min-height: 100%;
+    height: max-content;
+    border-radius: 10px;
+}
+
 .card {
     display: grid;
     width: 100%;
     justify-content: center;
-    padding: 20px;
     gap: 10px;
     grid-template-columns: 25% 25% 25% 25%;
 }
@@ -46,6 +126,7 @@
     border-radius: 10px;
     margin: auto;
     width: 150px;
+    height: 150px;
 }
 
 .information div label{
@@ -64,14 +145,18 @@
 
 .information .submit-button,
 .information .delete-button,
-.activity-button{
+.activity-button,
+.book-activity-button .update-button,
+.book-activity-button .cancel-button{
     border: 0;
     font-size: 2vh;
     font-weight: bold;
     background-color: #0015ff;
     color: white;
     border-radius: 10px;
-    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 35%;
     padding: 10px;
     transition: .5s;
@@ -81,7 +166,7 @@
 .submit-button .icon,
 .activity-button .icon{
     display: inline-block;
-    color: white;
+    color: white !important;
     margin-right: 5%;
 }
 
@@ -91,10 +176,30 @@
     float: right;
     padding: 15px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .information .delete-button{
     margin-left: 5%;
+    background-color: rgb(255, 0, 0);
+}
+
+.book-activity-button .update-button{
+    color: white;
+    margin: 0 ;
+    background-color: rgb(0, 184, 12);
+}
+
+.book-activity-button .update-button:hover{
+    background-color: rgba(0, 184, 12, 0.639);
+    cursor: pointer;
+}
+
+.book-activity-button .cancel-button{
+    color: white;
+    margin: 0;
     background-color: rgb(255, 0, 0);
 }
 
@@ -108,7 +213,8 @@
     background-color: #005eff;
 }
 
-.information .delete-button:hover{
+.information .delete-button:hover,
+.book-activity-button .cancel-button:hover{
     cursor: pointer;
     background-color: rgb(255, 77, 0);
 }
@@ -116,12 +222,14 @@
 
 
 /* Book Activity Create Form */
-.book-activity-form-box{
+.book-activity-form-box,
+.book-activity-update-form-box{
     color: black;
     padding: 20px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.815);
     overflow: auto;
+    width: 30%;
 }
 
 .book-activity-form-box h1{
@@ -138,12 +246,18 @@
 }
 
 .book-activity-input input,
-.book-activity-input select{
+.book-activity-input select,
+.book-activity-input .ant-picker-input{
     width: 100%;
     border: 0;
     border-radius: 10px;
     font-size: 2vh;
     padding: 10px;
+}
+
+.book-activity-input .ant-picker-input{
+    padding: 5px;
+    margin-right: auto;
 }
 
 .book-activity-button{
@@ -159,30 +273,100 @@
     width: 100%;
 }
 
-.book-activity-button .activity-button{
-    width: 50%;
-    padding: 10px 0px;
-    margin-right: 0;
-}
-
-.book-activity-button .activity-button label{
+.book-activity-button .update-button label,
+.book-activity-button .cancel-button label{
     color: white;
 }
 
 /* Book Activity Update */
 .updatePopup{
     position: fixed;
-    background-color: rgba(255, 255, 255, 0.578);
-    justify-self: center;
-    right: 35%;
-    margin-top: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
     top: 0;
-    
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
     z-index: 999;
+    margin: 0;
 }
 
-.updatePopup-icon{
-    position: absolute;
-    top: 2%;
-    right: 5%;
+.book-activity-update-form-box{
+    background-color: #eaeaea;
+    /* border: 1px solid black; */
+}
+.book-activity-update-form-box .updatePopup-top{
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.updatePopup-top label{
+    font-size: 130%;
+}
+
+.update-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: max-content;
+}
+
+.book-activity-update-form-box{
+    width: 40vw !important;
+}
+
+.book-activity-form-box .update-button,
+.book-activity-form-box .cancel-button{
+    width: 45%;
+}
+
+
+@media (max-width: 1360px){
+    .card{
+        grid-template-columns: 33% 33% 33%;
+    }
+}
+
+@media (max-width: 1060px){
+    .book-activity-form-box{
+        width: 50%;
+    }
+    .card{
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media (max-width: 725px){
+    .book-activity-list-box{
+        padding: 15px;
+    }
+    .book-activity-list-box-top h1{
+        font-size: 6vw;
+    }
+    .book-activity-list-box-top .activity-button{
+        margin: 0;
+        width: max-content;
+        font-size: 4vw;
+        padding: 10px;
+    }
+    .book-activity-list-box-top .icon{
+        display: none !important;
+    }
+    .book-activity-form-box,
+    .book-activity-update-form-box,
+    .update-form{
+        width: 100% !important;
+    }
+    .card-box{
+        padding: 10px;
+    }
+    .card{
+        padding: 0 !important;
+        grid-template-columns: 100%;
+    }
 }

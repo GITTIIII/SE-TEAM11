@@ -1,187 +1,200 @@
-import React, { useState, useEffect, useId } from "react";
-import {
-  Button,
-  Form,
-  Input,
-  message,
-  Select,
-  InputNumber,
-} from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { ChangeEvent, useEffect, useState } from "react";
+import "./editRoom.css";
+import { Button, Form, message } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import { useContext } from "react";
+import { roomIDContext } from "..";
+import { GetRoomById, UpdateRoom } from "../../../../services/https/room";
+import { GetAllRoomType } from "../../../../services/https/roomType";
+import { GetAllRoomZone } from "../../../../services/https/roomZone";
 import { RoomInterface } from "../../../../interface/IRoom";
 import { RoomTypeInterface } from "../../../../interface/IRoomType";
 import { RoomZoneInterface } from "../../../../interface/IRoomZone";
-import { CreateRoom, GetRoomById, UpdateRoom } from "../../../../services/https/room";
-import { GetAllRoomType } from "../../../../services/https/roomType";
-import { GetAllRoomZone } from "../../../../services/https/roomZone";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import "./../room.css"
-import "./editRoom.css"
-import cruise from "../../../../asset/cruise.png"
 
-const { Option } = Select;
-
-function EditRoom() {
-  const navigate = useNavigate();
-  const [messageApi, contextHolder] = message.useMessage();
+function EditRoom({ onCancel }: { onCancel: () => void }) {
   const [room, setRoom] = useState<RoomInterface>();
-  const [roomPrice, setRoom_price] = useState("");
-  const [roomTypes, setRoomTypes] = useState<RoomTypeInterface[]>([]);
-  const [roomZones, setRoomZones] = useState<RoomZoneInterface[]>([]);
-  const [roomImage, setRoomImage] = useState<string | null>(null);
-  const EmployeeID = localStorage.getItem("EmployeeID");
-  // รับข้อมูลจาก params
-  let { id } = useParams();
-  // อ้างอิง form กรอกข้อมูล
-  const [form] = Form.useForm();
+  const [type, setType] = useState<RoomTypeInterface[]>([]);
+  const [zone, setZone] = useState<RoomZoneInterface[]>([]);
+  const [input, setInput] = useState({} as RoomInterface);
+  const [room_img, setRoom_Img] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+  const roomID = useContext(roomIDContext);
 
-  const onFinish = async (values: RoomInterface) => {
-    values.ID = room?.ID;
-    console.log(values)
-    let res = await UpdateRoom(values);
-    if (res.status) {
-      messageApi.open({
-        type: "success",
-        content: "แก้ไขข้อมูลสำเร็จ",
-      });
-      setTimeout(function () {
-        navigate("/employee/room");
-      }, 2000);
-    } else {
-      messageApi.open({
-        type: "error",
-        content: res.message,
-      });
+  const getRoomType = async () => {
+    let res = await GetAllRoomType();
+
+    if (res) {
+      setType(res);
     }
   };
-    const getRoomType = async () => {
-        let res = await GetAllRoomType();
-        if (res) {
-        setRoomTypes(res);
-        }
-    };
-    const getRoomZone = async () => {
-        let res = await GetAllRoomZone();
-        if (res) {
-        setRoomZones(res);
-        }
-    };
-  const getRoomById = async () => {
-    let res = await GetRoomById(Number(id));
+
+  const getRoomZone = async () => {
+    let res = await GetAllRoomZone();
+
     if (res) {
-      setRoom(res);
-      // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
-      form.setFieldsValue({
-        Room_number:    res.Room_number,
-        Room_img:       res.Room_img,
-        Room_price:     res.Room_price,
-        RoomTypeID:     res.RoomTypeID,    
-        RoomZoneID:     res.RoomZoneID,
-        EmployeeID:     res.EmployeeID,
-      });
+      setZone(res);
     }
+  };
+
+  const getRoomByID = async () => {
+    let res = await GetRoomById(Number(roomID));
+    setRoom(res);
+    setInput(res);
   };
 
   useEffect(() => {
     getRoomType();
     getRoomZone();
-    getRoomById();
+    getRoomByID();
   }, []);
 
+  const handleInput = (e: any) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Type assertion to string
+        // เปลี่ยน setImage เพื่อทำการใช้ base64String
+        setRoom_Img(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async () => {
+    let updatedValues: RoomInterface = {
+      ID: Number(roomID),
+      Room_number: input.Room_number,
+      Room_img: room_img,
+      RoomTypeID: Number(input.RoomTypeID),
+      RoomZoneID: Number(input.RoomZoneID),
+      Room_price: Number(input.Room_price),
+      EmployeeID: Number(localStorage.getItem("EmployeeID")),
+    };
+
+    console.log(updatedValues);
+    console.log(input);
+    let res = await UpdateRoom(updatedValues);
+    if (res.status) {
+      messageApi.open({
+        type: "success",
+        content: "เเก้ไขข้อมูลสำเร็จ",
+      });
+      setTimeout(function () {
+        window.location.reload();
+      }, 500);
+    } else {
+      messageApi.open({
+        type: "error",
+        content: res.message,
+      });
+      console.log(res.message);
+    }
+  };
+
   return (
-    <div className='cruise-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      {contextHolder}
-      <h1 className='room-header'>Edit Room</h1>
-      <div className='room-headline'></div>
-      <div className='edit-room-form'>
-        <Form
-          name="basic"
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          autoComplete="off"
-        >
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Number of room</label>
-            <Form.Item
+    <>
+      <div className="update-room">
+        {contextHolder}
+        <div className="update-room-close-button">
+          <Button type="text" icon={<CloseOutlined />} onClick={onCancel} />
+        </div>
+
+        <div className="update-room-header">
+          <h1>แก้ไขข้อมูลห้อง : {room?.Room_number}</h1>
+        </div>
+
+        <div className="update-room-form">
+          <Form onFinish={handleSubmit}>
+            <label>หมายเลขห้องพัก</label>
+            <input
+              className="update-room-input"
+              placeholder="Enter room number"
               name="Room_number"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกเลขห้อง !",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </div>
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Room Type</label>
-            <Form.Item
+              defaultValue={Object(room).Room_number}
+              onChange={handleInput}
+              required
+            />
+            <br/>
+
+            <label>ประเภทห้องพัก</label>
+            <select
+              className="update-room-select-custom"
               name="RoomTypeID"
-              rules={[{ required: true, message: "กรุณาระบุประเภท !" }]}
+              onChange={handleInput}
             >
-              <Select allowClear>
-                {roomTypes.map((item) => (
-                  <Option value={item.ID} key={item.RoomType_name}>
-                    {item.RoomType_name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </div>
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Room Zone</label>
-            <Form.Item
+              <option
+                value="none"
+                hidden
+                defaultValue={Number(Object(room).RoomTypeID)}
+              >
+                {Object(room).RoomType?.RoomType_name}
+              </option>
+              {type.map((item) => (
+                <option value={item.ID} key={item.RoomType_name}>
+                  {item.RoomType_name}
+                </option>
+              ))}
+            </select>
+            
+            <label>โซนที่ตั้งห้องพัก</label>
+            <select
+              className="update-room-select-custom"
               name="RoomZoneID"
-              rules={[{ required: true, message: "กรุณาระบุโซนที่ตั้ง !" }]}
+              onChange={handleInput}
             >
-              <Select allowClear>
-                {roomZones.map((item) => (
-                  <Option value={item.ID} key={item.RoomZone_name}>
-                    {item.RoomZone_name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </div>
-          <div className='edit-room-form-control'>
-            <label className='edit-room-text'>Price of Room</label>
-            <Form.Item
+              <option
+                value="none"
+                hidden
+                defaultValue={Number(Object(room).RoomZoneID)}
+              >
+                {Object(room).RoomZone?.RoomZone_name}
+              </option>
+              {zone.map((item) => (
+                <option value={item.ID} key={item.RoomZone_name}>
+                  {item.RoomZone_name}
+                </option>
+              ))}
+            </select>
+            
+            <label>ราคาห้องพัก</label>
+            <br></br>
+            <input 
+              className='update-room-input' 
+              type="number" step="0.001" 
+              placeholder = 'ระบุราคาห้องพัก'
               name="Room_price"
-              rules={[
-                {
-                  required: true,
-                  message: "กรุณากรอกราคา !",
-                },
-              ]}
-            >
-              <InputNumber />
-            </Form.Item>
-          </div>
-            <Form.Item
+              defaultValue={Object(room).Room_price}
+              onChange={handleInput}
+              required
+            />
+            
+            <label>รูปภาพห้องพัก</label>
+            <br></br>
+            <input
+              className="update-room-form-info"
+              id="Room_img"
+              type="file"
+              accept="image/*"
               name="Room_img"
-              getValueFromEvent={(e) => e.file.originFileObj}
-            >
-              {roomImage && <img src={roomImage} alt="Room" style={{ maxWidth: "100%", marginTop: "10px" }} />}
-            </Form.Item>
-              <Form.Item>
-                  <NavLink to="/employee/room">
-                    <Button htmlType="button" style={{ marginRight: "10px" }}>
-                      cancle
-                    </Button>
-                  </NavLink>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    icon={<PlusOutlined />}
-                  >
-                    confirm
-                  </Button>
-              </Form.Item>
-        </Form>
+              onChange={handleImageChange}
+            />
+            <br />
+
+            <div className="update-room-button-area">
+              <button type="submit">ยืนยัน</button>
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

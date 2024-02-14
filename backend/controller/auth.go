@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/GITTIIII/SE-TEAM11/entity"
-	"github.com/GITTIIII/SE-TEAM11/services"
+	service "github.com/GITTIIII/SE-TEAM11/services"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -39,7 +39,7 @@ func LoginTourist(c *gin.Context) {
 	//check password
 	err := bcrypt.CompareHashAndPassword([]byte(tourist.Password), []byte(payload.Password))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "password incorrect"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "wrong email or password incorrect"})
 		return
 	}
 

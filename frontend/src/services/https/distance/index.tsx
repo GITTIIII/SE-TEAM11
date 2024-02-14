@@ -1,6 +1,6 @@
 import { DistanceInterface } from "../../../interface/IDistance";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllDistance() {
   const requestOptions = {

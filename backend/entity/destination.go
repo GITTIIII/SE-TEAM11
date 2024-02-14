@@ -2,23 +2,26 @@ package entity
 
 import (
 	// "time"
-
 	"gorm.io/gorm"
 )
 
 type Destination struct {
 	gorm.Model
+	
+	Destination_name   string 	`gorm:"uniqueIndex" valid:"required~กรอกต้นทาง - ปลายทาง"`
+	Comment       string    `valid:"required~จำนวนตัวอักษรต้องอยู่ระหว่าง 1 ตัว ถึง 100 ตัว,stringlength(1|100)~จำนวนตัวอักษรต้องอยู่ระหว่าง 1 ตัว ถึง 100 ตัว"`
 
-	Destination_name   string 	`gorm:"uniqueIndex" valid:"required~Destination is required"`
-	Destination_img    string	`valid:"image_valid~รูปภาพไม่ถูกต้อง"`
-	Destination_price 		float64	`valid:"required~Destination price is required, range(1000000|10000000)~Destination price between 1000000-10000000"`
-
-	PortOriginID *uint	`valid:"required~PortOrigin is required"`
+	PortOriginID *uint	` valid:"required~เลือกต้นทาง"`
 	PortOrigin PortOrigin `gorm:"foreignKey:PortOriginID"`
 
-	PortDestinationID *uint	`valid:"required~PortDestination is required"`
-	PortDestination PortDestination `gorm:"foreignKey:PortDestinationID"`
+	PortDestinationID *uint	`valid:"required~เลือกปลายทาง"`
+	PortDestination PortDestination `gorm:"foreignKey:PortDestinationID"  `
 
-	DistanceID *uint	`valid:"required~Distance is required"`
+	DistanceID *uint `valid:"required~เลือกระยะทาง"`
 	Distance Distance `gorm:"foreignKey:DistanceID"`
+	
+	EmployeeID	*uint 
+	Employee Employee	`gorm:"foreignKey:EmployeeID" valid:"-"`
+
+	Planners []Planner `gorm:"foreignKey:DestinationID"` 
 }

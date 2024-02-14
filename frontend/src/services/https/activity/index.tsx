@@ -1,6 +1,8 @@
 import { ActivityInterface } from "../../../interface/IActivity";
 
-const apiUrl = "http://localhost:8080";
+// https://api.cruise-ship.online
+// http://localhost:8080
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllActivity() {
   const requestOptions = {
@@ -22,8 +24,6 @@ async function GetAllActivity() {
 
   return res;
 }
-
-
 
 async function GetActivityById(id: Number | undefined) {
   const requestOptions = {

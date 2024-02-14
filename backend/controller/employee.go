@@ -13,6 +13,8 @@ import (
 func CreateEmployee(c *gin.Context) {
 	var employee entity.Employee
 	var employeeRole entity.EmployeeRole
+	var employeeGender entity.Gender
+	var employeeAreaCode entity.AreaCode
 
 	// bind เข้าตัวแปร employee
 	if err := c.ShouldBindJSON(&employee); err != nil {
@@ -34,8 +36,13 @@ func CreateEmployee(c *gin.Context) {
 		Email:    employee.Email,
 		Picture:  employee.Picture,
 		Password: string(hashPassword),
-		Gender:   employee.Gender,
-		Age: employee.Age,
+		Age:      employee.Age,
+		GenderID: employee.GenderID,
+		Gender:   employeeGender,
+
+		AreaCodeID: employee.AreaCodeID,
+		AreaCode:   employeeAreaCode,
+
 		EmployeeRoleID: employee.EmployeeRoleID,
 		EmployeeRole:   employeeRole,
 	}
@@ -58,7 +65,7 @@ func CreateEmployee(c *gin.Context) {
 func GetEmployeeById(c *gin.Context) {
 	var employee entity.Employee
 	id := c.Param("id")
-	if err := entity.DB().Preload("EmployeeRole").Raw("SELECT * FROM employees WHERE id = ?", id).Find(&employee).Error; err != nil {
+	if err := entity.DB().Preload("EmployeeRole").Preload("AreaCode").Preload("Gender").Raw("SELECT * FROM employees WHERE id = ?", id).Find(&employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -68,7 +75,7 @@ func GetEmployeeById(c *gin.Context) {
 // GET /employee
 func GetAllEmployee(c *gin.Context) {
 	var employee []entity.Employee
-	if err := entity.DB().Preload("EmployeeRole").Raw("SELECT * FROM employees").Find(&employee).Error; err != nil {
+	if err := entity.DB().Preload("EmployeeRole").Preload("AreaCode").Preload("Gender").Raw("SELECT * FROM employees").Find(&employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -97,6 +104,11 @@ func UpdateEmployee(c *gin.Context) {
 	// ค้นหา employee ด้วย id
 	if tx := entity.DB().Where("id = ?", employee.ID).First(&result); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Employee not found"})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(employee); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

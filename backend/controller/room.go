@@ -11,6 +11,9 @@ import (
 // POST /room
 func CreateRoom(c *gin.Context) {
 	var room entity.Room
+	var roomType entity.RoomType
+	var roomZone entity.RoomZone
+	var employee entity.Employee
 
 	// bind เข้าตัวแปร room
 	if err := c.ShouldBindJSON(&room); err != nil {
@@ -19,31 +22,10 @@ func CreateRoom(c *gin.Context) {
 	}
 
 	// validate struct
-    if _, err := govalidator.ValidateStruct(room); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
-
-	var roomType entity.RoomType
-	// db.First(&roomType, room.RoomTypeID)
-	// if roomType.ID == 0 {
-	// 	c.JSON(http.StatusNotFound, gin.H{"error": "roomType not found"})
-	// 	return
-	// }
-
-	var roomZone entity.RoomZone
-	// db.First(&roomZone, room.RoomZoneID)
-	// if roomZone.ID == 0 {
-	// 	c.JSON(http.StatusNotFound, gin.H{"error": "roomZone not found"})
-	// 	return
-	// }
-
-	var employee entity.Employee
-	// db.First(&employee, room.EmployeeID)
-	// if employee.ID == 0 {
-	// 	c.JSON(http.StatusNotFound, gin.H{"error": "employee not found"})
-	// 	return
-	// }
+	if _, err := govalidator.ValidateStruct(room); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// สร้าง room
 	a := entity.Room{
@@ -89,6 +71,17 @@ func GetAllRoom(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	c.JSON(http.StatusOK, gin.H{"data": room})
+}
+
+// GET /room/byAva
+func ListRoom(c *gin.Context) {
+	var room []entity.Room
+	if err := entity.DB().Where("Status = ?", "ว่าง").Find(&room).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 
@@ -102,30 +95,37 @@ func DeleteRoom(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
+type RoomUpdate struct {
+	ID          uint64
+	Room_number string `gorm:"uniqueIndex" valid:"required~ต้องระบุหมายเลขห้องพัก, matches(^[SDET][0-9]{4}[sgp]$)~เลขห้องพักต้องขึ้นต้นด้วย SEDT ตามด้วยตัวเลข 4 ตัว และลงท้ายด้วย sgp"`
+	Room_img    string
+	Room_price  float64 `valid:"required~ต้องระบุราคาของห้องพัก, range(10000|100000)~ราคาของห้องพักต้องอยู่ระหว่าง 10000-100000"`
+	RoomTypeID  uint
+	RoomZoneID  uint
+	EmployeeID  uint
+}
+
 // PATCH /room
 func UpdateRoom(c *gin.Context) {
-	var room entity.Room
-	var result entity.Room
+	var room RoomUpdate
 
 	if err := c.ShouldBindJSON(&room); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	
-	// ค้นหา room ด้วย id
-	if tx := entity.DB().Where("id = ?", room.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Room not found"})
-		return
-	}
 
+	//validate struct
 	if _, err := govalidator.ValidateStruct(room); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
-
-	if err := entity.DB().Save(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": room})
+
+	// update data in database and check error
+	if err := entity.DB().Table("rooms").Where("id = ?", room.ID).Updates(room).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// response updated data
+	c.JSON(http.StatusOK, gin.H{"data": "updated your repairs successfully"})
 }

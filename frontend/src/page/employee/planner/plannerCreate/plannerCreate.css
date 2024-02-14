@@ -1,12 +1,23 @@
+.create-planner-header {
+  color: #4f5c6e;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 0 20px;
+}
+
+.create-planner-table-show {
+  width: 100%;
+  padding: 0 70px;
+  background-color: #f2f3f5;
+  box-sizing: border-box;
+}
+
 .create-planner-form {
   width: 40%;
-  background: rgba(255, 255, 255, 0.1);
-
-  backdrop-filter: blur(10px);
-  border-radius: 5px;
-
+  background-color: #fff;
+  border-radius: 1%;
+  border: 3px solid #f4f5f7;
   padding: 20px;
-  margin: auto;
 }
 
 .create-planner-form-control {
@@ -35,7 +46,9 @@
 }
 
 .create-planner-text {
-  color: rgb(255, 255, 255);
+  color: #535b66;
+  font-weight: bold;
+  margin-top: 2px;
 }
 
 .create-planner-select {
@@ -49,14 +62,61 @@
   border-radius: 4px;
   border: 1px solid #ccc;
 
-  appearance: none;
   padding: 12px 20px;
   padding-right: 38px;
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
   transition: color 0.3s ease, background-color 0.3s ease,
     border-bottom-color 0.3s ease;
 }
 
-.create-planner-option {
+input[type="file"]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #142c74;
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: #0d45a5;
+}
+
+.create-planner-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 533px;
+  margin-top: 4rem;
+}
+
+.create-planner-imgBG {
+  margin: 0;
+  left: 0;
+  width: 50%;
+  height: 108.8%;
+}
+
+.create-planner-imgBG img {
+  margin: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #0d45a5;
+  border-radius: 1%;
+}
+.planner-cruise-bg {
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow: auto;
 }

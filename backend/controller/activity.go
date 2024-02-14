@@ -11,7 +11,7 @@ import (
 // POST /activity
 func CreateActivity(c *gin.Context) {
 	var activity entity.Activity
-	
+
 	// bind เข้าตัวแปร activity
 	if err := c.ShouldBindJSON(&activity); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -26,7 +26,7 @@ func CreateActivity(c *gin.Context) {
 	// สร้าง Activity
 	a := entity.Activity{
 		Activity_name: activity.Activity_name,
-		Activity_img: activity.Activity_img,
+		Activity_img:  activity.Activity_img,
 	}
 
 	// บันทึก

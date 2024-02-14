@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/GITTIIII/SE-TEAM11/services"
+	service "github.com/GITTIIII/SE-TEAM11/services"
 	"github.com/gin-gonic/gin"
 )
 

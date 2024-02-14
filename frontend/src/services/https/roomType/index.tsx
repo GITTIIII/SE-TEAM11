@@ -1,6 +1,6 @@
 import { RoomTypeInterface } from "../../../interface/IRoomType";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllRoomType() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllRoomType() {
 
   return res;
 }
-
-
 
 async function GetRoomTypeById(id: Number | undefined) {
   const requestOptions = {

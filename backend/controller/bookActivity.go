@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -11,15 +10,15 @@ import (
 )
 
 type BookActivityUpdate struct {
-	ID	uint64
-	TimeStart time.Time
-	TimeEnd time.Time
-	NumberOfPeople int `valid:"required~NumberOfPeople is required,range(3|10)~NumberOfPeople must be between 3 and 10"`
-	Comment string
-	Phone_number string `valid:"required~PhoneNumber is required, matches(^[0]\\d{9}$)~PhoneNumber must start with 0 and have length 10 digits"`
-	BookPlanID uint
-	TouristID uint
-	ActivityID uint
+	ID             uint64
+	Date           time.Time `valid:"required~กรุณาเลือกวัน,after_yesterday~วันจะต้องเป็นตั้งแต่ปัจจุบัน"`
+	Time           string
+	NumberOfPeople int `valid:"required~กรุณาระบุจำนวนคน,range(1|10)~จำนวนคนต้องอยู่ระหว่าง 1 ถึง 10 คน"`
+	Comment        string
+	Phone_number   string `valid:"required~กรุณาใส่เบอร์โทรศัพท์, matches(^[0]\\d{9}$)~เบอร์โทรศัพท์ ต้องเริ่มต้นด้วยเลข 0 และให้มีความยาวทั้งหมด 10 หลัก"`
+	BookPlanID     uint
+	TouristID      uint
+	ActivityID     uint
 }
 
 // POST /bookActivity
@@ -42,20 +41,20 @@ func CreateBookActivity(c *gin.Context) {
 
 	// สร้าง bookActivity
 	a := entity.BookActivity{
-		TimeStart: bookActivity.TimeStart,
-		TimeEnd: bookActivity.TimeEnd,
+		Date:           bookActivity.Date,
+		Time:           bookActivity.Time,
 		NumberOfPeople: bookActivity.NumberOfPeople,
-		Comment: bookActivity.Comment,
-		Phone_number: bookActivity.Phone_number,
+		Comment:        bookActivity.Comment,
+		Phone_number:   bookActivity.Phone_number,
 
 		BookPlanID: bookActivity.BookPlanID,
-		BookPlan: bookPlan,
+		BookPlan:   bookPlan,
 
 		TouristID: bookActivity.TouristID,
-		Tourist: tourist,
+		Tourist:   tourist,
 
 		ActivityID: bookActivity.ActivityID,
-		Activity: activity,
+		Activity:   activity,
 	}
 
 	// บันทึก
@@ -91,7 +90,7 @@ func GetAllBookActivity(c *gin.Context) {
 func GetAllBookActivityByTouristId(c *gin.Context) {
 	var bookActivity []entity.BookActivity
 	id := c.Param("id")
-	if err := entity.DB().Preload("BookPlan").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities WHERE tourist_id = ?",id).Find(&bookActivity).Error; err != nil {
+	if err := entity.DB().Preload("BookPlan").Preload("Tourist").Preload("Activity").Raw("SELECT * FROM book_activities WHERE tourist_id = ?", id).Find(&bookActivity).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -110,11 +109,8 @@ func DeleteBookActivity(c *gin.Context) {
 
 // PATCH /bookActivity
 func UpdateBookActivity(c *gin.Context) {
-	// create variable for store data as type of horse
 	var bookActivitiy BookActivityUpdate
-	//get id from url
 
-	// get data from body and check error
 	if err := c.ShouldBindJSON(&bookActivitiy); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -125,7 +121,7 @@ func UpdateBookActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	fmt.Println(bookActivitiy)
+
 	// update data in database and check error
 	if err := entity.DB().Table("book_activities").Where("id = ?", bookActivitiy.ID).Updates(bookActivitiy).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

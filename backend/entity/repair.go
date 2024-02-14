@@ -3,16 +3,17 @@ package entity
 import (
 	"time"
 
-	"github.com/asaskevich/govalidator"
+	
 	"gorm.io/gorm"
+	"github.com/asaskevich/govalidator"
 )
 
 
 type Repair struct {
 	gorm.Model
-	Comment       string    `valid:"required~Detail is required,stringlength(2|100)~Detail must be between 2 and 256 characters"`
-	Repair_img    string    `valid:"image_valid~รูปภาพไม่ถูกต้อง"`
-	Repair_date   time.Time `valid:"required~Date is required,after_yesterday~Date must be from today to future"`
+	Comment       string    `valid:"required~กรุณาใส่รายละเอียด,stringlength(1|100)~จำนวนตัวอักษรต้องอยู่ระหว่าง 1 ตัว ถึง 100 ตัว"`
+	Repair_img    string    `valid:"required~กรุณาใส่รูปภาพ,image_valid~ไฟล์นี้ไม่ใช่รูปภาพ"`
+	Repair_date   time.Time `valid:"required~กรุณาใส่วันเวลา,after_yesterday~กรุณาระบุวันเวลาตั้งแต่ปัจจุบันเป็นต้นไป"`
 	Repair_status string
 
 	RepairTypeID *uint

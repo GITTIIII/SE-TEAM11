@@ -23,14 +23,14 @@ export default function savoryCreate() {
   return (
     <>
       {contextHolder}
-      <div className='savoryCreate-bg' style={{ backgroundImage: `url(${cruise})` }}>
-      <h1 className='savoryCreate-header'>Add a Savory</h1>
+      <div className='savoryCreate-bg' style={{ background : "#eceef2"}}>
+      <h1 className='savoryCreate-header'>เพิ่ม ของคาว</h1>
       <div className='savoryCreate-headline'/>
 
         <div className='savoryCreate-form'>
         <Form onFinish={onFinish} autoComplete="off">
             <div className='savoryCreate-form-control'>
-              <label className='savoryCreate-text'>savory</label>
+              <label className='savoryCreate-text'>ชื่อ</label>
               <br></br>
               <Form.Item name="Name">
                 <Input placeholder='Name'></Input>
@@ -38,7 +38,7 @@ export default function savoryCreate() {
             </div>
 
             <div className='savoryCreate-form-control'>
-              <label className='savoryCreate-text'>Count</label>
+              <label className='savoryCreate-text'>ราคา</label>
               <br></br>
               <Form.Item name="Count">
                 <InputNumber type='number' placeholder='Count'></InputNumber>
@@ -47,7 +47,7 @@ export default function savoryCreate() {
 
             <br></br>
             <div className='buttom-area'>
-              <button  type="submit">Submit</button>
+              <button  type="submit">ยืนยัน</button>
             </div>
           </Form>
         </div>     

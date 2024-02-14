@@ -1,6 +1,6 @@
 import { RoomZoneInterface } from "../../../interface/IRoomZone";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllRoomZone() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllRoomZone() {
 
   return res;
 }
-
-
 
 async function GetRoomZoneById(id: Number | undefined) {
   const requestOptions = {

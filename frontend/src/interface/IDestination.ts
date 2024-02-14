@@ -1,18 +1,23 @@
 import { PortOriginInterface } from "./IPortOrigin";
 import { PortDestinationInterface } from "./IPortDestination";
 import { DistanceInterface } from "./IDistance";
+import { EmployeeInterface } from "./IEmployee";
 
 export interface DestinationInterface {
   ID?: number;
-  Destination_img?: string;
   Destination_name?: string;
-  Destination_price?: number;
+  Comment?: string;
+  Destination_status?: string;
+
   PortOriginID?: number;
   PortOrigin?: PortOriginInterface;
 
   PortDestinationID?: number;
-  PortDestinaton?: PortDestinationInterface;
+  PortDestination?: PortDestinationInterface;
 
   DistanceID?: number;
   Distance?: DistanceInterface;
+
+  EmployeeID?: number;
+  Employee?: EmployeeInterface;
 }

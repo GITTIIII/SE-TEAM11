@@ -25,6 +25,7 @@ func SetupDatabase() {
 		&Repair{},
 		&Employee{},
 		&Room{},
+		&Quay{},
 		&PortOrigin{},
 		&PortDestination{},
 		&Distance{},
@@ -43,6 +44,11 @@ func SetupDatabase() {
 		&Payment{},
 	)
 	db = database
+
+
+	// AreaCode Data
+	database.Where(AreaCode{Name: "THAI +66"}).FirstOrCreate(&AreaCode{Name: "THAI +66"})
+	database.Where(AreaCode{Name: "US +011"}).FirstOrCreate(&AreaCode{Name: "US +011"})
 
 	general := RepairType{
 		Repair_name: "ทั่วไป",
@@ -70,21 +76,35 @@ func SetupDatabase() {
 	database.Where(RoomZone{RoomZone_name: "Pool view"}).FirstOrCreate(&RoomZone{RoomZone_name: "Pool view"})
 
 	//destination
-	database.Where(PortOrigin{PortOrigin_name: "Nagoya"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Nagoya"})
-	database.Where(PortOrigin{PortOrigin_name: "Wales"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Wales"})
-	database.Where(PortOrigin{PortOrigin_name: "Madagascar"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Madagascar"})
-	database.Where(PortOrigin{PortOrigin_name: "Oslo"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Oslo"})
+	database.Where(PortOrigin{PortOrigin_name: "Nagoya Port"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Nagoya Port"})
+	database.Where(PortOrigin{PortOrigin_name: "Holyhead Of Wales"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Holyhead Of Wales"})
+	database.Where(PortOrigin{PortOrigin_name: "Ehoala port Of Madagascar"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Ehoala port Of Madagascar"})
+	database.Where(PortOrigin{PortOrigin_name: "Port Of Oslo"}).FirstOrCreate(&PortOrigin{PortOrigin_name: "Port Of Oslo"})
 
-	database.Where(PortDestination{PortDestination_name: "Phuket"}).FirstOrCreate(&PortDestination{PortDestination_name: "Phuket"})
-	database.Where(PortDestination{PortDestination_name: "New York"}).FirstOrCreate(&PortDestination{PortDestination_name: "New York"})
-	database.Where(PortDestination{PortDestination_name: "Barcelona"}).FirstOrCreate(&PortDestination{PortDestination_name: "Barcelona"})
-	database.Where(PortDestination{PortDestination_name: "London"}).FirstOrCreate(&PortDestination{PortDestination_name: "London"})
+	database.Where(PortDestination{PortDestination_name: "Shanghai International Port"}).FirstOrCreate(&PortDestination{PortDestination_name: "Shanghai International Port"})
+	database.Where(PortDestination{PortDestination_name: "Port Sea Of New York & New Jersey"}).FirstOrCreate(&PortDestination{PortDestination_name: "Port Sea of New York & New Jersey"})
+	database.Where(PortDestination{PortDestination_name: "Valencia Port Sea"}).FirstOrCreate(&PortDestination{PortDestination_name: "Valencia Port Sea"})
+	database.Where(PortDestination{PortDestination_name: "London Bridge Port Sea"}).FirstOrCreate(&PortDestination{PortDestination_name: "London Bridge Port Sea"})
 
 	database.Where(Distance{Distance: "3000"}).FirstOrCreate(&Distance{Distance: "3000"})
 	database.Where(Distance{Distance: "4000"}).FirstOrCreate(&Distance{Distance: "4000"})
 	database.Where(Distance{Distance: "5000"}).FirstOrCreate(&Distance{Distance: "5000"})
 	database.Where(Distance{Distance: "6000"}).FirstOrCreate(&Distance{Distance: "6000"})
+	database.Where(Distance{Distance: "7000"}).FirstOrCreate(&Distance{Distance: "7000"})
+	database.Where(Distance{Distance: "8000"}).FirstOrCreate(&Distance{Distance: "8000"})
+	database.Where(Distance{Distance: "9000"}).FirstOrCreate(&Distance{Distance: "9000"})
+	database.Where(Distance{Distance: "10000"}).FirstOrCreate(&Distance{Distance: "10000"})
+	database.Where(Distance{Distance: "11000"}).FirstOrCreate(&Distance{Distance: "11000"})
+	database.Where(Distance{Distance: "12000"}).FirstOrCreate(&Distance{Distance: "12000"})
+	database.Where(Distance{Distance: "13000"}).FirstOrCreate(&Distance{Distance: "13000"})
+	database.Where(Distance{Distance: "14000"}).FirstOrCreate(&Distance{Distance: "14000"})
 
+	database.Where(Quay{Quay_number: "1"}).FirstOrCreate(&Quay{Quay_number: "1"})
+	database.Where(Quay{Quay_number: "2"}).FirstOrCreate(&Quay{Quay_number: "2"})
+	database.Where(Quay{Quay_number: "3"}).FirstOrCreate(&Quay{Quay_number: "3"})
+	database.Where(Quay{Quay_number: "4"}).FirstOrCreate(&Quay{Quay_number: "4"})
+	database.Where(Quay{Quay_number: "5"}).FirstOrCreate(&Quay{Quay_number: "5"})
+	database.Where(Quay{Quay_number: "6"}).FirstOrCreate(&Quay{Quay_number: "6"})
 
 	adminRole := EmployeeRole{Name: "Admin"}
 	db.Create(&adminRole)
@@ -92,18 +112,29 @@ func SetupDatabase() {
 	employeeRole := EmployeeRole{Name: "Employee"}
 	db.Create(&employeeRole)
 
+	GenderMale := Gender{Name: "Male"}
+	db.Create(&GenderMale)
+
+	GenderFemale := Gender{Name: "Female"}
+	db.Create(&GenderFemale)
+
+	AreaCode := AreaCode{Name: "ADMIN +007"}
+	db.Create(&AreaCode)
+
 	adminPassword := "admin"
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(adminPassword), 14)
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(adminPassword), 14)
 
 	Employees := []Employee{
-		{	Name: "admin",
-			Gender:      "Male",
-			Tel: "0123456789",
-			Picture:     "",
-			Age: 18,
-			Email:    "admin@gmail.com",
-			Password:    string(hashedPassword),
-			EmployeeRoleID:    &adminRole.ID,
+		{	
+			Email:          "admin@gmail.com",
+			Password:       string(hashedPassword),
+			Name: 			"admin",
+			Tel:            "0123456789",
+			Picture:        "",
+			Age:            19,
+			EmployeeRoleID: &adminRole.ID,
+			AreaCodeID: 	&AreaCode.ID,
+			GenderID:       &GenderMale.ID,
 		},
 	}
 	for _, employee := range Employees {
@@ -135,19 +166,21 @@ func SetupDatabase() {
 		{ 	Activity_name: "บริการสปา",
 			Activity_img: "spa.jpg", 
 		},
+		{	Activity_name: "กีฬาฟันดาบ",
+			Activity_img: "fencing.jpg", 
+		},
+		{	Activity_name: "สเก็ตน้ำเเข็ง",
+			Activity_img: "iceskates.jpg", 
+		},
+		{	Activity_name: "ยิงธนู",
+			Activity_img: "archery.jpg",
+		},
+		{	Activity_name: "ดำน้ำ",
+			Activity_img: "scuba.jpg",
+		},
 	}
-
 	for _, activity := range Activitys {
 		db.Create(&activity)
 	}
-
-	book_plan := BookPlan{
-		PlannerID: 1,
-		TouristID: 1,
-		RoomID: 1,
-		FoodSetID: 1,
-	}
-	db.Model(&BookPlan{}).Create(&book_plan)
-
 	
 }

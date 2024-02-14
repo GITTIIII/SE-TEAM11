@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/gin-gonic/gin"
 )
 
 // POST /roomZone

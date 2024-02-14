@@ -3,17 +3,33 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/GITTIIII/SE-TEAM11/entity"
+	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
+
+type TouristUpdate struct {
+	ID           uint64
+	Email        string `gorm:"uniqueIndex" valid:"required~Email is required"`
+	Tourist_name string
+	Phone        string `valid:"matches(^[0]\\d{9}$)~PhoneNumber must start with 0 and have length 10 digits"`
+	Picture      string
+	Age          int `valid:"range(18|100)~Age must be between 18 and 100"`
+	Gender       string
+}
 
 // POST /tourist
 func CreateTourist(c *gin.Context) {
 	var tourist entity.Tourist
-	
+
 	// bind เข้าตัวแปร tourist
 	if err := c.ShouldBindJSON(&tourist); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(tourist); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -27,13 +43,13 @@ func CreateTourist(c *gin.Context) {
 
 	// สร้าง tourist
 	a := entity.Tourist{
-		Email: tourist.Email,
-		Password: string(hashPassword),
+		Email:        tourist.Email,
+		Password:     string(hashPassword),
 		Tourist_name: tourist.Tourist_name,
-		Phone: tourist.Phone,
-		Age: tourist.Age,
-		Picture: tourist.Picture,
-		Gender: tourist.Gender,
+		Phone:        tourist.Phone,
+		Age:          tourist.Age,
+		Picture:      tourist.Picture,
+		Gender:       tourist.Gender,
 	}
 
 	// บันทึก
@@ -78,22 +94,26 @@ func DeleteTourist(c *gin.Context) {
 
 // PATCH /tourist
 func UpdateTourist(c *gin.Context) {
-	var tourist entity.Tourist
-	var result entity.Tourist
+	var tourist TouristUpdate
 
 	if err := c.ShouldBindJSON(&tourist); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// ค้นหา tourist ด้วย id
-	if tx := entity.DB().Where("id = ?", tourist.ID).First(&result); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Tourist not found"})
-		return
-	}
 
-	if err := entity.DB().Save(&tourist).Error; err != nil {
+	//validate struct
+	if _, err := govalidator.ValidateStruct(tourist); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": tourist})
+
+	// update data in database and check error
+	if err := entity.DB().Table("tourists").Where("id = ?", tourist.ID).Updates(tourist).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// response updated data
+	c.JSON(http.StatusOK, gin.H{"data": "updated your tourist successfully"})
+
 }

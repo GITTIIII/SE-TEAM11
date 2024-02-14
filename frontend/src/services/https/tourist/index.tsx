@@ -1,6 +1,6 @@
 import { TouristInterface } from "../../../interface/ITourist";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllTourist() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllTourist() {
 
   return res;
 }
-
-
 
 async function GetTouristById(id: Number | undefined) {
   const requestOptions = {

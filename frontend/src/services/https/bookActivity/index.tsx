@@ -1,6 +1,6 @@
 import { BookActivityInterface } from "../../../interface/IBookActivity";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllBookActivity() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllBookActivity() {
 
   return res;
 }
-
-
 
 async function GetBookActivityById(id: Number | undefined) {
   const requestOptions = {
@@ -48,7 +46,10 @@ async function GetAllBookActivityByTouristId(id: Number | undefined) {
     method: "GET",
   };
 
-  let res = await fetch(`${apiUrl}/BookActivity/byTouristId/${id}`, requestOptions)
+  let res = await fetch(
+    `${apiUrl}/BookActivity/byTouristId/${id}`,
+    requestOptions
+  )
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {

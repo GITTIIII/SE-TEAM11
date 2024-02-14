@@ -1,4 +1,14 @@
 .employeelayout{
     display: flex;
-    
+}
+
+.touristlayout{
+    height: 90vh;
+}
+
+@media screen and (max-width: 1000px) {
+    .employeelayout{
+        flex-direction: column;
+        width: 100%;
+    }
 }

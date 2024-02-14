@@ -14,12 +14,13 @@ func CreateDestination(c *gin.Context) {
 	var portOrigin entity.PortOrigin
 	var portDestination entity.PortDestination
 	var Distance entity.Distance
+	var employee entity.Employee
 
 	// bind เข้าตัวแปร destination
 	if err := c.ShouldBindJSON(&destination); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-	// validation
+		// validation
 	}
 	if _, err := govalidator.ValidateStruct(destination); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -27,17 +28,20 @@ func CreateDestination(c *gin.Context) {
 	}
 	// สร้าง destination
 	a := entity.Destination{
-		Destination_img:    destination.Destination_img,
 		Destination_name: destination.Destination_name,
-		Destination_price: destination.Destination_price,
+		Comment:          destination.Comment,
+
 		PortOriginID: destination.PortOriginID,
-		PortOrigin: portOrigin,
+		PortOrigin:   portOrigin,
 
 		PortDestinationID: destination.PortDestinationID,
-		PortDestination: portDestination,
+		PortDestination:   portDestination,
 
 		DistanceID: destination.DistanceID,
-		Distance: Distance,
+		Distance:   Distance,
+
+		EmployeeID: destination.EmployeeID,
+		Employee:   employee,
 	}
 
 	// บันทึก
@@ -99,5 +103,15 @@ func UpdateDestination(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": destination})
+	if _, err := govalidator.ValidateStruct(destination); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// update data in database and check error
+	if err := entity.DB().Table("destinations").Where("id = ?", destination.ID).Updates(destination).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": "updated your destinations successfully"})
 }

@@ -1,5 +1,5 @@
 .Bottom-menu a.active li{
-    background-color: #F0A500;
+    background-color: #435585;
     color: white;
 }
 
@@ -28,4 +28,11 @@
     background-color: #89CFF3;
     display: flex;
     text-align: center;
+}
+
+@media screen and (max-width: 1000px) {
+    .Bottom-menu{
+        right: 1%;
+        bottom: 82%;
+    }
 }

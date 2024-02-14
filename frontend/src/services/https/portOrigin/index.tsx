@@ -1,6 +1,6 @@
 import { PortOriginInterface } from "../../../interface/IPortOrigin";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllPortOrigin() {
   const requestOptions = {
@@ -22,8 +22,6 @@ async function GetAllPortOrigin() {
 
   return res;
 }
-
-
 
 async function GetPortOriginById(id: Number | undefined) {
   const requestOptions = {

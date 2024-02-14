@@ -1,6 +1,6 @@
 import { FoodSetInterface } from "../../../../interface/IFoodSet";
 
-const apiUrl = "http://localhost:8080";
+const apiUrl = "https://api.cruise-ship.online";
 
 async function GetAllFoodSet() {
   const requestOptions = {
@@ -22,7 +22,6 @@ async function GetAllFoodSet() {
 
   return res;
 }
-
 
 async function CreateFoodSet(data: FoodSetInterface) {
   const requestOptions = {

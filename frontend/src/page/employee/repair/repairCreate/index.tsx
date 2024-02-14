@@ -11,8 +11,12 @@ import {
   Select,
   DatePicker,
   DatePickerProps,
+  Carousel,
 } from "antd";
-import repair from "../../../../asset/repair.jpg";
+import repair from "../../../../asset/RepairCreateBackground.png";
+import repairRoom1 from "../../../../asset/RepairItem1.jpg";
+import repairRoom2 from "../../../../asset/RepairItem2.jpg";
+import repairRoom3 from "../../../../asset/RepairItem3.jpg";
 import { CreateRepair } from "../../../../services/https/repair";
 import { RepairInterface } from "../../../../interface/IRepair";
 import { GetAllRepairType } from "../../../../services/https/repairType";
@@ -20,6 +24,7 @@ import { RepairTypeInterface } from "../../../../interface/IRepairType";
 import { RoomInterface } from "../../../../interface/IRoom";
 import { GetAllRoom } from "../../../../services/https/room";
 import dayjs from "dayjs";
+
 
 export default function RepairCreate() {
   let navigate = useNavigate();
@@ -36,7 +41,12 @@ export default function RepairCreate() {
     RoomID: 0,
   });
 
+  const [currentImage, setCurrentImage] = useState(0);
+
   const EmployeeID = localStorage.getItem("EmployeeID");
+
+  const images = [repairRoom1, repairRoom2,repairRoom3]; // เพิ่มรูปภาพตามความต้องการ
+  const numberOfImages = images.length;
 
   const getRoom = async () => {
     let res = await GetAllRoom();
@@ -57,6 +67,9 @@ export default function RepairCreate() {
   useEffect(() => {
     getRepairType();
     getRoom();
+    // autoplay();
+    // const intervalId = setInterval(autoplay, 5000);
+    // return () => clearInterval(intervalId);
   }, []);
 
   const handleInput = (e: any) => {
@@ -66,6 +79,27 @@ export default function RepairCreate() {
       [name]: parseInt(value, 10),
     });
   };
+
+  const autoplay = () => {
+    setCurrentImage((prev) => (prev + 1) % numberOfImages);
+  };
+
+  const nextImage = () => {
+    setCurrentImage((prev) => (prev + 1) % numberOfImages);
+  };
+
+  const prevImage = () => {
+    setCurrentImage((prev) => (prev - 1 + numberOfImages) % numberOfImages);
+  };
+
+ 
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
 
   const handleSubmit = async (values: RepairInterface) => {
     values.Comment = comment;
@@ -124,98 +158,112 @@ export default function RepairCreate() {
     <>
       <div className="login-bg" style={{ backgroundImage: `url(${repair})` }}>
         {contextHolder}
+        <div className="repair-create-content">
+          <div className="repair-create-header">
+            <h1 className="repair-text">สร้างคำขอการแจ้งซ่อม</h1>
+          </div>
 
-        <h1 className="repair-text">สร้างคำขอการแจ้งซ่อม</h1>
+          <div className="repair-create-content-left-right">
+            <div className="repair-form">
+              <Form onFinish={handleSubmit}>
+                <div className="repair-form-control">
+                  <label className="repair-text">หมายเลขห้องพัก</label>
+                  <br />
+                  <Select
+                    showSearch
+                    placeholder="กรุณาเลือกหมายเลขห้องพัก"
+                    className="repair-select-antd"
+                    optionFilterProp="children"
+                    onChange={(value) =>
+                      handleInput({ target: { name: "RoomID", value } })
+                    }
+                    filterOption={filterOption}
+                    options={roomNumber.map((item) => {
+                      return {
+                        label: `${item.Room_number}`,
+                        value: `${item.ID}`,
+                      };
+                    })}
+                  />
+                </div>
 
-        <div className="repair-form">
-          <Form onFinish={handleSubmit}>
-            <div className="repair-form-control">
-              <label className="repair-text">หมายเลขห้องพัก</label>
-              <br />
-              <Select
-                showSearch
-                placeholder="Select your room"
-                className="repair-select-antd"
-                optionFilterProp="children"
-                onChange={(value) =>
-                  handleInput({ target: { name: "RoomID", value } })
-                }
-                filterOption={filterOption}
-                options={roomNumber.map((item) => {
-                  return {
-                    label: `${item.Room_number}`,
-                    value: `${item.ID}`,
-                  };
-                })}
-              />
+                <div className="repair-form-control">
+                  <label className="repair-text">
+                    ประเภทการแจ้งซ่อมที่ต้องการได้รับบริการ
+                  </label>
+                  <br></br>
+                  <div className="repair-select">
+                    <select
+                      className="repair-select-custom"
+                      name="RepairTypeID"
+                      onChange={handleInput}
+                      required
+                    >
+                      <option value="none" hidden>
+                        เลือกประเภท
+                      </option>
+                      {type.map((item) => (
+                        <option value={item.ID} key={item.Repair_name}>
+                          {item.Repair_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="repair-form-control">
+                  <label className="repair-text">รายละเอียด</label>
+                  <br></br>
+                  <textarea
+                    className="repair-textarea"
+                    placeholder="กรอกรายละเอียด"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </div>
+
+                <div className="repair-form-control">
+                  <label className="repair-text">วันที่ต้องการรับบริการ</label>
+                  <br></br>
+                  <DatePicker
+                    value={rDate}
+                    onChange={onChange}
+                    format="YYYY-MM-DD"
+                  />
+                </div>
+
+                <div className="repair-form-control">
+                  <label className="repair-text">อัพโหลดรูปภาพ</label>
+                  <br></br>
+                  <input
+                    className="repair-input-file"
+                    id="repair_img"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </div>
+
+                <div className="buttom-area">
+                  <button type="submit">ยืนยัน</button>
+                </div>
+              </Form>
             </div>
 
-            <div className="repair-form-control">
-              <label className="repair-text">ประเภทการแจ้งซ่อมที่ต้องการได้รับบริการ</label>
-              <br></br>
-              <div className="repair-select">
-                <select
-                  className="repair-select-custom"
-                  name="RepairTypeID"
-                  onChange={handleInput}
-                  required
-                >
-                  <option value="none" hidden>
-                    เลือกประเภท
-                  </option>
-                  {type.map((item) => (
-                    <option value={item.ID} key={item.Repair_name}>
-                      {item.Repair_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            <div
+              className="repair-create-content-right"
+              style={{ backgroundImage: `url(${images[currentImage]})` }}
+            >
 
-            <div className="repair-form-control">
-              <label className="repair-text">รายละเอียด</label>
-              <br></br>
-              <textarea
-                className="repair-textarea"
-                placeholder="Enter your detail"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </div>
 
-            <div className="repair-form-control">
-              <label className="repair-text">วันที่ต้องการรับบริการ</label>
-              <br></br>
-              <DatePicker
-                value={rDate}
-                onChange={onChange}
-                format="YYYY-MM-DD"
-              />
+              <button className="prev" onClick={prevImage}>
+                &lt;
+              </button>
+              <button className="next" onClick={nextImage}>
+                &gt;
+              </button>
             </div>
-
-            <div className="repair-form-control">
-              <label className="repair-text">อัพโหลดรูปภาพ</label>
-              <br></br>
-              <input
-              className="repair-input-file"
-                id="repair_img"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-             
-            </div>
-
-            {/* <div className="repair-form-control">
-              <label className="repair-text">Upload your image</label>
-              <br></br>
-              
-            </div> */}
-
-            <div className="buttom-area">
-              <button type="submit">ยืนยัน</button>
-            </div>
-          </Form>
+          </div>
         </div>
       </div>
     </>
